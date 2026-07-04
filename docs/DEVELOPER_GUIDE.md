@@ -26,7 +26,7 @@ The Docker image rebuilds the CSS from scratch in a Node stage (see `Dockerfile`
 
 ## Conventions
 
-**Mission-scoping**: any new view or API endpoint that touches complaint/appointment/queue data must go through `missions/utils/permissions.py`'s `user_is_ministry_admin`, `user_can_manage_mission`, or `missions_for_user` - don't write a new ad hoc permission check. See [ARCHITECTURE.md](ARCHITECTURE.md) for why there are two provisioning paths these functions reconcile.
+**Mission-scoping**: any new view or API endpoint that touches complaint/appointment/queue data must go through `missions/utils/permissions.py`'s `user_is_ministry_admin`, `user_can_manage_mission`, or `missions_for_user` - don't write a new ad hoc permission check. `UserProfile.role`/`mission` is the source of truth; Groups + `Mission.staff_users` are auto-projected from it by a signal (`sync_user_permissions`), so just set the role and don't touch Groups directly. See [ARCHITECTURE.md](ARCHITECTURE.md).
 
 **Tracking codes / tokens**: use `secrets.choice`/`secrets.token_hex` (see `Complaint.generate_tracking_code`, `Appointment.generate_qr_token`), never `random` - anything that acts as a bearer credential (a citizen looks up their case by it, with no password) must be cryptographically unguessable.
 

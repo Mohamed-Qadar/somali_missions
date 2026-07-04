@@ -70,7 +70,7 @@ Every mission-scoped view (web or API) goes through three functions in `missions
 - `user_can_manage_mission(user, mission)` — ministry admin, or staff of that specific mission (via `Mission.staff_users` group membership, or `UserProfile.mission` + role)
 - `missions_for_user(user)` — all missions for ministry admins, else just the missions the user is scoped to
 
-There are historically two ways a user gets scoped to a mission (Django Groups from `seed_missions.py`, and `UserProfile.role`/`mission` from the embassy invitation flow) - both are recognized by these three functions so it doesn't matter which path provisioned the account. Consolidating into a single system is tracked as future cleanup, not attempted in this pass to avoid a high-risk rewrite of every call site.
+`UserProfile.role`/`mission` is the **single source of truth**. Django Groups (`MinistryAdmin`/`MissionStaff`) and `Mission.staff_users` are an automatic *projection* of the role, kept in sync by `sync_user_permissions()` (in `missions/utils/permissions.py`, wired to a `post_save` signal on `UserProfile` in `missions/signals.py`): set someone's role and their group membership + mission assignment follow automatically, and demoting them removes the stale memberships. This means the two representations can't drift. The three helper functions still read both (belt-and-braces, and Django admin's own permission system keys off Groups), but the signal guarantees they agree. `python manage.py sync_permissions` reconciles all existing users on demand (e.g. after someone edits Groups directly in the admin). This is why both the seed command (Groups + role) and the invitation flow (role only) produce a fully consistent account.
 
 ## Request flow example: booking an appointment
 
