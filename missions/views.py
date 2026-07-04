@@ -1623,8 +1623,11 @@ def activate_embassy_account_view(request, token):
             invitation.is_used = True
             invitation.save()
 
-            # Log user in
-            login(request, user)
+            # Log user in. This user was just created (not returned by
+            # authenticate()), so with django-axes adding a second auth backend
+            # we must name the backend explicitly, otherwise login() can't tell
+            # which one to record on the session.
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('dashboard_router')
 
     return render(request, 'missions/embassy_activation.html', {

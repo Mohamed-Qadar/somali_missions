@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Account Temporarily Locked" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-16">
+    <div class="bg-card border border-border rounded-2xl p-8 shadow-sm text-center space-y-5">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-red-700">
+            <span class="material-symbols-outlined text-3xl">lock</span>
+        </div>
+        <h1 class="text-2xl font-bold text-secondary">{% trans "Too Many Login Attempts" %}</h1>
+        <p class="text-textSecondary text-sm">
+            {% trans "For your security, this account has been temporarily locked after several failed sign-in attempts. Please try again in about an hour, or reset your password." %}
+        </p>
+        <a href="{% url 'password_reset' %}" class="block w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 rounded-lg shadow-sm">
+            {% trans "Reset Password" %}
+        </a>
+        <a href="{% url 'contact' %}" class="block text-sm text-primary hover:underline">{% trans "Contact the Ministry for help" %}</a>
+    </div>
+</div>
+{% endblock %}

@@ -2,12 +2,17 @@
 Django settings for somali_missions project.
 """
 
+import sys
 from datetime import timedelta
 from pathlib import Path
 
 from decouple import Csv, config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# True while running the Django test suite. Used to disable django-axes so its
+# cross-request lockout state doesn't leak between unrelated tests.
+TESTING = 'test' in sys.argv
 
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-only-change-me')
 DEBUG = config('DEBUG', default=True, cast=bool)
@@ -33,6 +38,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_celery_beat',
     'django_celery_results',
+    'axes',
+]
+
+# django-axes: brute-force login lockout. AxesStandaloneBackend must come first
+# so lockouts are enforced before the normal password check runs.
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [
@@ -46,6 +59,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'missions.middleware.SecurityHeadersMiddleware',
+    # AxesMiddleware must be last: it turns an axes lockout into the lockout
+    # response after the view has run.
+    'axes.middleware.AxesMiddleware',
 ]
 
 # CORS is scoped to the API only (/api/...) - the main site uses session
@@ -177,6 +193,20 @@ if config('SECURE_SSL_ENABLED', default=False, cast=bool):
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+
+# --- django-axes (brute-force login lockout) ---
+# Disabled under the test runner so lockout state can't leak between unrelated
+# tests; the dedicated lockout test re-enables it explicitly.
+AXES_ENABLED = config('AXES_ENABLED', default=True, cast=bool) and not TESTING
+AXES_FAILURE_LIMIT = config('AXES_FAILURE_LIMIT', default=5, cast=int)
+AXES_COOLOFF_TIME = timedelta(hours=1)          # auto-unlock after 1 hour
+AXES_RESET_ON_SUCCESS = True                    # a good login clears the counter
+# Lock on the (username, IP) pair: a single bad actor can't lock a legitimate
+# user out from every network, and a shared office IP isn't locked by one
+# person's typos.
+AXES_LOCKOUT_PARAMETERS = [['username', 'ip_address']]
+AXES_LOCKOUT_TEMPLATE = 'missions/lockout.html'
+AXES_HTTP_RESPONSE_CODE = 429  # Too Many Requests, rather than a bare 403
 
 # Assistant provider selection - see assistant/providers.py. Only 'rule_based'
 # is implemented; this is the extension point for a future AI backend.
