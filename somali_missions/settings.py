@@ -127,6 +127,13 @@ else:
         }
     }
 
+# Reuse DB connections across requests (persistent connections) instead of
+# opening a fresh one per request - a meaningful throughput win under load on
+# Postgres. CONN_HEALTH_CHECKS validates a reused connection before use so a
+# dropped connection is transparently reopened. Harmless on SQLite.
+DATABASES['default']['CONN_MAX_AGE'] = config('CONN_MAX_AGE', default=60, cast=int)
+DATABASES['default']['CONN_HEALTH_CHECKS'] = True
+
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -166,11 +173,24 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+# Cache: LocMemCache is per-process, so under multiple gunicorn workers each
+# worker has its own cache and the low-level view caching / rate limiting isn't
+# shared. When REDIS_URL is set (docker-compose provides one) use a shared Redis
+# cache so all workers see the same cached data and rate-limit counters.
+REDIS_URL = config('REDIS_URL', default='')
+if REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': REDIS_URL,
+        }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }
 
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
