@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "About Us" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-12 space-y-10">
+	<section class="space-y-4">
+		<h1 class="text-4xl font-black">{% trans "About This Platform" %}</h1>
+		<p class="text-lg text-textSecondary leading-relaxed">
+			{% trans "The Somali Missions Complaint & Evaluation Platform empowers Somali citizens worldwide to share service experiences at embassies and consulates. Aggregated feedback enables transparency, performance benchmarking, and actionable improvement for the Ministry of Foreign Affairs." %}
+		</p>
+	</section>
+	<div class="grid md:grid-cols-3 gap-8">
+		<div class="p-6 rounded-xl border border-border bg-white">
+			<h2 class="font-bold text-xl mb-2">{% trans "Mission" %}</h2>
+			<p class="text-sm text-textSecondary">{% trans "Provide a trusted channel for citizens to report issues and highlight service quality across all Somali diplomatic missions." %}</p>
+		</div>
+		<div class="p-6 rounded-xl border border-border bg-white">
+			<h2 class="font-bold text-xl mb-2">{% trans "Vision" %}</h2>
+			<p class="text-sm text-textSecondary">{% trans "Modern, transparent, citizen-centric consular services that meet global standards and foster public trust." %}</p>
+		</div>
+		<div class="p-6 rounded-xl border border-border bg-white">
+			<h2 class="font-bold text-xl mb-2">{% trans "Independence note" %}</h2>
+			<p class="text-sm text-textSecondary">{% trans "Feedback is collected independently. Mission ratings reflect citizen experiences and support internal quality review — not political endorsement." %}</p>
+		</div>
+	</div>
+</div>
+{% endblock %}

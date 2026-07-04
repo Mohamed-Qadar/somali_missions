@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Diplomatic Directory" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12 space-y-10">
+    
+    <!-- Title and Search -->
+    <div class="text-center space-y-4">
+        <h1 class="text-3xl md:text-5xl font-black text-secondary">{% trans "Global Diplomatic Directory" %}</h1>
+        <p class="text-textSecondary text-sm max-w-xl mx-auto">
+            {% trans "Access phone numbers, working hours, email, and locations for all Somali diplomatic missions worldwide." %}
+        </p>
+
+        <form method="get" class="max-w-2xl mx-auto flex flex-col sm:flex-row gap-3 pt-4">
+            <div class="flex-grow flex items-center bg-card border border-border rounded-xl px-3 shadow-sm">
+                <span class="material-symbols-outlined text-textSecondary">search</span>
+                <input type="search" name="q" value="{{ search_query }}" placeholder="{% trans 'Search by Country, City or Name...' %}" class="w-full border-none bg-transparent px-3 py-3 focus:outline-none focus:ring-0 text-sm">
+            </div>
+            
+            <select name="type" class="rounded-xl border border-border bg-card px-4 py-3 text-sm focus:border-primary shadow-sm font-semibold">
+                <option value="">{% trans "All Types" %}</option>
+                <option value="EM" {% if selected_type == 'EM' %}selected{% endif %}>{% trans "Embassies" %}</option>
+                <option value="CO" {% if selected_type == 'CO' %}selected{% endif %}>{% trans "Consulates" %}</option>
+            </select>
+
+            <button type="submit" class="bg-primary hover:bg-opacity-90 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-sm">
+                {% trans "Filter" %}
+            </button>
+        </form>
+    </div>
+
+    <!-- Leaflet Global Map -->
+    {% if map_pins_json != '[]' %}
+        <div class="bg-card border border-border rounded-3xl p-5 shadow-sm space-y-4">
+            <h3 class="font-bold text-secondary text-sm">{% trans "Geographic Directory Map" %}</h3>
+            <div id="dirMap" class="h-80 w-full rounded-2xl border border-border overflow-hidden"></div>
+        </div>
+    {% endif %}
+
+    <!-- Address / Contacts Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for m in missions %}
+            <div class="bg-card border border-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded
+                            {% if m.mission_type == 'EM' %}bg-blue-50 text-primary{% else %}bg-slate-100 text-textSecondary{% endif %}">
+                            {{ m.get_mission_type_display }}
+                        </span>
+                        <span class="text-xs text-textSecondary font-semibold">{{ m.city }}, {{ m.country }}</span>
+                    </div>
+
+                    <h3 class="font-bold text-lg text-secondary leading-snug">{{ m.name }}</h3>
+                    <p class="text-xs text-textSecondary leading-relaxed">{{ m.address }}</p>
+                    
+                    <div class="space-y-1.5 pt-2 text-xs text-textPrimary font-medium border-t border-slate-100">
+                        {% if m.phone %}
+                            <p class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm text-primary">phone</span>
+                                <span>{{ m.phone }}</span>
+                            </p>
+                        {% endif %}
+                        {% if m.email %}
+                            <p class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm text-primary">mail</span>
+                                <span>{{ m.email }}</span>
+                            </p>
+                        {% endif %}
+                        <p class="flex items-center gap-2 text-textSecondary">
+                            <span class="material-symbols-outlined text-sm">schedule</span>
+                            <span>{{ m.working_hours|default:"09:00 - 16:00" }}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 pt-4">
+                    <a href="{% url 'submit_complaint_wizard' %}?mission={{ m.id }}" class="block text-center border border-border hover:border-primary hover:bg-primary/5 text-textSecondary hover:text-primary text-[11px] font-bold py-2 rounded-xl transition-all">
+                        {% trans "Report Problem" %}
+                    </a>
+                    <a href="{% url 'submit_emergency' %}?mission={{ m.id }}" class="block text-center bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold py-2 rounded-xl transition-all">
+                        {% trans "Emergency Ask" %}
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-span-full text-center py-12 text-textSecondary italic text-sm">
+                {% trans "No diplomatic missions found matching your search parameters." %}
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% if map_pins_json != '[]' %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const pins = {{ map_pins_json|safe }};
+        if (pins.length) {
+            const map = L.map('dirMap').setView([pins[0].lat, pins[0].lng], 2);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            pins.forEach(pin => {
+                L.marker([pin.lat, pin.lng]).addTo(map).bindPopup(`
+                    <div class="text-xs p-1">
+                        <p class="font-bold text-slate-800">${pin.name}</p>
+                        <p class="text-slate-500">${pin.city}, ${pin.country}</p>
+                    </div>
+                `);
+            });
+        }
+    });
+</script>
+{% endif %}
+{% endblock %}

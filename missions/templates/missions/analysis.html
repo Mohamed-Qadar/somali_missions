@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Analysis" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12 space-y-8">
+	<div class="flex flex-wrap justify-between items-center gap-4">
+		<div>
+			<h1 class="text-3xl font-black">{% trans "Analysis & Rankings" %}</h1>
+			<p class="text-textSecondary">{{ period_label }}</p>
+		</div>
+		<div class="flex gap-2">
+			<a href="?period=30" class="px-3 py-2 rounded-lg text-sm {% if period == '30' %}bg-primary text-white{% else %}border border-border{% endif %}">30 {% trans "days" %}</a>
+			<a href="?period=365" class="px-3 py-2 rounded-lg text-sm {% if period == '365' %}bg-primary text-white{% else %}border border-border{% endif %}">365 {% trans "days" %}</a>
+			<a href="?period=all" class="px-3 py-2 rounded-lg text-sm {% if period == 'all' %}bg-primary text-white{% else %}border border-border{% endif %}">{% trans "All time" %}</a>
+		</div>
+	</div>
+
+	<div class="grid md:grid-cols-2 gap-6">
+		<div class="bg-white border border-border rounded-xl p-6">
+			<h2 class="font-bold mb-4">{% trans "Daily complaints" %}</h2>
+			<canvas id="dailyChart" height="200"></canvas>
+		</div>
+		<div class="bg-white border border-border rounded-xl p-6">
+			<h2 class="font-bold mb-4">{% trans "Complaints by mission" %}</h2>
+			<canvas id="missionChart" height="200"></canvas>
+		</div>
+	</div>
+
+	<div class="grid md:grid-cols-2 gap-6">
+		<div class="bg-white border border-border rounded-xl p-6">
+			<h2 class="font-bold mb-3">{% trans "Most complained" %}</h2>
+			<ul class="space-y-2">
+				{% for mission in most_complained %}
+					<li class="flex justify-between text-sm"><a href="{% url 'mission_detail' mission.pk %}" class="text-primary">{{ mission.name }}</a><span>{{ mission.complaint_count }}</span></li>
+				{% empty %}<li class="text-textSecondary">{% trans "No data." %}</li>{% endfor %}
+			</ul>
+		</div>
+		<div class="bg-white border border-border rounded-xl p-6">
+			<h2 class="font-bold mb-3">{% trans "Category breakdown" %}</h2>
+			<ul class="space-y-2">
+				{% for row in category_stats %}
+					<li class="flex justify-between text-sm"><span>{{ row.label }}</span><span>{{ row.count }}</span></li>
+				{% empty %}<li class="text-textSecondary">{% trans "No data." %}</li>{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="grid md:grid-cols-2 gap-6">
+		<div class="bg-white border border-border rounded-xl p-6">
+			<h2 class="font-bold mb-3">{% trans "Highest rated" %}</h2>
+			<ul class="space-y-2">
+				{% for mission in highest_rated %}
+					<li class="flex justify-between text-sm"><a href="{% url 'mission_detail' mission.pk %}" class="text-primary">{{ mission.name }}</a><span>{{ mission.avg_rating|floatformat:1 }} ★</span></li>
+				{% empty %}<li class="text-textSecondary">{% trans "No data." %}</li>{% endfor %}
+			</ul>
+		</div>
+		<div class="bg-white border border-border rounded-xl p-6">
+			<h2 class="font-bold mb-3">{% trans "Lowest rated" %}</h2>
+			<ul class="space-y-2">
+				{% for mission in lowest_rated %}
+					<li class="flex justify-between text-sm"><a href="{% url 'mission_detail' mission.pk %}" class="text-primary">{{ mission.name }}</a><span>{{ mission.avg_rating|floatformat:1 }} ★</span></li>
+				{% empty %}<li class="text-textSecondary">{% trans "No data." %}</li>{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+	new Chart(document.getElementById('dailyChart'), {
+		type: 'line',
+		data: {
+			labels: {{ daily_labels_json|safe }},
+			datasets: [{ label: '{% trans "Complaints" %}', data: {{ daily_counts_json|safe }}, borderColor: '#307de8', tension: 0.3 }]
+		},
+		options: { responsive: true, plugins: { legend: { display: false } } }
+	});
+	new Chart(document.getElementById('missionChart'), {
+		type: 'bar',
+		data: {
+			labels: {{ mission_labels_json|safe }},
+			datasets: [{ label: '{% trans "Complaints" %}', data: {{ mission_counts_json|safe }}, backgroundColor: '#307de8' }]
+		},
+		options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { maxRotation: 45 } } } }
+	});
+</script>
+{% endblock %}

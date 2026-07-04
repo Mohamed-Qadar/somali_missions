@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Privacy Policy" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12 prose prose-sm">
+	<h1 class="text-3xl font-black mb-6">{% trans "Privacy Policy" %}</h1>
+	<p>{% trans "This platform collects complaints and ratings about Somali diplomatic missions to improve public services." %}</p>
+	<h2 class="text-xl font-bold mt-6">{% trans "What we collect" %}</h2>
+	<ul class="list-disc pl-6 space-y-2 text-textSecondary">
+		<li>{% trans "Optional name, email, and phone (only if you choose not to submit anonymously)" %}</li>
+		<li>{% trans "Complaint subject, message, category, and star rating" %}</li>
+		<li>{% trans "Technical data such as submission time for abuse prevention" %}</li>
+	</ul>
+	<h2 class="text-xl font-bold mt-6">{% trans "Who can see your data" %}</h2>
+	<p class="text-textSecondary">{% trans "The public sees only summary information (subject, rating, status). Full messages and contact details are visible only to authorized Ministry and mission staff." %}</p>
+	<h2 class="text-xl font-bold mt-6">{% trans "Retention" %}</h2>
+	<p class="text-textSecondary">{% trans "Complaints are retained for service quality analysis. You can track status using your unique tracking code without creating an account." %}</p>
+</div>
+{% endblock %}

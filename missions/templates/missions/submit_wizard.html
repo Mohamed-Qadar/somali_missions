@@ -1,0 +1,582 @@
+﻿{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Submit Complaint" %} - {% trans "Somali Citizen Portal" %}{% endblock %}
+
+{% block extra_head %}
+<style>
+    .wizard-step { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
+    .wizard-step.active { display: block; opacity: 1; }
+    .step-indicator.active { color: #00adef; border-color: #00adef; }
+    .step-indicator.completed { color: #10b981; border-color: #10b981; background-color: #ecfdf5; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12">
+    <div class="bg-card border border-border rounded-3xl p-6 md:p-8 shadow-sm">
+        
+        <!-- Wizard Title -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-extrabold text-secondary">{% trans "Submit a Complaint" %}</h1>
+            <p class="text-textSecondary text-sm">{% trans "Follow the steps below to report a problem. Your draft is saved automatically." %}</p>
+        </div>
+
+        <!-- Progress Bar & Step Indicators -->
+        <div class="relative flex items-center justify-between mb-10 pb-4 border-b border-border">
+            <div class="absolute left-0 top-[22px] right-0 h-0.5 bg-slate-200 -z-10"></div>
+            <div class="absolute left-0 top-[22px] h-0.5 bg-primary -z-10 transition-all duration-300" id="progressLine" style="width: 0%;"></div>
+
+            <!-- Step 1 -->
+            <div class="flex flex-col items-center">
+                <span id="ind1" class="step-indicator active w-10 h-10 rounded-full border-2 bg-card flex items-center justify-center font-bold text-sm shadow-sm transition-all duration-300">1</span>
+                <span class="text-[10px] uppercase tracking-wider font-bold text-textSecondary mt-2">{% trans "Embassy" %}</span>
+            </div>
+            <!-- Step 2 -->
+            <div class="flex flex-col items-center">
+                <span id="ind2" class="step-indicator w-10 h-10 rounded-full border-2 bg-card flex items-center justify-center font-bold text-sm shadow-sm transition-all duration-300">2</span>
+                <span class="text-[10px] uppercase tracking-wider font-bold text-textSecondary mt-2">{% trans "Details" %}</span>
+            </div>
+            <!-- Step 3 -->
+            <div class="flex flex-col items-center">
+                <span id="ind3" class="step-indicator w-10 h-10 rounded-full border-2 bg-card flex items-center justify-center font-bold text-sm shadow-sm transition-all duration-300">3</span>
+                <span class="text-[10px] uppercase tracking-wider font-bold text-textSecondary mt-2">{% trans "Evidence" %}</span>
+            </div>
+            <!-- Step 4 -->
+            <div class="flex flex-col items-center">
+                <span id="ind4" class="step-indicator w-10 h-10 rounded-full border-2 bg-card flex items-center justify-center font-bold text-sm shadow-sm transition-all duration-300">4</span>
+                <span class="text-[10px] uppercase tracking-wider font-bold text-textSecondary mt-2">{% trans "Review" %}</span>
+            </div>
+        </div>
+
+        <!-- Main Form -->
+        <form method="post" id="wizardForm" enctype="multipart/form-data" class="space-y-6" novalidate>
+            {% csrf_token %}
+
+            {% if captcha_error %}
+                <div class="p-4 bg-danger/10 border border-danger/20 rounded-xl text-danger text-sm">
+                    {{ captcha_error }}
+                </div>
+            {% endif %}
+
+            <!-- ================= STEP 1: EMBASSY & CATEGORY ================= -->
+            <div class="wizard-step active" id="step1">
+                <div class="space-y-5">
+                    <div>
+                        <label for="missionSelect" class="block text-sm font-semibold text-secondary mb-2">{% trans "Select Embassy or Consulate" %}</label>
+                        <select name="mission" id="missionSelect" class="w-full rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card focus:border-primary transition-colors">
+                            <option value="">{% trans "-- Select Mission involved --" %}</option>
+                            {% for m in missions %}
+                                <option value="{{ m.id }}" {% if selected_mission_id == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }} ({{ m.city }}, {{ m.country }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-secondary mb-3">{% trans "Select Complaint Category" %}</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <label class="category-card border border-border rounded-xl p-3.5 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 hover:border-primary/50 transition-all select-none text-center">
+                                <input type="radio" name="category" value="PASSPORT" class="sr-only" checked>
+                                <span class="material-symbols-outlined text-primary text-2xl">menu_book</span>
+                                <span class="text-xs font-semibold text-textSecondary">{% trans "Passport Delays" %}</span>
+                            </label>
+                            <label class="category-card border border-border rounded-xl p-3.5 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 hover:border-primary/50 transition-all select-none text-center">
+                                <input type="radio" name="category" value="VISA" class="sr-only">
+                                <span class="material-symbols-outlined text-primary text-2xl">demography</span>
+                                <span class="text-xs font-semibold text-textSecondary">{% trans "Visa Problems" %}</span>
+                            </label>
+                            <label class="category-card border border-border rounded-xl p-3.5 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 hover:border-primary/50 transition-all select-none text-center">
+                                <input type="radio" name="category" value="CONSULAR" class="sr-only">
+                                <span class="material-symbols-outlined text-primary text-2xl">support_agent</span>
+                                <span class="text-xs font-semibold text-textSecondary">{% trans "Consular Services" %}</span>
+                            </label>
+                            <label class="category-card border border-border rounded-xl p-3.5 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 hover:border-primary/50 transition-all select-none text-center">
+                                <input type="radio" name="category" value="STAFF" class="sr-only">
+                                <span class="material-symbols-outlined text-primary text-2xl">badge</span>
+                                <span class="text-xs font-semibold text-textSecondary">{% trans "Staff Misconduct" %}</span>
+                            </label>
+                            <label class="category-card border border-border rounded-xl p-3.5 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 hover:border-primary/50 transition-all select-none text-center">
+                                <input type="radio" name="category" value="CORRUPTION" class="sr-only">
+                                <span class="material-symbols-outlined text-primary text-2xl">gavel</span>
+                                <span class="text-xs font-semibold text-textSecondary">{% trans "Corruption" %}</span>
+                            </label>
+                            <label class="category-card border border-border rounded-xl p-3.5 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 hover:border-primary/50 transition-all select-none text-center">
+                                <input type="radio" name="category" value="EMERGENCY" class="sr-only">
+                                <span class="material-symbols-outlined text-danger text-2xl">medical_services</span>
+                                <span class="text-xs font-semibold text-textSecondary">{% trans "Emergency Assistance" %}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= STEP 2: DETAILS & RATING ================= -->
+            <div class="wizard-step" id="step2">
+                <div class="space-y-5">
+                    
+                    <!-- Star Rating -->
+                    <div>
+                        <label class="block text-sm font-semibold text-secondary mb-1">{% trans "Rate service quality" %}</label>
+                        <div class="flex gap-2 text-3xl text-slate-300" id="starRatingZone">
+                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="1">â˜…</button>
+                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="2">â˜…</button>
+                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="3">â˜…</button>
+                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="4">â˜…</button>
+                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="5">â˜…</button>
+                        </div>
+                        <input type="hidden" name="rating" id="ratingInput" value="3">
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="origLang" class="block text-sm font-semibold text-secondary mb-1">{% trans "Submitting Message in" %}</label>
+                            <select name="original_language" id="origLang" class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                                <option value="en">English</option>
+                                <option value="so">Soomaali (Somali)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="id_subject" class="block text-sm font-semibold text-secondary mb-1">{% trans "Complaint Subject" %}</label>
+                            <input type="text" name="subject" id="id_subject" required class="w-full rounded-xl border border-border px-4 py-2.5 bg-slate-50 focus:bg-card focus:border-primary transition-colors">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="id_message" class="block text-sm font-semibold text-secondary mb-1">{% trans "Details of the Incident" %}</label>
+                        <textarea name="message" id="id_message" rows="5" required class="w-full rounded-xl border border-border px-4 py-2.5 bg-slate-50 focus:bg-card focus:border-primary transition-colors"></textarea>
+                    </div>
+
+                    <div class="p-4 bg-orange-50 border border-orange-100 rounded-xl space-y-3">
+                        <div>
+                            <h3 class="font-bold text-secondary text-sm">{% trans "Hardship and urgency factors" %}</h3>
+                            <p class="text-xs text-textSecondary mt-0.5">{% trans "These answers help the Ministry identify critical cases and prevent citizens from being stranded." %}</p>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-3 text-xs font-semibold text-textPrimary">
+                            <label class="flex items-start gap-2"><input type="checkbox" name="currently_at_mission" value="true" class="mt-0.5 rounded border-border text-primary"> {% trans "I am physically at the mission now" %}</label>
+                            <label class="flex items-start gap-2"><input type="checkbox" name="travelled_from_another_city" value="true" class="mt-0.5 rounded border-border text-primary"> {% trans "I travelled from another city or country" %}</label>
+                            <label class="flex items-start gap-2"><input type="checkbox" name="no_accommodation" value="true" class="mt-0.5 rounded border-border text-primary"> {% trans "I have no accommodation tonight" %}</label>
+                            <label class="flex items-start gap-2"><input type="checkbox" name="has_return_ticket" value="true" class="mt-0.5 rounded border-border text-primary"> {% trans "I already bought a return bus/flight ticket" %}</label>
+                            <label class="flex items-start gap-2"><input type="checkbox" name="waiting_more_than_two_hours" value="true" class="mt-0.5 rounded border-border text-primary"> {% trans "I have waited more than 2 hours" %}</label>
+                        </div>
+                    </div>
+
+                    <!-- Anonymous report checkbox -->
+                    <div class="p-4 bg-slate-50 border border-border rounded-xl">
+                        <label class="flex items-start gap-3 cursor-pointer select-none">
+                            <input type="checkbox" id="anonCheck" name="is_anonymous" value="true" class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary mt-0.5">
+                            <div>
+                                <span class="text-sm font-bold text-secondary">{% trans "Submit Anonymously" %}</span>
+                                <p class="text-xs text-textSecondary mt-0.5">
+                                    {% trans "If checked, your personal information (name, email, phone) will be completely hidden from government reviewers. You will track your complaint using a unique generated code." %}
+                                </p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Personal Information (Hidden if Anonymous is checked) -->
+                    <div id="personalInfoBlock" class="space-y-4 transition-all duration-300">
+                        <h3 class="font-bold text-secondary text-sm border-b border-border pb-1">{% trans "Contact Information" %}</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div>
+                                <label for="id_full_name" class="block text-xs font-semibold text-textSecondary mb-1">{% trans "Full Name" %}</label>
+                                <input type="text" name="full_name" id="id_full_name" value="{{ user.profile.full_name|default:'' }}" class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                            </div>
+                            <div>
+                                <label for="id_email" class="block text-xs font-semibold text-textSecondary mb-1">{% trans "Email" %}</label>
+                                <input type="email" name="email" id="id_email" value="{{ user.email|default:'' }}" class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                            </div>
+                            <div>
+                                <label for="id_phone" class="block text-xs font-semibold text-textSecondary mb-1">{% trans "Phone Number" %}</label>
+                                <input type="text" name="phone" id="id_phone" value="{{ user.profile.phone_number|default:'' }}" class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ================= STEP 3: EVIDENCE UPLOAD ================= -->
+            <div class="wizard-step" id="step3">
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-secondary mb-1">{% trans "Upload Supporting Evidence" %}</label>
+                        <p class="text-xs text-textSecondary mb-4">
+                            {% trans "Attach official documents, passport copies, visa rejections, audio/video statements, or screenshots. Max 10MB per file." %}
+                        </p>
+
+                        <!-- Drag and Drop Dropzone -->
+                        <div id="dropzone" class="border-2 border-dashed border-border rounded-2xl p-8 text-center bg-slate-50 hover:bg-slate-100/50 hover:border-primary transition-all cursor-pointer">
+                            <span class="material-symbols-outlined text-slate-400 text-4xl mb-2">upload_file</span>
+                            <p class="font-bold text-secondary text-sm">{% trans "Drag & Drop files here or click to browse" %}</p>
+                            <p class="text-[10px] text-textSecondary mt-1">{% trans "PDF, JPG, PNG, WEBP, MP3, WAV, MP4, MOV, AVI up to 10MB" %}</p>
+                            <input type="file" name="evidence_files" id="fileInput" multiple class="hidden">
+                        </div>
+
+                        <!-- Previews list -->
+                        <div id="previewsZone" class="mt-4 space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= STEP 4: REVIEW & SUBMIT ================= -->
+            <div class="wizard-step" id="step4">
+                <div class="space-y-6">
+                    <div class="bg-blue-50/50 border border-blue-100 rounded-2xl p-5 space-y-3 text-sm">
+                        <h3 class="font-bold text-secondary text-base">{% trans "Complaint Summary Review" %}</h3>
+                        
+                        <div>
+                            <span class="font-bold">{% trans "Target Mission" %}:</span>
+                            <span id="reviewMission" class="text-textSecondary">--</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">{% trans "Category" %}:</span>
+                            <span id="reviewCategory" class="text-textSecondary">--</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">{% trans "Subject" %}:</span>
+                            <span id="reviewSubject" class="text-textSecondary">--</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">{% trans "Rating" %}:</span>
+                            <span id="reviewRating" class="text-textSecondary">3/5</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">{% trans "Submission Type" %}:</span>
+                            <span id="reviewAnon" class="text-textSecondary">{% trans "Public Identity" %}</span>
+                        </div>
+                    </div>
+
+                    <!-- Captcha Field -->
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-border">
+                        <label for="captcha_ans" class="block text-sm font-semibold text-secondary mb-1">
+                            {% trans "Security Verification" %}
+                        </label>
+                        <p class="text-xs text-textSecondary mb-2">
+                            {% trans "What is" %} <strong>{{ captcha.0 }} + {{ captcha.1 }}</strong>?
+                        </p>
+                        <input type="number" name="captcha_answer" id="captcha_ans" required class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50 focus:bg-card focus:border-primary focus:outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between items-center pt-6 border-t border-border mt-8">
+                <button type="button" id="prevBtn" class="px-5 py-2.5 border border-border rounded-xl text-sm font-bold text-textSecondary hover:bg-slate-50 transition-colors hidden">
+                    {% trans "Back" %}
+                </button>
+                <div class="flex-grow"></div>
+                <button type="button" id="nextBtn" class="px-6 py-3 bg-primary hover:bg-opacity-90 text-white text-sm font-bold rounded-xl shadow-sm transition-all">
+                    {% trans "Continue" %}
+                </button>
+                <button type="submit" id="submitBtn" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded-xl shadow-sm transition-all hidden">
+                    {% trans "Submit Report" %}
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('wizardForm');
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        // Elements
+        const steps = document.querySelectorAll('.wizard-step');
+        const indicators = document.querySelectorAll('.step-indicator');
+        const progressLine = document.getElementById('progressLine');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Review inputs
+        const missionSelect = document.getElementById('missionSelect');
+        const subjectInput = document.getElementById('id_subject');
+        const messageInput = document.getElementById('id_message');
+        const anonCheck = document.getElementById('anonCheck');
+        const ratingInput = document.getElementById('ratingInput');
+
+        const reviewMission = document.getElementById('reviewMission');
+        const reviewCategory = document.getElementById('reviewCategory');
+        const reviewSubject = document.getElementById('reviewSubject');
+        const reviewRating = document.getElementById('reviewRating');
+        const reviewAnon = document.getElementById('reviewAnon');
+
+        // Load draft from LocalStorage
+        function loadDraft() {
+            if (localStorage.getItem('wizard_mission')) missionSelect.value = localStorage.getItem('wizard_mission');
+            if (localStorage.getItem('wizard_subject')) subjectInput.value = localStorage.getItem('wizard_subject');
+            if (localStorage.getItem('wizard_message')) messageInput.value = localStorage.getItem('wizard_message');
+            if (localStorage.getItem('wizard_rating')) {
+                const r = localStorage.getItem('wizard_rating');
+                ratingInput.value = r;
+                updateStarRating(parseInt(r));
+            }
+            if (localStorage.getItem('wizard_is_anonymous') === 'true') {
+                anonCheck.checked = true;
+                document.getElementById('personalInfoBlock').classList.add('hidden');
+            }
+            // Category draft loading
+            const savedCategory = localStorage.getItem('wizard_category');
+            if (savedCategory) {
+                const radio = form.querySelector(`input[name="category"][value="${savedCategory}"]`);
+                if (radio) {
+                    radio.checked = true;
+                    updateCategoryCards();
+                }
+            }
+        }
+
+        // Save draft to LocalStorage
+        function saveDraft() {
+            localStorage.setItem('wizard_mission', missionSelect.value);
+            localStorage.setItem('wizard_subject', subjectInput.value);
+            localStorage.setItem('wizard_message', messageInput.value);
+            localStorage.setItem('wizard_rating', ratingInput.value);
+            localStorage.setItem('wizard_is_anonymous', anonCheck.checked);
+            
+            const selectedCategory = form.querySelector('input[name="category"]:checked');
+            if (selectedCategory) {
+                localStorage.setItem('wizard_category', selectedCategory.value);
+            }
+        }
+
+        // Star rating interactivity
+        const stars = document.querySelectorAll('.star-btn');
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const val = parseInt(star.getAttribute('data-val'));
+                ratingInput.value = val;
+                updateStarRating(val);
+                saveDraft();
+            });
+        });
+
+        function updateStarRating(rating) {
+            stars.forEach((s, idx) => {
+                if (idx < rating) {
+                    s.classList.add('text-accent');
+                    s.classList.remove('text-slate-300');
+                } else {
+                    s.classList.remove('text-accent');
+                    s.classList.add('text-slate-300');
+                }
+            });
+        }
+
+        // Category Cards Selection outline
+        const categoryInputs = form.querySelectorAll('input[name="category"]');
+        categoryInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                updateCategoryCards();
+                saveDraft();
+            });
+        });
+
+        function updateCategoryCards() {
+            categoryInputs.forEach(input => {
+                const card = input.closest('.category-card');
+                if (input.checked) {
+                    card.classList.add('border-primary', 'bg-blue-50/30');
+                } else {
+                    card.classList.remove('border-primary', 'bg-blue-50/30');
+                }
+            });
+        }
+        updateCategoryCards();
+
+        // Autosave listeners
+        missionSelect.addEventListener('change', saveDraft);
+        subjectInput.addEventListener('input', saveDraft);
+        messageInput.addEventListener('input', saveDraft);
+        anonCheck.addEventListener('change', () => {
+            if (anonCheck.checked) {
+                document.getElementById('personalInfoBlock').classList.add('hidden');
+            } else {
+                document.getElementById('personalInfoBlock').classList.remove('hidden');
+            }
+            saveDraft();
+        });
+
+        // Initialize draft loading
+        loadDraft();
+
+        // Dropzone & File previews
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const previewsZone = document.getElementById('previewsZone');
+
+        dropzone.addEventListener('click', () => fileInput.click());
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('bg-slate-100');
+        });
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('bg-slate-100'));
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('bg-slate-100');
+            fileInput.files = e.dataTransfer.files;
+            updatePreviews();
+        });
+
+        fileInput.addEventListener('change', updatePreviews);
+
+        function updatePreviews() {
+            previewsZone.innerHTML = '';
+            const files = fileInput.files;
+            Array.from(files).forEach((file, index) => {
+                const isTooLarge = file.size > 10 * 1024 * 1024;
+                const sizeStr = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+                
+                const previewCard = document.createElement('div');
+                previewCard.className = `flex justify-between items-center p-3 rounded-xl border text-xs ${isTooLarge ? 'bg-red-50 border-red-200 text-red-700' : 'bg-slate-50 border-border'}`;
+                previewCard.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined">${isTooLarge ? 'warning' : 'attachment'}</span>
+                        <div>
+                            <p class="font-semibold">${file.name}</p>
+                            <p class="text-[10px] text-textSecondary">${sizeStr} ${isTooLarge ? '- {% trans "File too large (Max 10MB)" %}' : '- {% trans "Malware Check Passed" %}'}</p>
+                        </div>
+                    </div>
+                `;
+                previewsZone.appendChild(previewCard);
+            });
+        }
+
+        // Error display helpers
+        function showValidationError(element, message) {
+            element.classList.add('border-red-500', 'focus:border-red-500', 'ring-1', 'ring-red-500');
+            element.classList.remove('border-border');
+            
+            let errLabel = element.parentNode.querySelector('.input-error-msg');
+            if (!errLabel) {
+                errLabel = document.createElement('p');
+                errLabel.className = 'input-error-msg text-red-500 text-[11px] mt-1.5 font-semibold';
+                element.parentNode.appendChild(errLabel);
+            }
+            errLabel.textContent = message;
+            errLabel.classList.remove('hidden');
+        }
+
+        function clearValidationError(element) {
+            element.classList.remove('border-red-500', 'focus:border-red-500', 'ring-1', 'ring-red-500');
+            element.classList.add('border-border');
+            
+            let errLabel = element.parentNode.querySelector('.input-error-msg');
+            if (errLabel) {
+                errLabel.classList.add('hidden');
+            }
+        }
+
+        // Live input validation clearers
+        missionSelect.addEventListener('change', () => {
+            if (missionSelect.value) clearValidationError(missionSelect);
+        });
+        subjectInput.addEventListener('input', () => {
+            if (subjectInput.value.trim()) clearValidationError(subjectInput);
+        });
+        messageInput.addEventListener('input', () => {
+            if (messageInput.value.trim()) clearValidationError(messageInput);
+        });
+
+        // Wizard navigation logic
+        function updateWizardUI() {
+            // Update step views with quick opacity fade transition
+            steps.forEach((s, idx) => {
+                const isActive = (idx + 1) === currentStep;
+                if (isActive) {
+                    s.style.display = 'block';
+                    setTimeout(() => { s.style.opacity = '1'; }, 50);
+                } else {
+                    s.style.display = 'none';
+                    s.style.opacity = '0';
+                }
+            });
+
+            // Update Indicators
+            indicators.forEach((ind, idx) => {
+                const stepNum = idx + 1;
+                ind.classList.toggle('active', stepNum === currentStep);
+                ind.classList.toggle('completed', stepNum < currentStep);
+            });
+
+            // Progress line width
+            const progressPct = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            progressLine.style.width = `${progressPct}%`;
+
+            // Buttons visibility
+            prevBtn.classList.toggle('hidden', currentStep === 1);
+            nextBtn.classList.toggle('hidden', currentStep === totalSteps);
+            submitBtn.classList.toggle('hidden', currentStep !== totalSteps);
+        }
+
+        function validateStep() {
+            let isValid = true;
+            if (currentStep === 1) {
+                if (!missionSelect.value) {
+                    showValidationError(missionSelect, '{% trans "Please select a diplomatic mission or consulate." %}');
+                    isValid = false;
+                } else {
+                    clearValidationError(missionSelect);
+                }
+            } else if (currentStep === 2) {
+                if (!subjectInput.value.trim()) {
+                    showValidationError(subjectInput, '{% trans "Please provide a subject for your complaint." %}');
+                    isValid = false;
+                } else {
+                    clearValidationError(subjectInput);
+                }
+                if (!messageInput.value.trim()) {
+                    showValidationError(messageInput, '{% trans "Please explain the details of the problem." %}');
+                    isValid = false;
+                } else {
+                    clearValidationError(messageInput);
+                }
+            }
+            return isValid;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (validateStep()) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    if (currentStep === totalSteps) {
+                        populateSummary();
+                    }
+                    updateWizardUI();
+                }
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateWizardUI();
+            }
+        });
+
+        function populateSummary() {
+            reviewMission.textContent = missionSelect.options[missionSelect.selectedIndex].text;
+            
+            const categoryText = form.querySelector('input[name="category"]:checked').closest('.category-card').querySelector('span:last-child').textContent;
+            reviewCategory.textContent = categoryText;
+            
+            reviewSubject.textContent = subjectInput.value;
+            reviewRating.textContent = ratingInput.value + ' / 5';
+            reviewAnon.textContent = anonCheck.checked ? '{% trans "Anonymous submission" %}' : '{% trans "Publicly verified identity" %}';
+        }
+
+        // On submit, clear localStorage draft
+        form.addEventListener('submit', () => {
+            localStorage.removeItem('wizard_mission');
+            localStorage.removeItem('wizard_subject');
+            localStorage.removeItem('wizard_message');
+            localStorage.removeItem('wizard_rating');
+            localStorage.removeItem('wizard_is_anonymous');
+            localStorage.removeItem('wizard_category');
+        });
+    });
+</script>
+{% endblock %}

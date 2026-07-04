@@ -1,0 +1,323 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Track Complaint" %} - {% trans "Somali Citizen Portal" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12 space-y-8">
+    <div>
+        <h1 class="text-3xl font-black text-secondary">{% trans "Track Your Complaint" %}</h1>
+        <p class="text-textSecondary text-sm">{% trans "Review live status, communication threads, and complete feedback evaluations." %}</p>
+    </div>
+
+    <!-- Lookup Form -->
+    <form method="get" class="bg-card border border-border rounded-2xl p-5 flex gap-3 items-end shadow-sm max-w-xl">
+        <div class="flex-grow">
+            <label for="id_tracking_code" class="block text-xs font-bold text-textSecondary mb-1.5 uppercase">{% trans "Enter 8-Character Case Code" %}</label>
+            <input type="text" name="tracking_code" id="id_tracking_code" maxlength="8"
+                value="{{ form.tracking_code.value|default:'' }}"
+                class="w-full rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card uppercase font-mono font-bold text-lg tracking-wider focus:border-primary focus:outline-none"
+                placeholder="AB12CD34"
+                aria-label="{% trans 'Tracking code' %}" />
+            {% if form.tracking_code.errors %}
+                <p class="text-danger text-xs mt-1">{{ form.tracking_code.errors.0 }}</p>
+            {% endif %}
+        </div>
+        <button type="submit" class="bg-primary hover:bg-opacity-90 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-sm shadow-primary/15 text-sm h-[52px]">
+            {% trans "Look Up" %}
+        </button>
+    </form>
+
+    {% if complaint %}
+        <!-- Complaint Metadata & Cards -->
+        <div class="grid md:grid-cols-3 gap-6">
+            
+            <!-- Left Side Details -->
+            <div class="md:col-span-2 space-y-6">
+                
+                <!-- Main Case Details Card -->
+                <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-5">
+                    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
+                        <div>
+                            <span class="text-xs font-semibold text-textSecondary uppercase">{% trans "Case Reference" %}</span>
+                            <h2 class="text-xl font-black text-secondary mt-0.5">{{ complaint.tracking_code }}</h2>
+                        </div>
+                        <span class="text-xs bg-slate-100 text-textSecondary font-bold px-3 py-1 rounded-full uppercase">
+                            {{ complaint.get_category_display }}
+                        </span>
+                    </div>
+
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <span class="font-bold text-textSecondary">{% trans "Subject" %}:</span>
+                            <p class="text-textPrimary font-semibold text-base mt-0.5">{{ complaint.subject }}</p>
+                        </div>
+                        
+                        <div>
+                            <span class="font-bold text-textSecondary">{% trans "Details" %}:</span>
+                            <p class="text-textPrimary leading-relaxed mt-0.5 whitespace-pre-line">{{ complaint.message }}</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div>
+                                <span class="font-bold text-textSecondary">{% trans "Submitting Date" %}:</span>
+                                <p class="text-textPrimary mt-0.5">{{ complaint.created_at|date:"M d, Y H:i" }}</p>
+                            </div>
+                            <div>
+                                <span class="font-bold text-textSecondary">{% trans "Priority Level" %}:</span>
+                                <p class="text-textPrimary mt-0.5">
+                                    <span class="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full {% if complaint.priority == 'CRITICAL' %}bg-red-100 text-red-600{% elif complaint.priority == 'HIGH' %}bg-orange-100 text-orange-600{% else %}bg-blue-100 text-blue-600{% endif %}">
+                                        {{ complaint.get_priority_display }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Progression Graphic -->
+                <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-6">
+                    <h3 class="font-bold text-secondary text-base">{% trans "Live Progress Timeline" %}</h3>
+                    
+                    <div class="relative pl-6 space-y-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+                        {% for status_code, status_label in timeline_statuses %}
+                            <div class="relative flex items-start gap-4">
+                                <!-- Marker -->
+                                <span class="absolute left-[-22px] w-4.5 h-4.5 rounded-full border-2 bg-card z-10 transition-all duration-300
+                                    {% if forloop.counter0 <= current_step_idx %}
+                                        {% if status_code == 'RESOLVED' or status_code == 'CLOSED' %}
+                                            border-green-500 bg-green-50 text-green-500
+                                        {% else %}
+                                            border-primary bg-blue-50 text-primary
+                                        {% endif %}
+                                    {% else %}
+                                        border-slate-300 bg-card text-slate-300
+                                    {% endif %}">
+                                </span>
+                                
+                                <div class="text-sm">
+                                    <p class="font-bold {% if forloop.counter0 <= current_step_idx %}text-secondary{% else %}text-slate-400{% endif %}">
+                                        {{ status_label }}
+                                    </p>
+                                    {% if forloop.counter0 == current_step_idx %}
+                                        <span class="inline-block text-[10px] bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-full font-bold uppercase mt-1">
+                                            {% trans "Current Active Phase" %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Responses Section -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-secondary text-base">{% trans "Official Consular Communications" %}</h3>
+                    
+                    {% for response in complaint.public_responses %}
+                        <div class="p-5 rounded-2xl border border-green-200 bg-green-50/50 space-y-3">
+                            <div class="flex justify-between items-center border-b border-green-100 pb-2">
+                                <span class="text-xs font-bold text-green-800 uppercase">{% trans "Official Response" %}</span>
+                                <span class="text-xs text-textSecondary">{{ response.created_at|date:"M d, Y" }}</span>
+                            </div>
+                            <p class="text-sm text-textPrimary leading-relaxed">{{ response.message }}</p>
+                            <p class="text-xs text-textSecondary italic">{% trans "Signed by:" %} {{ response.responder_name }}</p>
+                        </div>
+                    {% empty %}
+                        <div class="p-5 rounded-2xl border border-border text-center bg-slate-50/50">
+                            <p class="text-sm text-textSecondary italic">{% trans "No public communications logged yet by diplomatic staff." %}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Secure Message Chat Section (Requirement 29) -->
+                <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-4 mt-6">
+                    <div class="flex justify-between items-center pb-3 border-b border-border">
+                        <h3 class="text-base font-extrabold text-secondary flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">forum</span>
+                            {% trans "Secure Messaging Portal" %}
+                        </h3>
+                        <span class="text-xs font-semibold text-textSecondary uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">
+                            {% trans "Internal Chat" %}
+                        </span>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                        <!-- Chat history -->
+                        <div class="space-y-3 max-h-[250px] overflow-y-auto p-4 bg-slate-50 border border-slate-150 rounded-2xl" id="citizenChatHistory">
+                            {% for msg in messages %}
+                                <div class="flex flex-col {% if msg.sender == request.user %}items-end{% else %}items-start{% endif %} space-y-1">
+                                    <span class="text-[10px] font-bold text-textSecondary px-1">
+                                        {{ msg.sender.username }} 
+                                        <span class="text-[9px] uppercase tracking-wider bg-slate-200 text-slate-700 px-1 py-0.2 rounded font-extrabold">
+                                            {{ msg.get_sender_type_display }}
+                                        </span>
+                                    </span>
+                                    
+                                    <div class="p-3 rounded-2xl max-w-sm shadow-sm text-xs border border-border
+                                        {% if msg.sender == request.user %}
+                                            bg-primary text-white border-primary/20 rounded-tr-none
+                                        {% else %}
+                                            bg-white text-textPrimary rounded-tl-none
+                                        {% endif %}">
+                                        <p class="leading-relaxed">{{ msg.message }}</p>
+                                        {% if msg.attachment %}
+                                            <div class="mt-2 pt-1 border-t border-border/20 flex items-center gap-1 text-[10px]">
+                                                <span class="material-symbols-outlined text-xs">attachment</span>
+                                                <a href="{{ msg.attachment.url }}" download class="underline font-bold">
+                                                    {% trans "Download Attachment" %}
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <span class="text-[8px] text-textSecondary px-1">
+                                        {{ msg.created_at|date:"M d, H:i" }}
+                                    </span>
+                                </div>
+                            {% empty %}
+                                <p class="text-center italic text-textSecondary py-4 text-xs">{% trans "No messages in the portal chat yet." %}</p>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Chat input form -->
+                        <form method="post" action="{% url 'post_secure_message' complaint.pk %}" enctype="multipart/form-data" class="space-y-3 pt-2">
+                            {% csrf_token %}
+                            <div>
+                                <textarea name="message_text" required placeholder="{% trans 'Write a message to the Embassy staff...' %}" rows="2"
+                                          class="w-full rounded-xl border border-border px-3.5 py-2.5 text-xs focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none bg-slate-50 focus:bg-card"></textarea>
+                            </div>
+
+                            <div class="flex flex-wrap justify-between items-center gap-3">
+                                <div class="flex items-center gap-2 text-xs">
+                                    <span class="material-symbols-outlined text-slate-400">upload_file</span>
+                                    <label for="citizen_message_attachment" class="font-bold text-textSecondary cursor-pointer hover:text-primary transition-all">
+                                        {% trans "Add Attachment" %}
+                                    </label>
+                                    <input type="file" name="message_attachment" id="citizen_message_attachment" class="hidden" onchange="document.getElementById('citAttachedFileName').textContent = this.files[0].name">
+                                    <span id="citAttachedFileName" class="text-primary font-mono text-[9px] truncate max-w-[120px]"></span>
+                                </div>
+                                
+                                <button type="submit" class="bg-primary hover:bg-opacity-95 text-white font-extrabold text-xs px-4 py-2 rounded-xl shadow-sm transition-all flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm">send</span>
+                                    {% trans "Send" %}
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const chat = document.getElementById('citizenChatHistory');
+                                if (chat) chat.scrollTop = chat.scrollHeight;
+                            });
+                        </script>
+                    {% else %}
+                        <div class="p-5 rounded-2xl border border-dashed border-border bg-slate-50 text-center space-y-3">
+                            <span class="material-symbols-outlined text-slate-400 text-3xl">lock_open</span>
+                            <p class="text-xs text-textSecondary">
+                                {% trans "Sign in to use the secure messaging portal to exchange files and message the embassy staff directly." %}
+                            </p>
+                            <a href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}" class="inline-block bg-secondary hover:bg-slate-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition-all">
+                                {% trans "Sign In Now" %}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <!-- Right Side (Embassy and Satisfaction Survey) -->
+            <div class="space-y-6">
+                <!-- Embassy details card -->
+                <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-bold text-secondary text-sm">{% trans "Diplomatic Mission" %}</h3>
+                    <div class="space-y-2 text-xs text-textSecondary">
+                        <p class="font-bold text-sm text-textPrimary">{{ complaint.mission.name }}</p>
+                        <p>{{ complaint.mission.city }}, {{ complaint.mission.country }}</p>
+                        {% if complaint.mission.phone %}
+                            <p><strong>{% trans "Phone" %}:</strong> {{ complaint.mission.phone }}</p>
+                        {% endif %}
+                        {% if complaint.mission.email %}
+                            <p><strong>{% trans "Email" %}:</strong> {{ complaint.mission.email }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Satisfaction Survey Block -->
+                {% if complaint.status == 'RESOLVED' or complaint.status == 'CLOSED' or complaint.status == 'RES' or complaint.status == 'CLO' %}
+                    <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-4">
+                        <h3 class="font-bold text-secondary text-sm border-b border-border pb-2">{% trans "Resolution Rating" %}</h3>
+
+                        {% if complaint.satisfaction_rating is None %}
+                            <p class="text-xs text-textSecondary">
+                                {% trans "Please take a moment to evaluate the response resolution. Your rating affects the embassy score." %}
+                            </p>
+                            
+                            <!-- Rating Form -->
+                            <form method="post" action="{% url 'submit_satisfaction' complaint.tracking_code %}" class="space-y-3">
+                                {% csrf_token %}
+                                
+                                <div class="flex gap-2 text-2xl text-slate-300" id="satisfactionStars">
+                                    <button type="button" class="sat-star-btn hover:text-accent" data-val="1">★</button>
+                                    <button type="button" class="sat-star-btn hover:text-accent" data-val="2">★</button>
+                                    <button type="button" class="sat-star-btn hover:text-accent" data-val="3">★</button>
+                                    <button type="button" class="sat-star-btn hover:text-accent" data-val="4">★</button>
+                                    <button type="button" class="sat-star-btn hover:text-accent" data-val="5">★</button>
+                                </div>
+                                <input type="hidden" name="satisfaction_rating" id="satRatingInput" required>
+                                
+                                <textarea name="satisfaction_comment" rows="3" placeholder="{% trans 'Comments or notes regarding the resolution...' %}" class="w-full text-xs rounded-xl border border-border p-2 bg-slate-50 focus:bg-card focus:border-primary focus:outline-none"></textarea>
+                                
+                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-sm">
+                                    {% trans "Submit Rating" %}
+                                </button>
+                            </form>
+                        {% else %}
+                            <div class="space-y-2">
+                                <p class="text-xs font-bold text-green-600 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm">verified</span>
+                                    {% trans "Feedback Submitted" %}
+                                </p>
+                                <div class="text-accent text-lg">
+                                    {% for i in "12345"|make_list %}
+                                        <span>{% if forloop.counter <= complaint.satisfaction_rating %}★{% else %}☆{% endif %}</span>
+                                    {% endfor %}
+                                </div>
+                                {% if complaint.satisfaction_comment %}
+                                    <p class="text-xs italic bg-slate-50 p-2.5 rounded-lg border border-border">
+                                        "{{ complaint.satisfaction_comment }}"
+                                    </p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.sat-star-btn');
+        const input = document.getElementById('satRatingInput');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const val = parseInt(star.getAttribute('data-val'));
+                input.value = val;
+                
+                stars.forEach((s, idx) => {
+                    if (idx < val) {
+                        s.classList.add('text-accent');
+                        s.classList.remove('text-slate-300');
+                    } else {
+                        s.classList.remove('text-accent');
+                        s.classList.add('text-slate-300');
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

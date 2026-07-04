@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Register" %} - {% trans "Somali Citizen Portal" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-12">
+    <div class="bg-white border border-border rounded-2xl p-8 shadow-sm">
+        <div class="text-center space-y-2 mb-8">
+            <h1 class="text-3xl font-black text-textPrimary">{% trans "Citizen Registration" %}</h1>
+            <p class="text-textSecondary text-sm">{% trans "Create an account to submit, track, and manage your diplomatic complaints." %}</p>
+        </div>
+
+        <form method="post" class="space-y-4" novalidate>
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div class="p-4 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
+                    {{ form.non_field_errors.0 }}
+                </div>
+            {% endif %}
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium mb-1">{{ form.username.label }}</label>
+                    {{ form.username }}
+                    {% if form.username.help_text %}
+                        <p class="text-xs text-textSecondary mt-1">{{ form.username.help_text }}</p>
+                    {% endif %}
+                    {% if form.username.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium mb-1">{{ form.email.label }}</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label for="{{ form.full_name.id_for_label }}" class="block text-sm font-medium mb-1">{{ form.full_name.label }}</label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.full_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.national_id.id_for_label }}" class="block text-sm font-medium mb-1">{{ form.national_id.label }}</label>
+                    {{ form.national_id }}
+                    {% if form.national_id.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.national_id.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label for="{{ form.phone_number.id_for_label }}" class="block text-sm font-medium mb-1">{{ form.phone_number.label }}</label>
+                    {{ form.phone_number }}
+                    {% if form.phone_number.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.phone_number.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.country_of_residence.id_for_label }}" class="block text-sm font-medium mb-1">{{ form.country_of_residence.label }}</label>
+                    {{ form.country_of_residence }}
+                    {% if form.country_of_residence.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.country_of_residence.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label for="{{ form.password.id_for_label }}" class="block text-sm font-medium mb-1">{{ form.password.label }}</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.confirm_password.id_for_label }}" class="block text-sm font-medium mb-1">{{ form.confirm_password.label }}</label>
+                    {{ form.confirm_password }}
+                    {% if form.confirm_password.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.confirm_password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 rounded-lg shadow-sm mt-4">
+                {% trans "Register Account" %}
+            </button>
+        </form>
+
+        <div class="text-center mt-6 text-sm text-textSecondary">
+            {% trans "Already have an account?" %} 
+            <a href="{% url 'login' %}" class="text-primary font-semibold hover:underline">{% trans "Sign In" %}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

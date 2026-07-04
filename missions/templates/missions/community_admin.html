@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Community Admin" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-10 space-y-8">
+    <div class="border-b border-border pb-5">
+        <h1 class="text-3xl font-black text-secondary">{% trans "Community Representative Panel" %}</h1>
+        <p class="text-sm text-textSecondary mt-1">{% trans "Update profiles, publish events, send announcements for moderation, and read citizen messages." %}</p>
+    </div>
+
+    {% if denied %}
+        <div class="bg-card border border-border rounded-2xl p-8 text-center">
+            <p class="font-bold text-secondary">{% trans "No approved community representation is attached to your account yet." %}</p>
+            <p class="text-sm text-textSecondary mt-2">{% trans "A platform administrator must approve your group representative record before this panel opens." %}</p>
+        </div>
+    {% else %}
+        <div class="flex flex-wrap gap-2">
+            {% for target in targets %}
+                <a href="?type={% if target.university_name %}student{% else %}community{% endif %}&id={{ target.pk }}" class="px-4 py-2 rounded-xl border border-border text-sm font-bold {% if selected == target %}bg-primary text-white border-primary{% else %}bg-card text-textSecondary{% endif %}">
+                    {{ target.name }}
+                </a>
+            {% endfor %}
+        </div>
+
+        {% if selected %}
+        <div class="grid lg:grid-cols-3 gap-8">
+            <section class="lg:col-span-2 bg-card border border-border rounded-3xl p-6 shadow-sm">
+                <h2 class="text-xl font-bold text-secondary mb-4">{% trans "Profile" %}</h2>
+                <form method="post" class="space-y-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="profile">
+                    <textarea name="description" rows="5" class="w-full rounded-xl border-border bg-slate-50 text-sm" placeholder="{% trans 'Group description' %}">{{ selected.description }}</textarea>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <input name="contact_email" value="{{ selected.contact_email }}" placeholder="{% trans 'Contact email' %}" class="rounded-xl border-border bg-slate-50 text-sm">
+                        <input name="phone_whatsapp" value="{{ selected.phone_whatsapp }}" placeholder="{% trans 'Phone/WhatsApp' %}" class="rounded-xl border-border bg-slate-50 text-sm">
+                        <input name="website_url" value="{{ selected.website_url }}" placeholder="{% trans 'Website URL' %}" class="rounded-xl border-border bg-slate-50 text-sm">
+                        <input name="facebook_url" value="{{ selected.facebook_url }}" placeholder="Facebook URL" class="rounded-xl border-border bg-slate-50 text-sm">
+                        <input name="instagram_url" value="{{ selected.instagram_url }}" placeholder="Instagram URL" class="rounded-xl border-border bg-slate-50 text-sm">
+                        <input name="x_url" value="{{ selected.x_url }}" placeholder="X URL" class="rounded-xl border-border bg-slate-50 text-sm">
+                    </div>
+                    <textarea name="office_location" rows="2" class="w-full rounded-xl border-border bg-slate-50 text-sm" placeholder="{% trans 'Office/location' %}">{{ selected.office_location }}</textarea>
+                    <label class="flex items-center gap-2 text-sm font-bold text-textPrimary">
+                        <input type="checkbox" name="emergency_support_available" class="rounded border-border text-primary" {% if selected.emergency_support_available %}checked{% endif %}>
+                        {% trans "Emergency support currently available" %}
+                    </label>
+                    <button class="bg-primary text-white px-5 py-3 rounded-xl text-sm font-bold">{% trans "Save Profile" %}</button>
+                </form>
+            </section>
+
+            <aside class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+                <h2 class="text-xl font-bold text-secondary mb-4">{% trans "Citizen Messages" %}</h2>
+                <div class="space-y-3 max-h-96 overflow-y-auto">
+                    {% for message in messages %}
+                        <div class="border border-border rounded-xl p-3">
+                            <p class="font-bold text-sm text-secondary">{{ message.sender_name }}</p>
+                            <p class="text-[10px] text-textSecondary">{{ message.created_at|date:"M d, Y H:i" }}</p>
+                            <p class="text-xs text-textPrimary mt-2">{{ message.message }}</p>
+                        </div>
+                    {% empty %}
+                        <p class="text-sm text-textSecondary italic">{% trans "No messages yet." %}</p>
+                    {% endfor %}
+                </div>
+            </aside>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+            <section class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+                <h2 class="text-xl font-bold text-secondary mb-4">{% trans "Publish Announcement" %}</h2>
+                <form method="post" class="space-y-3">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="announcement">
+                    <input name="title" required placeholder="{% trans 'Title' %}" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                    <select name="announcement_type" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                        <option value="GENERAL">{% trans "Community announcement" %}</option>
+                        <option value="EMERGENCY">{% trans "Emergency notice" %}</option>
+                        <option value="ACCOMMODATION">{% trans "Accommodation support" %}</option>
+                        <option value="TRAVEL">{% trans "Travel guidance" %}</option>
+                        <option value="EMBASSY_VISIT">{% trans "Embassy/consulate visit guidance" %}</option>
+                        <option value="VOLUNTEER">{% trans "Volunteer campaign" %}</option>
+                    </select>
+                    <textarea name="body" required rows="5" placeholder="{% trans 'Announcement details' %}" class="w-full rounded-xl border-border bg-slate-50 text-sm"></textarea>
+                    <button class="bg-secondary text-white px-5 py-3 rounded-xl text-sm font-bold">{% trans "Submit for Moderation" %}</button>
+                </form>
+                <div class="mt-6 space-y-3">
+                    {% for item in announcements %}
+                        <div class="border border-border rounded-xl p-3 text-sm">
+                            <div class="flex justify-between gap-3">
+                                <p class="font-bold text-secondary">{{ item.title }}</p>
+                                <span class="text-[10px] font-bold {% if item.is_public %}text-green-700{% else %}text-orange-600{% endif %}">
+                                    {% if item.is_public %}{% trans "Public" %}{% else %}{% trans "Pending" %}{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+                <h2 class="text-xl font-bold text-secondary mb-4">{% trans "Publish Event" %}</h2>
+                <form method="post" class="space-y-3">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="event">
+                    <input name="title" required placeholder="{% trans 'Event title' %}" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                    <select name="event_type" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                        <option value="EVENT">{% trans "Event" %}</option>
+                        <option value="MEETING">{% trans "Meeting" %}</option>
+                        <option value="ORIENTATION">{% trans "Student orientation" %}</option>
+                        <option value="VOLUNTEER">{% trans "Volunteer campaign" %}</option>
+                        <option value="GUIDANCE">{% trans "Travel guidance" %}</option>
+                    </select>
+                    <input name="location" placeholder="{% trans 'Location' %}" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                    <input type="datetime-local" name="starts_at" required class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                    <textarea name="description" required rows="5" placeholder="{% trans 'Event details' %}" class="w-full rounded-xl border-border bg-slate-50 text-sm"></textarea>
+                    <button class="bg-secondary text-white px-5 py-3 rounded-xl text-sm font-bold">{% trans "Save Event" %}</button>
+                </form>
+                <div class="mt-6 space-y-3">
+                    {% for event in events %}
+                        <div class="border border-border rounded-xl p-3 text-sm">
+                            <p class="font-bold text-secondary">{{ event.title }}</p>
+                            <p class="text-xs text-textSecondary">{{ event.starts_at|date:"M d, Y H:i" }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

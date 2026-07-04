@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Somali Missions" %} - {% trans "Home" %}{% endblock %}
+
+{% block extra_head %}
+<style>
+	.home-hero {
+		background:
+			linear-gradient(90deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.92) 56%, rgba(239,248,255,.9) 100%),
+			radial-gradient(circle at 78% 36%, rgba(0,173,239,.16), transparent 34%),
+			#f8fbff;
+	}
+	.hero-grid {
+		background-image:
+			linear-gradient(rgba(24,48,89,.06) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(24,48,89,.06) 1px, transparent 1px);
+		background-size: 28px 28px;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="home-hero border-b border-border">
+	<div class="hero-grid">
+		<div class="max-w-[1200px] mx-auto px-3 sm:px-5 lg:px-6 py-8 lg:py-12">
+			<div class="grid lg:grid-cols-[1fr_340px] gap-8 items-center">
+				<div>
+					<p class="text-xs uppercase tracking-[0.28em] font-black text-primary">{% trans "Somali Missions Network" %}</p>
+					<h1 class="mt-4 max-w-4xl text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-secondary">
+						{% trans "Transparent Missions. Better Service. Stronger Somalia." %}
+					</h1>
+					<p class="mt-5 max-w-3xl text-base md:text-lg leading-8 text-textSecondary">
+						{% trans "Find Somali missions worldwide, submit complaints, track progress, and help improve services for every Somali citizen." %}
+					</p>
+
+					<form method="get" class="mt-8 rounded-xl border border-border bg-white p-3 shadow-sm">
+						<div class="grid gap-3 lg:grid-cols-[1.8fr_1fr_1fr_1fr_auto]">
+							<label class="flex items-center gap-2 rounded-lg border border-border bg-slate-50 px-3">
+								<span class="material-symbols-outlined text-textSecondary text-xl">search</span>
+								<input type="search" name="q" value="{{ search_query }}" placeholder="{% trans 'Search missions, city, country...' %}" class="min-w-0 flex-1 border-0 bg-transparent px-0 py-3 text-sm focus:ring-0" aria-label="{% trans 'Search missions' %}">
+							</label>
+							<select name="country" class="rounded-lg border-border bg-slate-50 py-3 text-sm font-semibold text-textPrimary">
+								<option value="">{% trans "All Countries" %}</option>
+								{% for c in countries %}
+									<option value="{{ c }}" {% if selected_country == c %}selected{% endif %}>{{ c }}</option>
+								{% endfor %}
+							</select>
+							<select name="mission_type" class="rounded-lg border-border bg-slate-50 py-3 text-sm font-semibold text-textPrimary">
+								<option value="">{% trans "All Mission Types" %}</option>
+								<option value="EM" {% if selected_mission_type == 'EM' %}selected{% endif %}>{% trans "Embassy" %}</option>
+								<option value="CO" {% if selected_mission_type == 'CO' %}selected{% endif %}>{% trans "Consulate" %}</option>
+							</select>
+							<select name="min_rating" class="rounded-lg border-border bg-slate-50 py-3 text-sm font-semibold text-textPrimary">
+								<option value="">{% trans "Min. Rating 1-5" %}</option>
+								<option value="1" {% if selected_min_rating == '1' %}selected{% endif %}>1+</option>
+								<option value="2" {% if selected_min_rating == '2' %}selected{% endif %}>2+</option>
+								<option value="3" {% if selected_min_rating == '3' %}selected{% endif %}>3+</option>
+								<option value="4" {% if selected_min_rating == '4' %}selected{% endif %}>4+</option>
+							</select>
+							<button type="submit" class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-black text-white shadow-sm hover:bg-sky-600 transition-colors">
+								<span class="material-symbols-outlined text-lg">search</span>
+								{% trans "Search" %}
+							</button>
+						</div>
+					</form>
+
+					<div class="mt-4 flex flex-wrap items-center gap-2 text-xs">
+						<span class="font-bold text-primary">{% trans "Popular searches:" %}</span>
+						<a href="?q=Ankara" class="rounded-full border border-border bg-white px-3 py-1.5 font-bold text-textSecondary hover:border-primary hover:text-primary transition-colors">Ankara</a>
+						<a href="?q=London" class="rounded-full border border-border bg-white px-3 py-1.5 font-bold text-textSecondary hover:border-primary hover:text-primary transition-colors">London</a>
+						<a href="?q=Mogadishu" class="rounded-full border border-border bg-white px-3 py-1.5 font-bold text-textSecondary hover:border-primary hover:text-primary transition-colors">Mogadishu</a>
+						<a href="?q=Nairobi" class="rounded-full border border-border bg-white px-3 py-1.5 font-bold text-textSecondary hover:border-primary hover:text-primary transition-colors">Nairobi</a>
+						<a href="?q=Dubai" class="rounded-full border border-border bg-white px-3 py-1.5 font-bold text-textSecondary hover:border-primary hover:text-primary transition-colors">Dubai</a>
+						<a href="?q=Cairo" class="rounded-full border border-border bg-white px-3 py-1.5 font-bold text-textSecondary hover:border-primary hover:text-primary transition-colors">Cairo</a>
+					</div>
+				</div>
+
+				<aside class="rounded-xl border border-border bg-white p-5 shadow-lg shadow-slate-200/70">
+					<div class="flex items-center justify-between border-b border-border pb-3">
+						<h2 class="text-sm font-black text-secondary">{% trans "Service Transparency at a Glance" %}</h2>
+						<span class="material-symbols-outlined text-primary">insights</span>
+					</div>
+					<div class="divide-y divide-border">
+						<div class="flex items-center justify-between gap-4 py-4">
+							<div class="flex items-center gap-3">
+								<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">account_balance</span></span>
+								<div><p class="text-xs font-black text-secondary">{% trans "Total Missions" %}</p><p class="text-[11px] text-textSecondary">{% trans "Worldwide" %}</p></div>
+							</div>
+							<p class="text-xl font-black text-secondary">{{ home_stats.total_missions }}</p>
+						</div>
+						<div class="flex items-center justify-between gap-4 py-4">
+							<div class="flex items-center gap-3">
+								<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600"><span class="material-symbols-outlined">forum</span></span>
+								<div><p class="text-xs font-black text-secondary">{% trans "Total Complaints" %}</p><p class="text-[11px] text-textSecondary">{% trans "This Month" %}</p></div>
+							</div>
+							<p class="text-xl font-black text-secondary">{{ home_stats.monthly_complaints }}</p>
+						</div>
+						<div class="flex items-center justify-between gap-4 py-4">
+							<div class="flex items-center gap-3">
+								<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-50 text-amber-500"><span class="material-symbols-outlined">star</span></span>
+								<div><p class="text-xs font-black text-secondary">{% trans "Average Rating" %}</p><p class="text-[11px] text-textSecondary">{% trans "All Missions" %}</p></div>
+							</div>
+							<p class="text-xl font-black text-secondary">{{ home_stats.average_rating|floatformat:1 }} / 5</p>
+						</div>
+						<div class="flex items-center justify-between gap-4 py-4">
+							<div class="flex items-center gap-3">
+								<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600"><span class="material-symbols-outlined">task_alt</span></span>
+								<div><p class="text-xs font-black text-secondary">{% trans "Resolved Complaints" %}</p><p class="text-[11px] text-textSecondary">{% trans "This Month" %}</p></div>
+							</div>
+							<p class="text-xl font-black text-secondary">{{ home_stats.monthly_resolved }}</p>
+						</div>
+					</div>
+					<a href="{% url 'analysis' %}" class="mt-2 flex items-center justify-center gap-2 rounded-lg bg-primary/10 px-4 py-3 text-sm font-black text-primary hover:bg-primary hover:text-white transition-colors">
+						<span class="material-symbols-outlined text-lg">bar_chart</span>
+						{% trans "View All Statistics" %}
+					</a>
+				</aside>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="max-w-[1200px] mx-auto px-3 sm:px-5 lg:px-6 py-8 lg:py-10">
+	<section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
+		<a href="{% url 'directory' %}" class="group rounded-xl border border-border bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-primary hover:shadow-md">
+			<span class="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">search</span></span>
+			<h3 class="mt-4 text-sm font-black text-secondary">{% trans "Find Somali Mission" %}</h3>
+			<p class="mt-2 min-h-10 text-xs leading-5 text-textSecondary">{% trans "Search embassies and consulates worldwide." %}</p>
+			<span class="mt-3 inline-flex text-primary transition-transform group-hover:translate-x-1"><span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+		</a>
+		<a href="{% url 'submit_complaint_wizard' %}" class="group rounded-xl border border-border bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-primary hover:shadow-md">
+			<span class="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600"><span class="material-symbols-outlined">description</span></span>
+			<h3 class="mt-4 text-sm font-black text-secondary">{% trans "Submit Complaint" %}</h3>
+			<p class="mt-2 min-h-10 text-xs leading-5 text-textSecondary">{% trans "Report issues and help improve services." %}</p>
+			<span class="mt-3 inline-flex text-primary transition-transform group-hover:translate-x-1"><span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+		</a>
+		<a href="{% url 'track' %}" class="group rounded-xl border border-border bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-primary hover:shadow-md">
+			<span class="flex h-11 w-11 items-center justify-center rounded-lg bg-violet-50 text-violet-600"><span class="material-symbols-outlined">manage_search</span></span>
+			<h3 class="mt-4 text-sm font-black text-secondary">{% trans "Track Complaint" %}</h3>
+			<p class="mt-2 min-h-10 text-xs leading-5 text-textSecondary">{% trans "Use your tracking code for updates." %}</p>
+			<span class="mt-3 inline-flex text-primary transition-transform group-hover:translate-x-1"><span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+		</a>
+		<a href="{% url 'directory' %}" class="group rounded-xl border border-border bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-primary hover:shadow-md">
+			<span class="flex h-11 w-11 items-center justify-center rounded-lg bg-amber-50 text-amber-600"><span class="material-symbols-outlined">business_center</span></span>
+			<h3 class="mt-4 text-sm font-black text-secondary">{% trans "Before You Travel" %}</h3>
+			<p class="mt-2 min-h-10 text-xs leading-5 text-textSecondary">{% trans "Check documents, timing, and service guidance." %}</p>
+			<span class="mt-3 inline-flex text-primary transition-transform group-hover:translate-x-1"><span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+		</a>
+		<a href="{% url 'student_association_directory' %}" class="group rounded-xl border border-border bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-primary hover:shadow-md">
+			<span class="flex h-11 w-11 items-center justify-center rounded-lg bg-sky-50 text-sky-600"><span class="material-symbols-outlined">school</span></span>
+			<h3 class="mt-4 text-sm font-black text-secondary">{% trans "Somali Student Associations" %}</h3>
+			<p class="mt-2 min-h-10 text-xs leading-5 text-textSecondary">{% trans "Connect with trusted student groups." %}</p>
+			<span class="mt-3 inline-flex text-primary transition-transform group-hover:translate-x-1"><span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+		</a>
+		<a href="{% url 'community_directory' %}" class="group rounded-xl border border-border bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-primary hover:shadow-md">
+			<span class="flex h-11 w-11 items-center justify-center rounded-lg bg-green-50 text-green-600"><span class="material-symbols-outlined">groups</span></span>
+			<h3 class="mt-4 text-sm font-black text-secondary">{% trans "Somali Community Groups" %}</h3>
+			<p class="mt-2 min-h-10 text-xs leading-5 text-textSecondary">{% trans "Find local Somali community support." %}</p>
+			<span class="mt-3 inline-flex text-primary transition-transform group-hover:translate-x-1"><span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+		</a>
+		<a href="{% url 'emergency_hotline' %}" class="group rounded-xl border border-red-100 bg-red-50 p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-danger hover:shadow-md">
+			<span class="flex h-11 w-11 items-center justify-center rounded-lg bg-white text-danger"><span class="material-symbols-outlined">emergency_home</span></span>
+			<h3 class="mt-4 text-sm font-black text-danger">{% trans "Emergency Support" %}</h3>
+			<p class="mt-2 min-h-10 text-xs leading-5 text-red-700">{% trans "Get urgent help and emergency contacts." %}</p>
+			<span class="mt-3 inline-flex text-danger transition-transform group-hover:translate-x-1"><span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+		</a>
+	</section>
+
+	<section class="mt-8 grid gap-4 rounded-xl border border-border bg-white p-5 shadow-sm md:grid-cols-5">
+		<div class="flex items-center gap-3 border-border md:border-r">
+			<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">shield</span></span>
+			<div><p class="text-sm font-black text-secondary">{% trans "Your Voice Matters" %}</p><p class="text-xs text-textSecondary">{% trans "Every complaint helps improve services." %}</p></div>
+		</div>
+		<div class="flex items-center gap-3 border-border md:border-r">
+			<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">lock</span></span>
+			<div><p class="text-sm font-black text-secondary">{% trans "100% Secure & Private" %}</p><p class="text-xs text-textSecondary">{% trans "Your information is protected." %}</p></div>
+		</div>
+		<div class="flex items-center gap-3 border-border md:border-r">
+			<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">schedule</span></span>
+			<div><p class="text-sm font-black text-secondary">{% trans "Faster Response" %}</p><p class="text-xs text-textSecondary">{% trans "We monitor timely responses." %}</p></div>
+		</div>
+		<div class="flex items-center gap-3 border-border md:border-r">
+			<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">diversity_1</span></span>
+			<div><p class="text-sm font-black text-secondary">{% trans "For Every Somali" %}</p><p class="text-xs text-textSecondary">{% trans "Services for citizens everywhere." %}</p></div>
+		</div>
+		<div class="flex items-center gap-3">
+			<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">public</span></span>
+			<div><p class="text-sm font-black text-secondary">{% trans "Worldwide Network" %}</p><p class="text-xs text-textSecondary">{% trans "One network across global missions." %}</p></div>
+		</div>
+	</section>
+
+	<!-- Quick Complaint Tracking Widget -->
+	<div class="mt-8 bg-white border border-border rounded-xl p-5 shadow-sm flex flex-col md:flex-row justify-between items-center gap-5">
+		<div class="space-y-1 text-left">
+			<h3 class="text-xl font-black text-secondary flex items-center gap-2">
+				<span class="material-symbols-outlined text-primary">find_in_page</span>
+				{% trans "Track Your Complaint" %}
+			</h3>
+			<p class="text-xs text-textSecondary">
+				{% trans "Input your unique 8-character case tracking code to check status and read official responses." %}
+			</p>
+		</div>
+		<form method="get" action="{% url 'track' %}" class="flex gap-2 w-full md:w-auto flex-shrink-0">
+			<input type="text" name="tracking_code" placeholder="X8A0QH6G" required maxlength="8" class="w-full md:w-64 rounded-lg border border-border px-4 py-3 text-sm focus:border-primary focus:outline-none uppercase font-mono font-bold tracking-wider bg-slate-50 focus:bg-card">
+			<button type="submit" class="bg-secondary hover:bg-primary text-white font-bold text-sm px-6 py-3 rounded-lg shadow-sm transition-all flex-shrink-0">
+				{% trans "Track Case" %}
+			</button>
+		</form>
+	</div>
+
+	{% if map_missions_json != '[]' %}
+	<section class="mt-10">
+		<h2 class="text-2xl font-black text-secondary mb-4">{% trans "Mission Map" %}</h2>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+		<div id="mission-map" class="h-72 rounded-xl border border-border overflow-hidden"></div>
+		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+		<script>
+			const missions = {{ map_missions_json|safe }};
+			if (missions.length) {
+				const map = L.map('mission-map').setView([missions[0].lat, missions[0].lng], 2);
+				L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+				missions.forEach(m => L.marker([m.lat, m.lng]).addTo(map).bindPopup(`<a href="${m.url}">${m.name}</a><br>${m.city}, ${m.country}`));
+			}
+		</script>
+	</section>
+	{% endif %}
+
+	<section class="mt-10">
+		<div class="flex justify-between items-center mb-4">
+			<h2 class="text-2xl font-black text-secondary">{% trans "Missions Overview" %}</h2>
+			<a href="{% url 'analysis' %}" class="text-primary font-bold text-sm hover:underline">{% trans "View Analysis" %}</a>
+		</div>
+		<div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+			{% for mission in missions %}
+				<div class="flex flex-col gap-3 rounded-xl border border-border bg-white p-5 shadow-sm hover:shadow-md transition-shadow">
+					<div>
+						<h3 class="font-black text-lg text-secondary">{{ mission.name }}</h3>
+						<p class="text-sm text-textSecondary">{{ mission.city }}, {{ mission.country }}</p>
+					</div>
+					<div class="flex items-center justify-between text-sm">
+						<div class="flex items-center gap-1 text-primary">
+							<span class="material-symbols-outlined">star</span>
+							<span class="font-bold">{{ mission.average_rating|default:"0"|floatformat:1 }}</span>
+						</div>
+						<span class="text-textSecondary">{{ mission.complaint_count }} {% trans "complaints" %}</span>
+					</div>
+					<a href="{% url 'mission_detail' mission.pk %}" class="mt-2 inline-flex items-center justify-center rounded-lg border border-primary/30 px-4 py-2 text-sm font-bold text-primary hover:bg-primary/10">
+						{% trans "View Details" %}
+					</a>
+				</div>
+			{% empty %}
+				<p class="text-textSecondary">{% trans "No missions found." %}</p>
+			{% endfor %}
+		</div>
+	</section>
+</div>
+{% endblock %}

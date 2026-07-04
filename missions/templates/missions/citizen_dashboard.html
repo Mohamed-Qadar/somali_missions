@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "My Dashboard" %} - {% trans "Citizen Portal" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12 space-y-8">
+    
+    <!-- Welcome Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-secondary to-slate-800 text-white rounded-3xl p-6 md:p-8 shadow-sm">
+        <div>
+            <h1 class="text-2xl md:text-3xl font-black">{% trans "Citizen Service Portal" %}</h1>
+            <p class="text-white/80 text-sm mt-1">{% trans "Welcome back," %} {{ user.profile.full_name|default:user.username }}</p>
+        </div>
+        <a href="{% url 'submit_complaint_wizard' %}" class="inline-flex items-center gap-2 bg-primary hover:bg-opacity-90 text-white font-bold px-5 py-3 rounded-xl shadow-sm text-sm transition-all">
+            <span class="material-symbols-outlined text-sm">add</span>
+            {% trans "File New Complaint" %}
+        </a>
+    </div>
+
+    <!-- Statistics Cards Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Card 1 -->
+        <div class="bg-card border border-border rounded-2xl p-5 shadow-sm space-y-1">
+            <p class="text-xs font-bold text-textSecondary uppercase tracking-wider">{% trans "Total Filed" %}</p>
+            <p class="text-3xl font-black text-secondary">{{ total }}</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-card border border-border rounded-2xl p-5 shadow-sm space-y-1">
+            <p class="text-xs font-bold text-textSecondary uppercase tracking-wider">{% trans "Active Cases" %}</p>
+            <p class="text-3xl font-black text-primary">{{ open_cases }}</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-card border border-border rounded-2xl p-5 shadow-sm space-y-1">
+            <p class="text-xs font-bold text-textSecondary uppercase tracking-wider">{% trans "Resolved" %}</p>
+            <p class="text-3xl font-black text-green-500">{{ resolved }}</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="bg-card border border-border rounded-2xl p-5 shadow-sm space-y-1">
+            <p class="text-xs font-bold text-textSecondary uppercase tracking-wider">{% trans "Archived" %}</p>
+            <p class="text-3xl font-black text-slate-400">{{ closed }}</p>
+        </div>
+    </div>
+
+    <!-- Complaints List -->
+    <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-6">
+        <div class="border-b border-border pb-4">
+            <h2 class="text-xl font-bold text-secondary">{% trans "Recent Submissions" %}</h2>
+            <p class="text-xs text-textSecondary">{% trans "Track and view reviews from Somali Consular officials." %}</p>
+        </div>
+
+        <div class="space-y-4">
+            {% for c in complaints %}
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl border border-border hover:border-primary/30 bg-slate-50/50 hover:bg-slate-50 transition-all">
+                    <div class="space-y-2">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="font-bold text-sm text-secondary">{{ c.tracking_code }}</span>
+                            <span class="text-xs bg-slate-200/80 text-textSecondary font-bold px-2.5 py-0.5 rounded-full">
+                                {{ c.get_category_display }}
+                            </span>
+                            
+                            <!-- Priority badge -->
+                            {% if c.priority == 'CRITICAL' %}
+                                <span class="text-xs bg-red-100 text-red-600 font-bold px-2.5 py-0.5 rounded-full border border-red-200">
+                                    {{ c.get_priority_display }}
+                                </span>
+                            {% elif c.priority == 'HIGH' %}
+                                <span class="text-xs bg-orange-100 text-orange-600 font-bold px-2.5 py-0.5 rounded-full">
+                                    {{ c.get_priority_display }}
+                                </span>
+                            {% else %}
+                                <span class="text-xs bg-blue-100 text-blue-600 font-bold px-2.5 py-0.5 rounded-full">
+                                    {{ c.get_priority_display }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        <h3 class="font-bold text-secondary text-base leading-snug">{{ c.subject }}</h3>
+                        <p class="text-xs text-textSecondary">{{ c.mission.name }} • {% trans "Submitted on" %} {{ c.created_at|date:"M d, Y" }}</p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="text-right md:block hidden">
+                            <span class="text-xs font-bold text-textSecondary">{% trans "Current Status:" %}</span>
+                            <p class="font-extrabold text-sm text-primary uppercase mt-0.5">{{ c.get_status_display }}</p>
+                        </div>
+                        
+                        <a href="{% url 'track' %}?tracking_code={{ c.tracking_code }}" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border hover:border-primary hover:bg-primary/5 text-textSecondary hover:text-primary transition-all shadow-sm">
+                            <span class="material-symbols-outlined text-base">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="text-center py-12 space-y-3">
+                    <span class="material-symbols-outlined text-slate-300 text-5xl">inventory_2</span>
+                    <p class="text-textSecondary italic text-sm">{% trans "You have not submitted any complaints yet." %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

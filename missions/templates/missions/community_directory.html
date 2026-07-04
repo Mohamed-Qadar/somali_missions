@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% if directory_type == 'student' %}{% trans "Somali Student Associations" %}{% else %}{% trans "Somali Community Groups" %}{% endif %} - {% trans "Somali Missions" %}
+{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12 space-y-8">
+    <div class="flex flex-col md:flex-row justify-between gap-6 border-b border-border pb-6">
+        <div>
+            <p class="text-xs uppercase tracking-[0.35em] font-bold text-primary">
+                {% trans "Community Support Network" %}
+            </p>
+            <h1 class="text-3xl md:text-4xl font-black text-secondary mt-2">
+                {% if directory_type == 'student' %}{% trans "Somali Student Associations" %}{% else %}{% trans "Somali Community Groups" %}{% endif %}
+            </h1>
+            <p class="text-textSecondary text-sm mt-2 max-w-2xl">
+                {% trans "Find verified Somali-led support networks for orientation, accommodation guidance, translation, transport help, and emergency community support." %}
+            </p>
+        </div>
+        <div class="flex gap-2 items-start">
+            <a href="{% url 'student_association_directory' %}" class="px-4 py-2.5 rounded-xl border border-border text-sm font-bold {% if directory_type == 'student' %}bg-primary text-white border-primary{% else %}bg-card text-textSecondary{% endif %}">
+                {% trans "Student Associations" %}
+            </a>
+            <a href="{% url 'community_directory' %}" class="px-4 py-2.5 rounded-xl border border-border text-sm font-bold {% if directory_type != 'student' %}bg-primary text-white border-primary{% else %}bg-card text-textSecondary{% endif %}">
+                {% trans "Community Groups" %}
+            </a>
+        </div>
+    </div>
+
+    <form method="get" class="grid md:grid-cols-4 gap-3 bg-card border border-border rounded-2xl p-4">
+        <input type="search" name="q" value="{{ search_query }}" placeholder="{% trans 'Search country, city, group...' %}" class="md:col-span-2 rounded-xl border-border bg-slate-50">
+        <select name="country" class="rounded-xl border-border bg-slate-50">
+            <option value="">{% trans "All countries" %}</option>
+            {% for c in countries %}
+                <option value="{{ c }}" {% if selected_country == c %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+        <div class="flex gap-2">
+            <input type="text" name="city" value="{{ selected_city }}" placeholder="{% trans 'City' %}" class="min-w-0 flex-1 rounded-xl border-border bg-slate-50">
+            <button class="px-4 py-2 rounded-xl bg-secondary text-white font-bold text-sm">{% trans "Find" %}</button>
+        </div>
+    </form>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {% for group in groups %}
+            <a href="{% if directory_type == 'student' %}{% url 'student_association_detail' group.pk %}{% else %}{% url 'community_group_detail' group.pk %}{% endif %}" class="bg-card border border-border rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-primary/40 transition-all space-y-4">
+                <div class="flex gap-4">
+                    <div class="h-14 w-14 rounded-xl bg-slate-100 border border-border overflow-hidden flex items-center justify-center shrink-0">
+                        {% if group.logo %}
+                            <img src="{{ group.logo.url }}" alt="{{ group.name }}" class="h-full w-full object-cover">
+                        {% else %}
+                            <span class="material-symbols-outlined text-primary">groups</span>
+                        {% endif %}
+                    </div>
+                    <div class="min-w-0">
+                        <h2 class="font-extrabold text-secondary truncate">{{ group.name }}</h2>
+                        <p class="text-xs text-textSecondary">{{ group.city }}, {{ group.country }}</p>
+                        {% if group.university_name %}<p class="text-xs text-primary font-bold mt-1">{{ group.university_name }}</p>{% endif %}
+                    </div>
+                </div>
+                <p class="text-sm text-textSecondary line-clamp-3">{{ group.description|default:"Profile description pending." }}</p>
+                <div class="flex flex-wrap gap-2 text-[10px] font-bold uppercase">
+                    <span class="px-2 py-1 rounded bg-green-50 text-green-700 border border-green-100">{% trans "Verified" %}</span>
+                    {% if group.emergency_support_available %}
+                        <span class="px-2 py-1 rounded bg-red-50 text-red-700 border border-red-100">{% trans "Emergency Support" %}</span>
+                    {% endif %}
+                </div>
+            </a>
+        {% empty %}
+            <p class="text-textSecondary italic">{% trans "No verified groups found for this search." %}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

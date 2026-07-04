@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Complaint Submitted" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-16 text-center">
+	<div class="mb-6 flex justify-center">
+		<div class="h-24 w-24 bg-green-100 rounded-full flex items-center justify-center">
+			<span class="material-symbols-outlined text-5xl text-green-600">check_circle</span>
+		</div>
+	</div>
+	<h1 class="text-3xl font-bold mb-4">{% trans "Complaint Submitted Successfully" %}</h1>
+	<p class="text-textSecondary text-lg mb-4">
+		{% trans "Thank you for your feedback. Your complaint has been recorded." %}
+	</p>
+	{% if tracking_code %}
+		<div class="bg-white border border-border rounded-xl p-6 mb-8">
+			<p class="text-sm text-textSecondary mb-2">{% trans "Your tracking code" %}</p>
+			<p class="text-3xl font-black tracking-widest text-primary">{{ tracking_code }}</p>
+			<p class="text-sm text-textSecondary mt-3">{% trans "Save this code to check your complaint status later." %}</p>
+		</div>
+	{% endif %}
+	<div class="flex justify-center gap-4 flex-wrap">
+		<a href="{% url 'track' %}{% if tracking_code %}?tracking_code={{ tracking_code }}{% endif %}" class="bg-primary text-white font-bold py-3 px-6 rounded-lg">{% trans "Track Status" %}</a>
+		<a href="{% url 'home' %}" class="border border-border font-bold py-3 px-6 rounded-lg">{% trans "Return Home" %}</a>
+	</div>
+</div>
+{% endblock %}

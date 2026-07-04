@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ mission.name }} - {% trans "Staff" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12 grid lg:grid-cols-3 gap-8">
+	<div class="lg:col-span-1">
+		<h1 class="text-2xl font-black mb-4">{{ mission.name }}</h1>
+		<ul class="space-y-2 text-sm">
+			{% for c in complaints %}
+				<li>
+					<a href="?complaint={{ c.pk }}" class="block p-3 rounded-lg border {% if selected_complaint and selected_complaint.pk == c.pk %}border-primary bg-primary/5{% else %}border-border{% endif %}">
+						<strong>{{ c.tracking_code }}</strong> — {{ c.subject|truncatechars:30 }}
+						<span class="text-textSecondary block">{{ c.get_status_display }}</span>
+					</a>
+				</li>
+			{% empty %}
+				<li class="text-textSecondary">{% trans "No complaints." %}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="lg:col-span-2">
+		{% if selected_complaint %}
+			<div class="bg-white border border-border rounded-xl p-6 space-y-4 mb-6">
+				<h2 class="font-bold">{{ selected_complaint.subject }}</h2>
+				<p class="text-sm"><strong>{% trans "Code" %}:</strong> {{ selected_complaint.tracking_code }}</p>
+				<p class="text-sm"><strong>{% trans "Rating" %}:</strong> {{ selected_complaint.rating }}/5</p>
+				<p class="text-sm whitespace-pre-wrap">{{ selected_complaint.message }}</p>
+				{% if not selected_complaint.is_anonymous %}
+					<p class="text-sm text-textSecondary">{{ selected_complaint.full_name }} — {{ selected_complaint.email }} — {{ selected_complaint.phone }}</p>
+				{% else %}
+					<p class="text-sm italic text-textSecondary">{% trans "Anonymous submission" %}</p>
+				{% endif %}
+			</div>
+			<form method="post" class="bg-white border border-border rounded-xl p-6 space-y-3 mb-6">
+				{% csrf_token %}
+				<h3 class="font-bold">{% trans "Update status" %}</h3>
+				{{ status_form.status }}
+				<button type="submit" name="save_status" class="bg-primary text-white px-4 py-2 rounded-lg text-sm">{% trans "Save status" %}</button>
+			</form>
+			<form method="post" class="bg-white border border-border rounded-xl p-6 space-y-3">
+				{% csrf_token %}
+				<h3 class="font-bold">{% trans "Add response" %}</h3>
+				{% for field in response_form %}
+					<div>
+						<label class="block text-sm mb-1">{{ field.label }}</label>
+						{{ field }}
+					</div>
+				{% endfor %}
+				<button type="submit" name="save_response" class="bg-primary text-white px-4 py-2 rounded-lg text-sm">{% trans "Save response" %}</button>
+			</form>
+		{% else %}
+			<p class="text-textSecondary">{% trans "Select a complaint from the list." %}</p>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

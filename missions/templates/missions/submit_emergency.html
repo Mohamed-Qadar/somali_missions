@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Report Diplomatic Crisis" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-12">
+    <div class="bg-card border-2 border-red-200 rounded-3xl p-6 md:p-8 shadow-md">
+        
+        <!-- Emergency Intake Header -->
+        <div class="text-center space-y-3 mb-8">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-red-100 text-red-600">
+                <span class="material-symbols-outlined text-3xl animate-bounce">warning</span>
+            </div>
+            <h1 class="text-3xl font-extrabold text-secondary">{% trans "Report Diplomatic Crisis" %}</h1>
+            <p class="text-textSecondary text-sm max-w-md mx-auto">
+                {% trans "This channel triggers immediate oversight. Files submitted here will bypass normal queue delays and alert rescue officers." %}
+            </p>
+        </div>
+
+        <!-- Warning Alert -->
+        <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-xl text-yellow-800 text-xs flex gap-2.5 mb-6">
+            <span class="material-symbols-outlined shrink-0 text-sm mt-0.5">info</span>
+            <div>
+                <p class="font-bold">{% trans "Important Legal Notice" %}</p>
+                <p class="mt-0.5">
+                    {% trans "Filing intentionally false reports on the emergency hotline is a criminal offense under Somali national law. Please use this ONLY for true crisis assistance." %}
+                </p>
+            </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="space-y-5" novalidate>
+            {% csrf_token %}
+
+            <div>
+                <label for="missionSelect" class="block text-sm font-semibold text-secondary mb-1">{% trans "Choose Embassy/Consulate Nearest to You" %}</label>
+                <select name="mission" id="missionSelect" required class="w-full rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card focus:border-red-500">
+                    <option value="">{% trans "-- Select Mission --" %}</option>
+                    {% for m in missions %}
+                        <option value="{{ m.id }}" {% if selected_mission_id == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }} ({{ m.city }}, {{ m.country }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="categorySelect" class="block text-sm font-semibold text-secondary mb-1">{% trans "Nature of Crisis" %}</label>
+                <select name="category" id="categorySelect" required class="w-full rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card focus:border-red-500">
+                    <option value="EMERGENCY">{% trans "Other Urgent Assist" %}</option>
+                    <option value="LOST_DOCS">{% trans "Lost Passport / Stranded Abroad" %}</option>
+                    <option value="EMERGENCY">{% trans "Arrest or Detention" %}</option>
+                    <option value="EMERGENCY">{% trans "Human Trafficking / Smuggling Case" %}</option>
+                    <option value="EMERGENCY">{% trans "Domestic Violence or Abuse" %}</option>
+                    <option value="EMERGENCY">{% trans "Medical Crisis or Health Emergency" %}</option>
+                    <option value="EMERGENCY">{% trans "Stranded Citizen" %}</option>
+                    <option value="EMERGENCY">{% trans "Missing Person Abroad" %}</option>
+                    <option value="EMERGENCY">{% trans "War / Conflict Zone Extraction" %}</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="msgInput" class="block text-sm font-semibold text-secondary mb-1">{% trans "Explain what happened & details of help needed" %}</label>
+                <textarea name="message" id="msgInput" rows="5" required placeholder="{% trans 'Include name of local authorities involved, hospitals, locations, and any immediate threats.' %}" class="w-full rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card focus:border-red-500"></textarea>
+            </div>
+
+            <div class="p-4 bg-red-50 border border-red-100 rounded-xl space-y-3">
+                <h3 class="font-bold text-sm text-red-800">{% trans "Immediate hardship factors" %}</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-xs font-semibold text-textPrimary">
+                    <label class="flex items-start gap-2"><input type="checkbox" name="currently_at_mission" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I am at the consulate now" %}</label>
+                    <label class="flex items-start gap-2"><input type="checkbox" name="travelled_from_another_city" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I travelled a long distance" %}</label>
+                    <label class="flex items-start gap-2"><input type="checkbox" name="no_accommodation" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I do not have accommodation" %}</label>
+                    <label class="flex items-start gap-2"><input type="checkbox" name="has_return_ticket" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I may miss a return ticket" %}</label>
+                    <label class="flex items-start gap-2"><input type="checkbox" name="waiting_more_than_two_hours" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I have waited more than 2 hours" %}</label>
+                </div>
+            </div>
+
+            <h3 class="font-bold text-sm text-secondary border-b border-border pb-1 pt-3">{% trans "Your Identity & Callback Information" %}</h3>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <div>
+                    <label for="nameInput" class="block text-xs font-semibold text-textSecondary mb-1">{% trans "Full Name" %}</label>
+                    <input type="text" name="full_name" id="nameInput" value="{{ user.profile.full_name|default:'' }}" required class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                </div>
+                <div>
+                    <label for="phoneInput" class="block text-xs font-semibold text-textSecondary mb-1">{% trans "Callback Phone" %}</label>
+                    <input type="text" name="phone" id="phoneInput" value="{{ user.profile.phone_number|default:'' }}" required placeholder="+123..." class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                </div>
+                <div>
+                    <label for="emailInput" class="block text-xs font-semibold text-textSecondary mb-1">{% trans "Email" %}</label>
+                    <input type="email" name="email" id="emailInput" value="{{ user.email|default:'' }}" class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <label class="block text-sm font-semibold text-secondary mb-2">{% trans "Evidence / Pictures / Proof" %}</label>
+                <input type="file" name="evidence_files" multiple class="w-full border border-border bg-slate-50 rounded-xl px-3 py-2 text-xs">
+            </div>
+
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl shadow-lg mt-4 text-base">
+                {% trans "Transmit Emergency Alert Now" %}
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

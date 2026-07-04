@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Staff Dashboard" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12">
+	<h1 class="text-3xl font-black mb-6">{% trans "Staff Dashboard" %}</h1>
+	{% if denied %}
+		<p class="text-textSecondary">{% trans "You do not have permission to manage any missions. Contact the Ministry administrator." %}</p>
+	{% else %}
+		<ul class="space-y-3">
+			{% for mission in missions %}
+				<li class="bg-white border border-border rounded-xl p-4 flex justify-between items-center">
+					<span>{{ mission.name }} — {{ mission.city }}</span>
+					<a href="{% url 'staff_mission_manage' mission.pk %}" class="text-primary font-semibold">{% trans "Manage" %}</a>
+				</li>
+			{% empty %}
+				<li class="text-textSecondary">{% trans "No missions assigned." %}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+</div>
+{% endblock %}

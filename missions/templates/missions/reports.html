@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Reports" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-12 space-y-8">
+	<h1 class="text-3xl font-black">{% trans "Generate and Export Reports" %}</h1>
+	<form method="post" class="grid lg:grid-cols-3 gap-8">
+		{% csrf_token %}
+		<div class="lg:col-span-2 bg-white border border-border rounded-2xl p-6 space-y-4">
+			<h2 class="font-bold">{% trans "Configure Your Report" %}</h2>
+			{% for radio in form.report_type %}
+				<label class="flex items-center gap-3 border border-border rounded-lg p-3 cursor-pointer">{{ radio.tag }} <span>{{ radio.choice_label }}</span></label>
+			{% endfor %}
+			<div class="grid sm:grid-cols-2 gap-4">
+				<div><label class="text-sm font-medium">{% trans "Consulate" %}</label>{{ form.consulate }}</div>
+				<div><label class="text-sm font-medium">{% trans "Date from" %}</label>{{ form.date }}</div>
+			</div>
+			<label class="flex items-center gap-2">{{ form.include_average }} {% trans "Include average score" %}</label>
+			<label class="flex items-center gap-2">{{ form.include_complaints }} {% trans "Include complaint details" %}</label>
+			<label class="flex items-center gap-2">{{ form.include_sentiment }} {% trans "Include sentiment ratio" %}</label>
+			<button type="submit" class="bg-primary text-white font-bold py-3 px-6 rounded-lg">{% trans "Generate PDF" %}</button>
+		</div>
+		<div class="space-y-4">
+			<div class="grid grid-cols-2 gap-3">
+				{% for card in summary_cards %}
+					<div class="bg-white border border-border rounded-xl p-4">
+						<p class="text-xs text-textSecondary">{{ card.label }}</p>
+						<p class="text-lg font-bold">{{ card.value }}</p>
+					</div>
+				{% endfor %}
+			</div>
+			<a href="{% url 'export_complaints_csv' %}" class="block text-center border border-primary text-primary font-semibold py-3 rounded-lg">{% trans "Export CSV" %}</a>
+		</div>
+	</form>
+
+	<div class="bg-white border border-border rounded-xl p-6">
+		<h2 class="font-bold mb-4">{% trans "Recent complaints summary" %}</h2>
+		{% if recent_complaints %}
+			<ul class="space-y-2 text-sm">
+				{% for c in recent_complaints %}
+					<li class="flex justify-between border-b border-border pb-2">
+						<span>{{ c.tracking_code }} — {{ c.subject|truncatechars:40 }}</span>
+						<span class="text-textSecondary">{{ c.created_at|date:"M d, Y" }}</span>
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p class="text-textSecondary">{% trans "No reports generated yet." %}</p>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

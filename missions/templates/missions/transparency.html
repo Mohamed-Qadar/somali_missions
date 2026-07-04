@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Public Transparency Portal" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12 space-y-12">
+    
+    <!-- Hero Header -->
+    <div class="text-center space-y-3">
+        <p class="text-sm uppercase font-bold tracking-[0.4em] text-primary">{% trans "Government Transparency Initiative" %}</p>
+        <h1 class="text-4xl md:text-5xl font-black text-secondary">{% trans "Public Transparency Portal" %}</h1>
+        <p class="text-textSecondary text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
+            {% trans "Access real-time ministry statistics, evaluate diplomatic mission rankings, and read case resolution outcomes." %}
+        </p>
+    </div>
+
+    <!-- General Stats Counters -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm space-y-2">
+            <span class="material-symbols-outlined text-primary text-4xl">folder_open</span>
+            <p class="text-xs font-bold text-textSecondary uppercase tracking-wider">{% trans "Total Complaints Registered" %}</p>
+            <p class="text-4xl font-black text-secondary">{{ total }}</p>
+        </div>
+
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm space-y-2">
+            <span class="material-symbols-outlined text-green-500 text-4xl">task_alt</span>
+            <p class="text-xs font-bold text-textSecondary uppercase tracking-wider">{% trans "Successfully Resolved" %}</p>
+            <p class="text-4xl font-black text-green-500">{{ resolved }}</p>
+        </div>
+
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm space-y-2">
+            <span class="material-symbols-outlined text-accent text-4xl">hourglass_bottom</span>
+            <p class="text-xs font-bold text-textSecondary uppercase tracking-wider">{% trans "Average Resolution SLA" %}</p>
+            <p class="text-4xl font-black text-secondary">{{ avg_response_time }} {% trans "Days" %}</p>
+        </div>
+    </div>
+
+    <!-- Embassy Performance Leaderboards -->
+    <div class="grid md:grid-cols-2 gap-8">
+        
+        <!-- Top Performing Embassies -->
+        <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-5">
+            <div class="border-b border-border pb-3 flex items-center gap-2">
+                <span class="material-symbols-outlined text-green-500">verified</span>
+                <h3 class="font-extrabold text-secondary text-base">{% trans "Top Performing Embassies" %}</h3>
+            </div>
+            
+            <div class="space-y-4">
+                {% for entry in top_performing %}
+                    <div class="flex justify-between items-center p-3 rounded-xl border border-slate-100 bg-slate-50/50">
+                        <div>
+                            <p class="font-bold text-sm text-secondary">{{ entry.mission.name }}</p>
+                            <p class="text-[10px] text-textSecondary">{{ entry.mission.city }}, {{ entry.mission.country }}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-bold text-green-600 bg-green-50 border border-green-200 px-2.5 py-1 rounded-lg">
+                                {{ entry.score }}%
+                            </span>
+                            <p class="text-[9px] text-textSecondary mt-1.5">{{ entry.complaints }} {% trans "cases" %}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-textSecondary italic text-xs text-center py-4">{% trans "No rank statistics computed." %}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Needs Improvement Embassies -->
+        <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-5">
+            <div class="border-b border-border pb-3 flex items-center gap-2">
+                <span class="material-symbols-outlined text-danger">warning</span>
+                <h3 class="font-extrabold text-secondary text-base">{% trans "Needs Improvement" %}</h3>
+            </div>
+
+            <div class="space-y-4">
+                {% for entry in needs_improvement %}
+                    <div class="flex justify-between items-center p-3 rounded-xl border border-slate-100 bg-slate-50/50">
+                        <div>
+                            <p class="font-bold text-sm text-secondary">{{ entry.mission.name }}</p>
+                            <p class="text-[10px] text-textSecondary">{{ entry.mission.city }}, {{ entry.mission.country }}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-bold text-danger bg-red-50 border border-red-200 px-2.5 py-1 rounded-lg">
+                                {{ entry.score }}%
+                            </span>
+                            <p class="text-[9px] text-textSecondary mt-1.5">{{ entry.complaints }} {% trans "cases" %}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-textSecondary italic text-xs text-center py-4">{% trans "All embassies meeting service compliance targets." %}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Resolved Success Stories / Public Feed -->
+    <div class="bg-card border border-border rounded-3xl p-6 md:p-8 shadow-sm space-y-6">
+        <div class="border-b border-border pb-4">
+            <h2 class="text-xl font-bold text-secondary">{% trans "Anonymized Resolution Outcomes" %}</h2>
+            <p class="text-xs text-textSecondary">{% trans "See how the Ministry is taking direct action to solve complaints and improve services worldwide." %}</p>
+        </div>
+
+        <div class="space-y-6">
+            {% for story in success_stories %}
+                <div class="p-6 rounded-2xl border border-border bg-slate-50/30 hover:bg-slate-50 transition-all space-y-4">
+                    <div class="flex justify-between items-start flex-wrap gap-2 text-xs">
+                        <div>
+                            <span class="font-extrabold text-secondary text-sm">{% trans "Complaint" %} #{{ story.tracking_code }}</span>
+                            <p class="text-textSecondary font-semibold mt-1">{{ story.mission.name }} • {{ story.get_category_display }}</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 font-bold px-3 py-1 rounded-full uppercase">
+                            {% trans "Successfully Resolved" %}
+                        </span>
+                    </div>
+
+                    <div class="space-y-1">
+                        <span class="text-xs font-bold text-textSecondary">{% trans "Citizen Issue" %}:</span>
+                        <p class="text-sm text-textPrimary leading-relaxed font-medium">"{{ story.subject }}"</p>
+                    </div>
+
+                    {% for resp in story.public_responses %}
+                        <div class="p-4 bg-white border border-green-100 rounded-xl space-y-1">
+                            <span class="text-[10px] font-bold text-green-700 uppercase tracking-wide">{% trans "Embassy Resolution Action" %}</span>
+                            <p class="text-xs text-textPrimary leading-relaxed">{{ resp.message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% empty %}
+                <p class="text-textSecondary italic text-xs text-center py-6">{% trans "No success stories logged yet." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

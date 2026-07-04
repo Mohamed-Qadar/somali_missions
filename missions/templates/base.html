@@ -1,0 +1,349 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html class="light" lang="{{ LANGUAGE_CODE }}" dir="ltr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}{% trans "Somali Missions Complaint Portal" %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'missions/flag.jpg' %}">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00adef", /* Somali sky blue */
+                        secondary: "#183059", /* Deep trust navy */
+                        accent: "#d4af37", /* Gold accent */
+                        background: "#f4f7f6",
+                        card: "#ffffff",
+                        border: "#e2e8f0",
+                        textPrimary: "#0f172a",
+                        textSecondary: "#475569",
+                        danger: "#ef4444"
+                    },
+                    fontFamily: { 
+                        sans: ["Plus Jakarta Sans", "sans-serif"] 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { 
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+            vertical-align: middle; 
+        }
+        body { 
+            font-family: "Plus Jakarta Sans", sans-serif; 
+        }
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-background text-textPrimary min-h-screen flex flex-col w-full overflow-x-hidden">
+    <div class="bg-secondary text-white">
+        <div class="max-w-[1200px] mx-auto px-3 sm:px-5 lg:px-6 h-8 sm:h-9 flex items-center justify-between gap-3 text-[11px] sm:text-xs">
+            <div class="flex items-center gap-2 min-w-0 font-bold">
+                <span class="material-symbols-outlined text-primary text-sm">verified_user</span>
+                <span class="truncate">{% trans "Federal Republic of Somalia" %} <span class="text-white/45 px-2">|</span> {% trans "Ministry of Foreign Affairs" %}</span>
+            </div>
+            <div class="flex items-center gap-3 sm:gap-5 text-white/80 shrink-0">
+                <a href="{% url 'faq' %}" class="hidden sm:inline hover:text-white transition-colors">{% trans "Help Center" %}</a>
+                <a href="{% url 'contact' %}" class="hidden sm:inline hover:text-white transition-colors">{% trans "Contact Us" %}</a>
+                <form action="{% url 'set_language' %}" method="post" class="inline-flex items-center overflow-hidden rounded-lg border border-white/15 bg-white/5 p-0.5" aria-label="{% trans 'Language' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    {% get_current_language as CURRENT_LANG %}
+                    <button type="submit" name="language" value="en" class="h-6 min-w-8 rounded-md px-2 text-[10px] font-black transition-colors {% if CURRENT_LANG == 'en' %}bg-white text-secondary{% else %}text-white/75 hover:text-white{% endif %}">EN</button>
+                    <button type="submit" name="language" value="so" class="h-6 min-w-8 rounded-md px-2 text-[10px] font-black transition-colors {% if CURRENT_LANG == 'so' %}bg-white text-secondary{% else %}text-white/75 hover:text-white{% endif %}">SO</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-50 border-b border-border bg-card/95 shadow-sm backdrop-blur">
+        <div class="max-w-[1200px] mx-auto px-3 sm:px-5 lg:px-6">
+            <div class="flex h-[57px] md:h-[63px] lg:h-[71px] items-center justify-between gap-2 sm:gap-3 lg:gap-4 min-w-0">
+                
+                <!-- Logo & Branding -->
+                <a href="{% url 'home' %}" class="flex items-center gap-2 sm:gap-3 shrink min-w-0">
+                    <img src="{% static 'images/somalia-coat-of-arms.png' %}" alt="{% trans 'Somali Coat of Arms' %}" class="h-8 md:h-[38px] lg:h-[46px] w-auto object-contain shrink-0">
+                    <span class="flex h-[30px] w-10 md:h-[34px] md:w-11 lg:h-[42px] lg:w-14 items-center justify-center rounded border border-border bg-white shadow-sm shrink-0 overflow-hidden">
+                        <img src="{% static 'missions/flag.jpg' %}" alt="{% trans 'Somali Flag' %}" class="h-full w-full object-cover">
+                    </span>
+                    <div class="leading-tight min-w-0 max-w-[150px] sm:max-w-[230px] text-left">
+                        <p class="truncate text-[8px] sm:text-[9px] lg:text-[10px] uppercase font-extrabold tracking-[0.12em] text-primary">{% trans "Federal Republic of Somalia" %}</p>
+                        <div class="truncate font-black text-[11px] sm:text-[13px] lg:text-[14px] text-secondary">{% trans "Ministry of Foreign Affairs" %}</div>
+                        <p class="truncate text-[9px] sm:text-[10px] text-primary font-bold">{% trans "Complaints & Citizen Protection" %}</p>
+                    </div>
+                </a>
+
+                <!-- Main Desktop Navigation -->
+                <nav class="hidden lg:flex items-center justify-center gap-0.5 xl:gap-1 text-[11px] xl:text-[12px] font-bold text-textSecondary flex-1 min-w-0">
+                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'home' %}">{% trans "Home" %}</a>
+                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'directory' %}">{% trans "Directory" %}</a>
+                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'student_association_directory' %}">{% trans "Students" %}</a>
+                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'community_directory' %}">{% trans "Communities" %}</a>
+                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'transparency' %}">{% trans "Transparency" %}</a>
+                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'analysis' %}">{% trans "Stats" %}</a>
+                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'track' %}">{% trans "Track" %}</a>
+                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'emergency_hotline' %}">{% trans "Campaign" %}</a>
+                </nav>
+
+                <div class="flex items-center justify-end gap-1.5 sm:gap-2 shrink-0">
+                    <a class="inline-flex h-9 md:h-10 items-center gap-1.5 rounded-lg bg-danger px-2.5 sm:px-3 text-xs font-black text-white shadow-sm hover:bg-red-600 transition-colors" href="{% url 'emergency_hotline' %}">
+                        <span class="material-symbols-outlined text-base">warning</span>
+                        <span class="hidden min-[380px]:inline">{% trans "Emergency" %}</span>
+                    </a>
+
+                    {% if user.is_authenticated %}
+                        <div class="relative hidden lg:block" id="profileDropdownContainer">
+                            <button id="profileDropdownBtn" class="flex h-10 items-center gap-2 rounded-lg border border-border bg-white px-3 text-xs text-secondary hover:border-primary hover:text-primary font-bold focus:outline-none">
+                                <span class="material-symbols-outlined">account_circle</span>
+                                <span>{{ user.username }}</span>
+                                <span class="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded uppercase font-semibold">
+                                    {% if user.profile.role == 'CITIZEN' %}
+                                        {% trans "Citizen" %}
+                                    {% elif user.profile.role == 'EMBASSY_STAFF' %}
+                                        {% trans "Staff (Legacy)" %}
+                                    {% elif user.profile.role == 'EMBASSY_OFFICER' %}
+                                        {% trans "Embassy Officer" %}
+                                    {% elif user.profile.role == 'EMBASSY_MANAGER' %}
+                                        {% trans "Embassy Manager" %}
+                                    {% elif user.profile.role == 'MINISTRY_REVIEWER' %}
+                                        {% trans "Reviewer" %}
+                                    {% else %}
+                                        {% trans "Admin" %}
+                                    {% endif %}
+                                </span>
+                            </button>
+                            <!-- Dropdown Menu (No physical gap with top-full position) -->
+                            <div id="profileDropdownMenu" class="absolute right-0 top-full w-48 bg-card border border-border rounded-xl shadow-lg py-2 opacity-0 -translate-y-2 pointer-events-none transition-all duration-300 ease-out z-50">
+                                {% if user.profile.role == 'CITIZEN' %}
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'citizen_dashboard' %}">{% trans "Dashboard" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'submit_complaint_wizard' %}">{% trans "New Complaint" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'citizen_dashboard' %}">{% trans "My Complaints" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'track' %}">{% trans "Messages" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="#">{% trans "Profile" %}</a>
+                                {% elif user.profile.role == 'EMBASSY_OFFICER' %}
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Dashboard" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Assigned Cases" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Respond to Citizens" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Messages" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'report_dashboard' %}">{% trans "Reports" %}</a>
+                                {% elif user.profile.role == 'EMBASSY_MANAGER' %}
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Dashboard" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Embassy Complaints" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Staff Management" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'export_complaints_csv' %}?consulate={{ user.profile.mission.name }}">{% trans "Performance Reports" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Messages" %}</a>
+                                {% elif user.profile.role == 'MINISTRY_REVIEWER' %}
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_reviewer_dashboard' %}">{% trans "Dashboard" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_reviewer_dashboard' %}">{% trans "National Complaints" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_reviewer_dashboard' %}">{% trans "Escalations" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_analytics' %}">{% trans "Analytics" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_reviewer_dashboard' %}">{% trans "Messages" %}</a>
+                                {% elif user.profile.role == 'MINISTRY_ADMIN' %}
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_admin_dashboard' %}">{% trans "Dashboard" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'invite_embassy_user' %}">{% trans "User Management" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_admin_dashboard' %}#embassy-performance-oversight">{% trans "Embassy Management" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_admin_dashboard' %}">{% trans "System Settings" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_analytics' %}">{% trans "National Analytics" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_admin_dashboard' %}#system-audit-logs">{% trans "Audit Logs" %}</a>
+                                {% endif %}
+                                <hr class="my-1 border-border">
+                                <a class="block px-4 py-2 text-danger hover:bg-red-50" href="{% url 'logout' %}">{% trans "Logout" %}</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a class="hidden lg:inline-flex h-10 items-center gap-1.5 rounded-lg border border-border bg-white px-3 text-xs font-bold text-secondary hover:border-primary hover:text-primary transition-colors" href="{% url 'login' %}">
+                            <span class="material-symbols-outlined text-sm">person</span>
+                            {% trans "Sign In" %}
+                        </a>
+                        <a class="hidden lg:inline-flex h-10 items-center gap-1.5 rounded-lg bg-primary px-3 text-xs text-white hover:bg-sky-600 font-bold transition-all shadow-sm shadow-primary/20" href="{% url 'register' %}">
+                            <span class="material-symbols-outlined text-sm">person_add</span>
+                            {% trans "Register" %}
+                        </a>
+                    {% endif %}
+
+                    <!-- Mobile Menu Button -->
+                    <button id="navToggle" class="lg:hidden inline-flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-lg border border-border text-secondary bg-slate-50" aria-label="{% trans 'Toggle navigation' %}">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Panel -->
+            <div id="navMobilePanel" class="lg:hidden hidden border-t border-border py-4">
+                <div class="flex flex-col gap-2 text-sm font-semibold">
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'home' %}">{% trans "Home" %}</a>
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'directory' %}">{% trans "Directory" %}</a>
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'student_association_directory' %}">{% trans "Student Associations" %}</a>
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'community_directory' %}">{% trans "Somali Communities" %}</a>
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'transparency' %}">{% trans "Transparency Portal" %}</a>
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'analysis' %}">{% trans "Analysis" %}</a>
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'track' %}">{% trans "Track Complaint" %}</a>
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-red-50 text-danger bg-red-50/50 border border-red-100 flex items-center gap-2" href="{% url 'emergency_hotline' %}">
+                        <span class="material-symbols-outlined text-sm animate-pulse">campaign</span>
+                        {% trans "EMERGENCY PORTAL" %}
+                    </a>
+                    <hr class="border-border my-1">
+                    {% if user.is_authenticated %}
+                        <p class="px-4 text-[10px] text-textSecondary uppercase tracking-wider font-bold">{% trans "Account Settings" %}</p>
+                        {% if user.profile.role == 'CITIZEN' %}
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'citizen_dashboard' %}">{% trans "Dashboard" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'submit_complaint_wizard' %}">{% trans "New Complaint" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'citizen_dashboard' %}">{% trans "My Complaints" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'track' %}">{% trans "Messages" %}</a>
+                        {% elif user.profile.role == 'EMBASSY_OFFICER' %}
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Dashboard" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Assigned Cases" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Respond to Citizens" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Messages" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'report_dashboard' %}">{% trans "Reports" %}</a>
+                        {% elif user.profile.role == 'EMBASSY_MANAGER' %}
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Dashboard" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Embassy Complaints" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Staff Management" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'export_complaints_csv' %}?consulate={{ user.profile.mission.name }}">{% trans "Performance Reports" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Messages" %}</a>
+                        {% elif user.profile.role == 'MINISTRY_REVIEWER' %}
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_reviewer_dashboard' %}">{% trans "Dashboard" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_reviewer_dashboard' %}">{% trans "National Complaints" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_reviewer_dashboard' %}">{% trans "Escalations" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_analytics' %}">{% trans "Analytics" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_reviewer_dashboard' %}">{% trans "Messages" %}</a>
+                        {% elif user.profile.role == 'MINISTRY_ADMIN' %}
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_admin_dashboard' %}">{% trans "Dashboard" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'invite_embassy_user' %}">{% trans "User Management" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_admin_dashboard' %}#embassy-performance-oversight">{% trans "Embassy Management" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_admin_dashboard' %}">{% trans "System Settings" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_analytics' %}">{% trans "National Analytics" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_admin_dashboard' %}#system-audit-logs">{% trans "Audit Logs" %}</a>
+                        {% endif %}
+                        <a class="px-4 py-2.5 rounded-xl bg-red-50 text-danger text-center font-bold" href="{% url 'logout' %}">{% trans "Logout" %}</a>
+                    {% else %}
+                        <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary text-center" href="{% url 'login' %}">{% trans "Sign In" %}</a>
+                        <a class="px-4 py-2.5 rounded-xl bg-primary text-white text-center font-bold" href="{% url 'register' %}">{% trans "Register" %}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        {% block content %}{% endblock %}</main>
+
+    <footer class="border-t border-border bg-card mt-12 py-10">
+        <div class="max-w-[1200px] mx-auto px-3 sm:px-5 lg:px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-textSecondary">
+                <div class="flex items-center gap-3">
+                    <img src="{% static 'missions/logo.png' %}" alt="{% trans 'Government Logo' %}" class="h-8 w-auto">
+                    <div>
+                        <p class="font-bold text-secondary">{% trans "Federal Government of Somalia" %}</p>
+                        <p class="text-xs">© {% trans "Somali Ministry of Foreign Affairs. All Rights Reserved." %}</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-6 font-semibold">
+                    <a class="hover:text-primary transition-colors" href="{% url 'privacy' %}">{% trans "Privacy Policy" %}</a>
+                    <a class="hover:text-primary transition-colors" href="{% url 'faq' %}">{% trans "FAQ Assistance" %}</a>
+                    <a class="hover:text-primary transition-colors" href="{% url 'about' %}">{% trans "About Portal" %}</a>
+                    <a class="hover:text-primary transition-colors" href="{% url 'contact' %}">{% trans "Contact Ministry" %}</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile Menu Toggle
+            const toggle = document.getElementById('navToggle');
+            const panel = document.getElementById('navMobilePanel');
+            if (toggle && panel) {
+                toggle.addEventListener('click', () => panel.classList.toggle('hidden'));
+            }
+
+            // Profile Dropdown Interactivity
+            const container = document.getElementById('profileDropdownContainer');
+            const btn = document.getElementById('profileDropdownBtn');
+            const menu = document.getElementById('profileDropdownMenu');
+            
+            if (container && btn && menu) {
+                let closeTimeout = null;
+                let isOpen = false;
+
+                function openDropdown() {
+                    if (closeTimeout) clearTimeout(closeTimeout);
+                    isOpen = true;
+                    menu.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+                    menu.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                }
+
+                function closeDropdown() {
+                    if (closeTimeout) clearTimeout(closeTimeout);
+                    isOpen = false;
+                    menu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    menu.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+                }
+
+                function scheduleClose() {
+                    if (closeTimeout) clearTimeout(closeTimeout);
+                    closeTimeout = setTimeout(() => {
+                        closeDropdown();
+                    }, 400); // 400ms closing delay
+                }
+
+                // Check device capability
+                const isMobile = window.matchMedia("(max-width: 1024px)").matches || ('ontouchstart' in window);
+
+                if (!isMobile) {
+                    // Desktop: Hover behaviors
+                    container.addEventListener('mouseenter', openDropdown);
+                    container.addEventListener('mouseleave', scheduleClose);
+                    
+                    menu.addEventListener('mouseenter', openDropdown);
+                    menu.addEventListener('mouseleave', scheduleClose);
+
+                    // Click toggle fallback
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (isOpen) {
+                            closeDropdown();
+                        } else {
+                            openDropdown();
+                        }
+                    });
+                } else {
+                    // Mobile: Click trigger only
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (isOpen) {
+                            closeDropdown();
+                        } else {
+                            openDropdown();
+                        }
+                    });
+                }
+
+                // Click outside to close
+                document.addEventListener('click', function(e) {
+                    if (!container.contains(e.target)) {
+                        closeDropdown();
+                    }
+                });
+            }
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

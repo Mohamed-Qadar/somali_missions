@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Activate Embassy Account" %} - {% trans "Somali Missions Platform" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-16">
+    <div class="bg-white border border-border rounded-3xl p-8 shadow-sm space-y-6">
+        
+        <!-- Header Banner -->
+        <div class="text-center space-y-2">
+            <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-full mb-2">
+                <span class="material-symbols-outlined text-2xl">admin_panel_settings</span>
+            </div>
+            <h1 class="text-2xl font-black text-secondary">{% trans "Activate Staff Portal" %}</h1>
+            <p class="text-textSecondary text-sm">
+                {% trans "Configure username and password for your security credentials." %}
+            </p>
+        </div>
+
+        <!-- Invitation Context Info -->
+        <div class="bg-slate-50 border border-border rounded-2xl p-4 space-y-2 text-xs">
+            <div class="flex justify-between">
+                <span class="font-semibold text-textSecondary">{% trans "Invited Email" %}:</span>
+                <span class="font-bold text-textPrimary">{{ invitation.email }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-semibold text-textSecondary">{% trans "Assigned Mission" %}:</span>
+                <span class="font-bold text-textPrimary">{{ invitation.mission.name }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-semibold text-textSecondary">{% trans "Portal Role" %}:</span>
+                <span class="inline-block font-extrabold uppercase text-[9px] bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                    {{ invitation.get_role_display }}
+                </span>
+            </div>
+        </div>
+
+        <form method="post" class="space-y-4" novalidate>
+            {% csrf_token %}
+            
+            {% if error %}
+                <div class="p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm text-center font-semibold">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <div>
+                <label for="username" class="block text-sm font-semibold text-textSecondary mb-1">{% trans "Unique Username" %}</label>
+                <input type="text" name="username" id="username" required placeholder="e.g. mohamed_emb"
+                       class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="full_name" class="block text-sm font-semibold text-textSecondary mb-1">{% trans "Full Name" %}</label>
+                <input type="text" name="full_name" id="full_name" required placeholder="e.g. Ambassador Mohamed Farah"
+                       class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-semibold text-textSecondary mb-1">{% trans "Secure Password" %}</label>
+                <input type="password" name="password" id="password" required placeholder="••••••••"
+                       class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="confirm_password" class="block text-sm font-semibold text-textSecondary mb-1">{% trans "Confirm Password" %}</label>
+                <input type="password" name="confirm_password" id="confirm_password" required placeholder="••••••••"
+                       class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+            </div>
+
+            <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white font-extrabold py-3.5 rounded-xl shadow-md shadow-primary/20 transition-all flex justify-center items-center gap-2 mt-2">
+                <span class="material-symbols-outlined text-lg">check_circle</span>
+                {% trans "Activate Account & Login" %}
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

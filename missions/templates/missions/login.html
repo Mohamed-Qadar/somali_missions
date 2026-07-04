@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign In" %} - {% trans "Somali Missions Platform" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-16">
+    <div class="bg-white border border-border rounded-2xl p-8 shadow-sm">
+        <div class="text-center space-y-2 mb-6">
+            <h1 class="text-2xl font-bold text-textPrimary">{% trans "Sign In" %}</h1>
+            <p class="text-textSecondary text-sm">{% trans "Access citizen dashboard or diplomatic oversight." %}</p>
+        </div>
+
+        <form method="post" class="space-y-4" novalidate>
+            {% csrf_token %}
+            
+            {% if error %}
+                <div class="p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm text-center">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <div>
+                <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium mb-1">{% trans "Username or Email" %}</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <div class="flex justify-between items-center mb-1">
+                    <label for="{{ form.password.id_for_label }}" class="block text-sm font-medium">{% trans "Password" %}</label>
+                    <a href="{% url 'password_reset' %}" class="text-xs text-primary hover:underline">{% trans "Forgot password?" %}</a>
+                </div>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.password.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="flex items-center gap-2">
+                {{ form.remember_me }}
+                <label for="{{ form.remember_me.id_for_label }}" class="text-sm text-textSecondary select-none">{{ form.remember_me.label }}</label>
+            </div>
+
+            <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 rounded-lg shadow-sm mt-2">
+                {% trans "Sign In" %}
+            </button>
+        </form>
+
+        <div class="text-center mt-6 pt-6 border-t border-border text-sm text-textSecondary">
+            {% trans "Are you a citizen experience problems?" %} <br/>
+            <a href="{% url 'register' %}" class="text-primary font-semibold hover:underline">{% trans "Create Citizen Account" %}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

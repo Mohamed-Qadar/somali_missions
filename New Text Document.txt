@@ -1,0 +1,111 @@
+Somali Temsilcilikleri Şikayet & Değerlendirme Platformu – Proje Taslağı
+🎯 Projenin Amacı
+
+Dünyanın farklı ülkelerinde yaşayan Somali vatandaşlarının büyükelçilik, konsolosluk ve temsilciliklerde yaşadıkları hizmet sorunlarını kolayca raporlayabilecekleri, bu verilerin analiz edilip Somali Dışişleri Bakanlığı ile paylaşılabileceği bağımsız, küçük ama etkili bir web platformu geliştirmek.
+
+🧩 Temel Özellikler
+1️⃣ Konsolosluk Listesi (Global)
+
+Tüm dünyadaki Somali Büyükelçilikleri, Başkonsoloslukları ve Temsilcilikleri listelenir.
+
+Her temsilcilik için bilgiler:
+
+Adı
+
+Ülke, şehir
+
+Telefon
+
+E-posta
+
+Adres
+
+Web sitesi
+
+Çalışma saatleri
+
+📝 Şikayet ve Değerlendirme Modülleri
+2️⃣ Puanlama Sistemi (1–5 Yıldız)
+
+Kullanıcılar temsilciliklere puan verebilir.
+
+3️⃣ Şikayet Formu (Anonim veya Email ile)
+
+Email vermek zorunlu değil.
+
+Kullanıcılar tamamen anonim olarak şikayet yazabilir.
+
+Formda:
+
+Temsilcilik seçimi
+
+Puan
+
+Şikayet metni
+
+(Opsiyonel) email
+
+4️⃣ En Çok Şikayet Alanlar Sıralaması
+
+Otomatik istatistik oluşturulur
+
+Aylık, yıllık veya genel sıralama
+
+Somali Dışişleri için önemli metrik
+Analiz & Raporlama Modülleri
+5️⃣ Şikayet Trend Analizi (Otomatik)
+
+Son 30 gün içinde:
+
+Hangi konsolosluk en çok şikayet aldı
+
+Hangi konular daha fazla tekrar etti
+
+Günlük / haftalık grafikler
+
+➡ Django + Chart.js ile yapılabilir.
+
+6️⃣ Negatif Duygu Analizi (Sentiment Analysis) – Otomatik
+
+Kullanıcı şikayeti yazdığı anda sistem otomatik olarak sınıflandırır:
+
+Kötü
+
+Orta
+
+İyi
+Bu sayede:
+
+Çok sert şikayetler işaretlenebilir
+
+Trend raporları daha anlamlı hale gelir
+
+Dışişleri için kalite göstergesi olur
+PDF Raporu Oluşturma (Export)
+
+Her konsolosluğun tüm şikayetleri
+
+Aylık özet
+
+Ortalama puan
+
+Negatif/pozitif oranı
+
+Tümü tek tıkla PDF dosyası olarak indirilebilir.
+
+➡ Dışişleri Bakanlığı ile paylaşım kolaylaşır.
+Konsolosluk Cevap Modülü
+8️⃣ Konsolosluk Yanıtları
+
+Konsolosluk yetkilisi giriş yapar
+
+Kullanıcı şikayetlerine cevap yazabilir
+
+Kullanıcıya mail gitmez (anonimlik korunur)
+
+Sistem "Bu şikayet yanıtlandı" şeklinde işaretler
+Çok hafif arayüz
+
+Mobil uyumlu
+
+Sade ve hızlı

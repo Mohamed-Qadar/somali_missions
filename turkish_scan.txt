@@ -1,0 +1,11 @@
+('UserProfile', 5, 'full_name', 'ABD\\u0130')
+('UserProfile', 5, 'country_of_residence', 'T\\xfcrkiye')
+('UserProfile', 6, 'full_name', 'ABD\\u0130')
+('UserProfile', 6, 'country_of_residence', 'T\\xfcrkiye')
+('UserProfile', 7, 'country_of_residence', 'T\\xfcrkiye')
+('Complaint', 8, 'message', 'safarada somal\\u0131 ee jabuuti waa tuugo gaalo is uruursatay')
+('Complaint', 12, 'subject', '\\u015fikeyet')
+('Complaint', 12, 'message', 'bu \\u0131nsanlar \\xe7ok k\\xf6t\\xfc')
+('Complaint', 13, 'subject', '\\u015fikeyet')
+('Complaint', 13, 'message', 'bu \\u0131nsanlar \\xe7ok k\\xf6t\\xfc')
+TOTAL HITS: 10

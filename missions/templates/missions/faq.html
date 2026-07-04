@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "FAQ" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12 space-y-6">
+	<h1 class="text-3xl font-black">{% trans "Frequently Asked Questions" %}</h1>
+	<div class="bg-white border border-border rounded-xl p-6">
+		<h2 class="font-bold">{% trans "Can I submit anonymously?" %}</h2>
+		<p class="text-textSecondary text-sm mt-2">{% trans "Yes. Check 'Submit anonymously' and your name and contact details will not be stored." %}</p>
+	</div>
+	<div class="bg-white border border-border rounded-xl p-6">
+		<h2 class="font-bold">{% trans "How do I track my complaint?" %}</h2>
+		<p class="text-textSecondary text-sm mt-2">{% trans "After submission you receive an 8-character tracking code. Use the Track page to check status and any public response." %}</p>
+	</div>
+	<div class="bg-white border border-border rounded-xl p-6">
+		<h2 class="font-bold">{% trans "How long until I get a response?" %}</h2>
+		<p class="text-textSecondary text-sm mt-2">{% trans "Mission staff aim to review complaints within 14 working days. Urgent cases may be prioritized." %}</p>
+	</div>
+	<div class="bg-white border border-border rounded-xl p-6">
+		<h2 class="font-bold">{% trans "Who runs this platform?" %}</h2>
+		<p class="text-textSecondary text-sm mt-2">{% trans "The platform supports the Ministry of Foreign Affairs in monitoring service quality at Somali missions worldwide." %}</p>
+	</div>
+</div>
+{% endblock %}

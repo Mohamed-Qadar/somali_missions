@@ -1,0 +1,2171 @@
+# SO translations for Somali Missions platform
+msgid ""
+msgstr ""
+"Project-Id-Version: somali-missions\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-04 00:00+0000\n"
+"PO-Revision-Date: 2026-07-04 00:00+0000\n"
+"Language: so\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "-- Assign Staff --"
+msgstr "-- U qoondee Shaqaale --"
+
+msgid "-- Select Mission --"
+msgstr "-- Dooro Xafiiska --"
+
+msgid "-- Select Mission involved --"
+msgstr "-- Dooro Xafiiska ay khusayso --"
+
+msgid "1. All staff responses to citizens must remain respectful, formal, and written in clear language (Somali or English)."
+msgstr "1. All staff responses to citizens must remain respectful, formal, and written in clear language (Somali or English)."
+
+msgid "100% Secure & Private"
+msgstr "100% Ammaan & Qarsoodi"
+
+msgid "2. Use the 'Request Info' action to send clarifying requests instead of making assumptions. This notifies the citizen automatically."
+msgstr "2. Use the 'Request Info' action to send clarifying requests instead of making assumptions. This notifies the citizen automatically."
+
+msgid "24/7 Diplomatic Rescue Service"
+msgstr "24/7 Diplomatic Rescue Service"
+
+msgid "3. Every single status modification, assignment action, and internal note is securely stored on a read-only audit log database for transparency reviews."
+msgstr "3. Every single status modification, assignment action, and internal note is securely stored on a read-only audit log database for transparency reviews."
+
+msgid "A platform administrator must approve your group representative record before this panel opens."
+msgstr "A platform administrator must approve your group representative record before this panel opens."
+
+msgid "A user with that email already exists."
+msgstr "A user with that email already exists."
+
+msgid "A user with that username already exists."
+msgstr "A user with that username already exists."
+
+msgid "About Portal"
+msgstr "Ku saabsan Bogga"
+
+msgid "About This Platform"
+msgstr "Ku saabsan Madalkan"
+
+msgid "About Us"
+msgstr "Nagu saabsan"
+
+msgid "Access citizen dashboard or diplomatic oversight."
+msgstr "Access citizen dashboard or diplomatic oversight."
+
+msgid "Access phone numbers, working hours, email, and locations for all Somali diplomatic missions worldwide."
+msgstr "Access phone numbers, working hours, email, and locations for all Somali diplomatic missions worldwide."
+
+msgid "Access real-time ministry statistics, evaluate diplomatic mission rankings, and read case resolution outcomes."
+msgstr "Access real-time ministry statistics, evaluate diplomatic mission rankings, and read case resolution outcomes."
+
+msgid "Accommodation"
+msgstr "Accommodation"
+
+msgid "Accommodation support"
+msgstr "Accommodation support"
+
+msgid "Account Settings"
+msgstr "Dejinta Akoonka"
+
+msgid "Action"
+msgstr "Tallaabo"
+
+msgid "Action Performed"
+msgstr "Action Performed"
+
+msgid "Activate Account & Login"
+msgstr "Kici Akoonka oo Gal"
+
+msgid "Activate Embassy Account"
+msgstr "Activate Embassy Account"
+
+msgid "Activate Staff Portal"
+msgstr "Activate Staff Portal"
+
+msgid "Activation Link (Simulation)"
+msgstr "Activation Link (Simulation)"
+
+msgid "Active"
+msgstr "Firfircoon"
+
+msgid "Active Cases"
+msgstr "Kiisaska Firfircoon"
+
+msgid "Active Pending Invitations"
+msgstr "Active Pending Invitations"
+
+msgid "Active oversight required"
+msgstr "Active oversight required"
+
+msgid "Add Attachment"
+msgstr "Ku dar Lifaaq"
+
+msgid "Add Attachment File"
+msgstr "Add Attachment File"
+
+msgid "Add response"
+msgstr "Add response"
+
+msgid "Admin"
+msgstr "Maamul"
+
+msgid "Affordable accommodation"
+msgstr "Affordable accommodation"
+
+msgid "After submission you receive an 8-character tracking code. Use the Track page to check status and any public response."
+msgstr "After submission you receive an 8-character tracking code. Use the Track page to check status and any public response."
+
+msgid "All Consulates"
+msgstr "Dhammaan Qunsuliyadaha"
+
+msgid "All Countries"
+msgstr "Dhammaan Dalalka"
+
+msgid "All Mission Complaints"
+msgstr "Dhammaan Cabashooyinka Xafiisyada"
+
+msgid "All Mission Types"
+msgstr "Dhammaan Noocyada Xafiisyada"
+
+msgid "All Missions"
+msgstr "Dhammaan Xafiisyada"
+
+msgid "All Types"
+msgstr "Dhammaan Noocyada"
+
+msgid "All countries"
+msgstr "Dhammaan dalalka"
+
+msgid "All embassies meeting service compliance targets."
+msgstr "All embassies meeting service compliance targets."
+
+msgid "All time"
+msgstr "All time"
+
+msgid "Allocate"
+msgstr "Allocate"
+
+msgid "Already have an account?"
+msgstr "Akoon hore ma leedahay?"
+
+msgid "An email verification link has been sent to"
+msgstr "An email verification link has been sent to"
+
+msgid "Analysis"
+msgstr "Falanqayn"
+
+msgid "Analysis & Rankings"
+msgstr "Falanqayn & Kala-sarrayn"
+
+msgid "Analytics"
+msgstr "Falanqaynta Xogta"
+
+msgid "Announcement details"
+msgstr "Announcement details"
+
+msgid "Announcements"
+msgstr "Ogeysiisyo"
+
+msgid "Anonymized Resolution Outcomes"
+msgstr "Anonymized Resolution Outcomes"
+
+msgid "Anonymous Citizen"
+msgstr "Muwaadin aan magac sheegin"
+
+msgid "Anonymous submission"
+msgstr "Gudbin qarsoodi ah"
+
+msgid "Answer"
+msgstr "Jawaab"
+
+msgid "Appointment"
+msgstr "Ballan"
+
+msgid "Appointment Issues"
+msgstr "Dhibaatooyinka Ballanta"
+
+msgid "Approved"
+msgstr "La ansixiyay"
+
+msgid "Archived"
+msgstr "La kaydiyay"
+
+msgid "Are you a Somali citizen experiencing a severe crisis abroad? (e.g., Arrest, Detention, Human Trafficking, Domestic Abuse, Medical Emergencies, or Lost Passport in a vulnerable area)."
+msgstr "Are you a Somali citizen experiencing a severe crisis abroad? (e.g., Arrest, Detention, Human Trafficking, Domestic Abuse, Medical Emergencies, or Lost Passport in a vulnerable area)."
+
+msgid "Are you a citizen experience problems?"
+msgstr "Are you a citizen experience problems?"
+
+msgid "Arrest or Detention"
+msgstr "Xarig ama Hayn"
+
+msgid "Assigned"
+msgstr "La qoondeeyay"
+
+msgid "Assigned Cases"
+msgstr "Kiisaska la qoondeeyay"
+
+msgid "Assigned Diplomatic Mission"
+msgstr "Xafiiska Dibloomaasiga ee la qoondeeyay"
+
+msgid "Assigned Mission"
+msgstr "Xafiiska la qoondeeyay"
+
+msgid "Assigned Officer"
+msgstr "Sarkaalka la qoondeeyay"
+
+msgid "Attach official documents, passport copies, visa rejections, audio/video statements, or screenshots. Max 10MB per file."
+msgstr "Attach official documents, passport copies, visa rejections, audio/video statements, or screenshots. Max 10MB per file."
+
+msgid "Audit Logs"
+msgstr "Diiwaannada Hantidhawrka"
+
+msgid "Automatic and manual SLA escalations are recorded here for ministry accountability."
+msgstr "Automatic and manual SLA escalations are recorded here for ministry accountability."
+
+msgid "Average Rating"
+msgstr "Celceliska Qiimeynta"
+
+msgid "Average Resolution SLA"
+msgstr "Celceliska Waqtiga Xallinta"
+
+msgid "Average Resolution Time"
+msgstr "Celceliska Waqtiga Xallinta"
+
+msgid "Average post-close satisfaction"
+msgstr "Average post-close satisfaction"
+
+msgid "Avg Solve Speed"
+msgstr "Avg Solve Speed"
+
+msgid "Avg. Solve Time"
+msgstr "Avg. Solve Time"
+
+msgid "Avg. Star Rating"
+msgstr "Celceliska Xiddigaha"
+
+msgid "Awaiting Response"
+msgstr "Jawaab ayaa la sugayaa"
+
+msgid "Back"
+msgstr "Dib u noqo"
+
+msgid "Back to Command Center"
+msgstr "Back to Command Center"
+
+msgid "Back to Embassy Dashboard"
+msgstr "Ku noqo Dashboard-ka Safaaradda"
+
+msgid "Back to Login"
+msgstr "Ku noqo Galitaanka"
+
+msgid "Back to Mission List"
+msgstr "Ku noqo Liiska Xafiisyada"
+
+msgid "Before You Travel"
+msgstr "Kahor Safarka"
+
+msgid "Best arrival:"
+msgstr "Best arrival:"
+
+msgid "By"
+msgstr "Waxaa qoray"
+
+msgid "Callback Phone"
+msgstr "Callback Phone"
+
+msgid "Campaign"
+msgstr "Ololaha"
+
+msgid "Can I submit anonymously?"
+msgstr "Ma gudbin karaa anigoon magacayga sheegin?"
+
+msgid "Case Audit Trail"
+msgstr "Case Audit Trail"
+
+msgid "Case Reference"
+msgstr "Tixraaca Kiiska"
+
+msgid "Case Status Control"
+msgstr "Xakamaynta Xaaladda Kiiska"
+
+msgid "Case Workspace"
+msgstr "Case Workspace"
+
+msgid "Case detail status update."
+msgstr "Case detail status update."
+
+msgid "Cases"
+msgstr "Kiisas"
+
+msgid "Category"
+msgstr "Qayb"
+
+msgid "Category breakdown"
+msgstr "Category breakdown"
+
+msgid "Change Password"
+msgstr "Beddel Furaha"
+
+msgid "Check documents, timing, and service guidance."
+msgstr "Hubi dukumentiyada, waqtiga, iyo hagidda adeegga."
+
+msgid "Choose Embassy/Consulate Nearest to You"
+msgstr "Dooro Safaaradda/Qunsuliyadda kuugu dhow"
+
+msgid "Citizen"
+msgstr "Muwaadin"
+
+msgid "Citizen Issue"
+msgstr "Citizen Issue"
+
+msgid "Citizen Messages"
+msgstr "Farriimaha Muwaadiniinta"
+
+msgid "Citizen Portal"
+msgstr "Bogga Muwaadinka"
+
+msgid "Citizen Registration"
+msgstr "Diiwaangelinta Muwaadinka"
+
+msgid "Citizen Score"
+msgstr "Citizen Score"
+
+msgid "Citizen Service Portal"
+msgstr "Citizen Service Portal"
+
+msgid "Citizen Support Nearby"
+msgstr "Citizen Support Nearby"
+
+msgid "Citizen submitted complaint."
+msgstr "Citizen submitted complaint."
+
+msgid "City"
+msgstr "Magaalo"
+
+msgid "Civil registration"
+msgstr "Civil registration"
+
+msgid "Closed"
+msgstr "Xiran"
+
+msgid "Code"
+msgstr "Koodh"
+
+msgid "Comments or notes regarding the resolution..."
+msgstr "Comments or notes regarding the resolution..."
+
+msgid "Communication Log"
+msgstr "Communication Log"
+
+msgid "Communities"
+msgstr "Bulshooyinka"
+
+msgid "Community Admin"
+msgstr "Maamulka Bulshada"
+
+msgid "Community Groups"
+msgstr "Kooxaha Bulshada"
+
+msgid "Community Profile"
+msgstr "Astaanta Bulshada"
+
+msgid "Community Representative"
+msgstr "Wakiilka Bulshada"
+
+msgid "Community Representative Panel"
+msgstr "Community Representative Panel"
+
+msgid "Community Support Network"
+msgstr "Shabakadda Taageerada Bulshada"
+
+msgid "Community announcement"
+msgstr "Community announcement"
+
+msgid "Complaint"
+msgstr "Cabasho"
+
+msgid "Complaint Subject"
+msgstr "Mawduuca Cabashada"
+
+msgid "Complaint Submitted"
+msgstr "Cabashada waa la gudbiyay"
+
+msgid "Complaint Submitted Successfully"
+msgstr "Cabashada si guul leh ayaa loo gudbiyay"
+
+msgid "Complaint Summary Review"
+msgstr "Dib u eegista Kooban ee Cabashada"
+
+msgid "Complaint Volume"
+msgstr "Tirada Cabashooyinka"
+
+msgid "Complaint subject, message, category, and star rating"
+msgstr "Complaint subject, message, category, and star rating"
+
+msgid "Complaints"
+msgstr "Cabashooyin"
+
+msgid "Complaints & Citizen Protection"
+msgstr "Cabashooyinka & Ilaalinta Muwaadinka"
+
+msgid "Complaints Assigned to You"
+msgstr "Cabashooyinka laguu qoondeeyay"
+
+msgid "Complaints are retained for service quality analysis. You can track status using your unique tracking code without creating an account."
+msgstr "Complaints are retained for service quality analysis. You can track status using your unique tracking code without creating an account."
+
+msgid "Complaints by Country"
+msgstr "Cabashooyinka Dalka"
+
+msgid "Complaints by Diplomatic Mission"
+msgstr "Cabashooyinka Xafiiska Dibloomaasiga"
+
+msgid "Complaints by Service Category"
+msgstr "Cabashooyinka Qaybta Adeegga"
+
+msgid "Complaints by mission"
+msgstr "Complaints by mission"
+
+msgid "Configure Your Report"
+msgstr "Habee Warbixintaada"
+
+msgid "Configure username and password for your security credentials."
+msgstr "Configure username and password for your security credentials."
+
+msgid "Confirm Password"
+msgstr "Xaqiiji Furaha"
+
+msgid "Confirm Password Reset"
+msgstr "Xaqiiji Dib-u-dejinta Furaha"
+
+msgid "Connect with trusted student groups."
+msgstr "La xiriir ururrada ardayda ee la aamini karo."
+
+msgid "Consular Services"
+msgstr "Adeegyada Qunsuliyadda"
+
+msgid "Consulate"
+msgstr "Qunsuliyad"
+
+msgid "Consulates"
+msgstr "Qunsuliyado"
+
+msgid "Contact"
+msgstr "Xiriir"
+
+msgid "Contact Information"
+msgstr "Macluumaadka Xiriirka"
+
+msgid "Contact Ministry"
+msgstr "La xiriir Wasaaradda"
+
+msgid "Contact Us"
+msgstr "Nala Soo Xiriir"
+
+msgid "Contact email"
+msgstr "Iimaylka xiriirka"
+
+msgid "Continue"
+msgstr "Sii wad"
+
+msgid "Corruption"
+msgstr "Musuqmaasuq"
+
+msgid "Country"
+msgstr "Dalka"
+
+msgid "Country of Residence"
+msgstr "Dalka Deganaanshaha"
+
+msgid "Create Citizen Account"
+msgstr "Samee Akoon Muwaadin"
+
+msgid "Create an account to submit, track, and manage your diplomatic complaints."
+msgstr "Create an account to submit, track, and manage your diplomatic complaints."
+
+msgid "Critical"
+msgstr "Halis"
+
+msgid "Critical Crisis Queue"
+msgstr "Critical Crisis Queue"
+
+msgid "Critical Response Deadlines Breached"
+msgstr "Critical Response Deadlines Breached"
+
+msgid "Critical case %(code)s has exceeded %(hours)s hour SLA for %(mission)s."
+msgstr "Critical case %(code)s has exceeded %(hours)s hour SLA for %(mission)s."
+
+msgid "Current Active Phase"
+msgstr "Current Active Phase"
+
+msgid "Current Status:"
+msgstr "Xaaladda Hadda:"
+
+msgid "Daily complaints"
+msgstr "Daily complaints"
+
+msgid "Daily submission limit reached for this mission. Please try again tomorrow."
+msgstr "Daily submission limit reached for this mission. Please try again tomorrow."
+
+msgid "Daily submission limit reached. Please try again tomorrow."
+msgstr "Daily submission limit reached. Please try again tomorrow."
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Date from"
+msgstr "Taariikhda laga bilaabo"
+
+msgid "Days"
+msgstr "Maalmo"
+
+msgid "Delay"
+msgstr "Dib-u-dhac"
+
+msgid "Delayed"
+msgstr "Dib u dhacay"
+
+msgid "Details"
+msgstr "Faahfaahin"
+
+msgid "Details of the Incident"
+msgstr "Faahfaahinta Dhacdada"
+
+msgid "Developer / Simulator Tooling:"
+msgstr "Developer / Simulator Tooling:"
+
+msgid "Diplomatic Directory"
+msgstr "Hagaha Dibloomaasiga"
+
+msgid "Diplomatic Mission"
+msgstr "Xafiis Dibloomaasi"
+
+msgid "Diplomatic Mission Performance Oversight"
+msgstr "Diplomatic Mission Performance Oversight"
+
+msgid "Diplomatic Mission:"
+msgstr "Diplomatic Mission:"
+
+msgid "Directory"
+msgstr "Hagaha"
+
+msgid "Document"
+msgstr "Dukumenti"
+
+msgid "Document Authentication"
+msgstr "Xaqiijinta Dukumentiga"
+
+msgid "Document Pre-check"
+msgstr "Hubinta Hore ee Dukumentiga"
+
+msgid "Document authentication"
+msgstr "Document authentication"
+
+msgid "Domestic Violence or Abuse"
+msgstr "Domestic Violence or Abuse"
+
+msgid "Download Attachment"
+msgstr "Soo dejiso Lifaaqa"
+
+msgid "Download File"
+msgstr "Soo dejiso Faylka"
+
+msgid "Drag & Drop files here or click to browse"
+msgstr "Drag & Drop files here or click to browse"
+
+msgid "EMERGENCY PORTAL"
+msgstr "EMERGENCY PORTAL"
+
+msgid "Email"
+msgstr "Iimayl"
+
+msgid "Email (Optional)"
+msgstr "Email (Optional)"
+
+msgid "Email (optional)"
+msgstr "Email (optional)"
+
+msgid "Email Address"
+msgstr "Cinwaanka Iimaylka"
+
+msgid "Email Verification Sent"
+msgstr "Xaqiijinta Iimaylka waa la diray"
+
+msgid "Email Verified"
+msgstr "Iimaylka waa la xaqiijiyay"
+
+msgid "Email Verified Successfully!"
+msgstr "Email Verified Successfully!"
+
+msgid "Email and Mission are required."
+msgstr "Email and Mission are required."
+
+msgid "Email:"
+msgstr "Email:"
+
+msgid "Embassies"
+msgstr "Safaarado"
+
+msgid "Embassy"
+msgstr "Safaarad"
+
+msgid "Embassy & Consulate Portal"
+msgstr "Bogga Safaaradda & Qunsuliyadda"
+
+msgid "Embassy / Consulate"
+msgstr "Safaarad / Qunsuliyad"
+
+msgid "Embassy Complaints"
+msgstr "Cabashooyinka Safaaradda"
+
+msgid "Embassy Emergency Directory"
+msgstr "Hagaha Gurmadka Safaaradda"
+
+msgid "Embassy Management"
+msgstr "Maamulka Safaaradda"
+
+msgid "Embassy Manager"
+msgstr "Maamulaha Safaaradda"
+
+msgid "Embassy Manager (SLA & staff manager)"
+msgstr "Embassy Manager (SLA & staff manager)"
+
+msgid "Embassy Officer"
+msgstr "Sarkaalka Safaaradda"
+
+msgid "Embassy Officer (Case handler)"
+msgstr "Embassy Officer (Case handler)"
+
+msgid "Embassy Portal Management"
+msgstr "Embassy Portal Management"
+
+msgid "Embassy Resolution Action"
+msgstr "Embassy Resolution Action"
+
+msgid "Embassy Staff (Legacy)"
+msgstr "Embassy Staff (Legacy)"
+
+msgid "Embassy/consulate visit guidance"
+msgstr "Embassy/consulate visit guidance"
+
+msgid "Emergency"
+msgstr "Gurmad"
+
+msgid "Emergency & Citizen Protection"
+msgstr "Gurmad & Ilaalinta Muwaadinka"
+
+msgid "Emergency Active"
+msgstr "Emergency Active"
+
+msgid "Emergency Ask"
+msgstr "Emergency Ask"
+
+msgid "Emergency Assistance"
+msgstr "Caawimaad Gurmad"
+
+msgid "Emergency Support"
+msgstr "Taageero Gurmad"
+
+msgid "Emergency Support Available"
+msgstr "Taageero Gurmad ayaa jirta"
+
+msgid "Emergency assistance"
+msgstr "Emergency assistance"
+
+msgid "Emergency complaint submitted."
+msgstr "Emergency complaint submitted."
+
+msgid "Emergency contact"
+msgstr "Emergency contact"
+
+msgid "Emergency contacts, community help, transport, and affordable accommodation guidance."
+msgstr "Emergency contacts, community help, transport, and affordable accommodation guidance."
+
+msgid "Emergency notice"
+msgstr "Emergency notice"
+
+msgid "Emergency support available"
+msgstr "Emergency support available"
+
+msgid "Emergency support currently available"
+msgstr "Emergency support currently available"
+
+msgid "Enter 8-Character Case Code"
+msgstr "Enter 8-Character Case Code"
+
+msgid "Enter your email address below, and we will email you instructions for setting a new password."
+msgstr "Enter your email address below, and we will email you instructions for setting a new password."
+
+msgid "Escalate"
+msgstr "Escalate"
+
+msgid "Escalate to Ministry"
+msgstr "Escalate to Ministry"
+
+msgid "Escalation Action Log"
+msgstr "Escalation Action Log"
+
+msgid "Escalations"
+msgstr "Escalations"
+
+msgid "Event"
+msgstr "Dhacdo"
+
+msgid "Event details"
+msgstr "Event details"
+
+msgid "Event title"
+msgstr "Event title"
+
+msgid "Events and Support Campaigns"
+msgstr "Events and Support Campaigns"
+
+msgid "Every complaint helps improve services."
+msgstr "Every complaint helps improve services."
+
+msgid "Evidence"
+msgstr "Evidence"
+
+msgid "Evidence / Pictures / Proof"
+msgstr "Evidence / Pictures / Proof"
+
+msgid "Evidence Review Gallery"
+msgstr "Evidence Review Gallery"
+
+msgid "Explain what happened & details of help needed"
+msgstr "Explain what happened & details of help needed"
+
+msgid "Export CSV"
+msgstr "Export CSV"
+
+msgid "Export CSV Report"
+msgstr "Export CSV Report"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "FAQ Assistance"
+msgstr "FAQ Assistance"
+
+msgid "Faster Response"
+msgstr "Jawaab Degdeg ah"
+
+msgid "Federal Government of Somalia"
+msgstr "Federal Government of Somalia"
+
+msgid "Federal Republic of Somalia"
+msgstr "Jamhuuriyadda Federaalka Soomaaliya"
+
+msgid "Feedback Submitted"
+msgstr "Feedback Submitted"
+
+msgid "Feedback is collected independently. Mission ratings reflect citizen experiences and support internal quality review — not political endorsement."
+msgstr "Feedback is collected independently. Mission ratings reflect citizen experiences and support internal quality review — not political endorsement."
+
+msgid "File Instant Emergency Report"
+msgstr "File Instant Emergency Report"
+
+msgid "File New Complaint"
+msgstr "File New Complaint"
+
+msgid "File preview unavailable"
+msgstr "File preview unavailable"
+
+msgid "File too large (Max 10MB)"
+msgstr "File too large (Max 10MB)"
+
+msgid "Filing intentionally false reports on the emergency hotline is a criminal offense under Somali national law. Please use this ONLY for true crisis assistance."
+msgstr "Filing intentionally false reports on the emergency hotline is a criminal offense under Somali national law. Please use this ONLY for true crisis assistance."
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Find"
+msgstr "Find"
+
+msgid "Find Somali Mission"
+msgstr "Raadi Xafiis Soomaaliyeed"
+
+msgid "Find Somali missions worldwide, submit complaints, track progress, and help improve services for every Somali citizen."
+msgstr "Raadi xafiisyada Soomaaliya ee dunida, gudbi cabashooyin, la soco horumarka, kana qayb qaado hagaajinta adeegyada muwaadin kasta oo Soomaaliyeed."
+
+msgid "Find contact details and hotlines for the nearest Somali Diplomatic Mission."
+msgstr "Find contact details and hotlines for the nearest Somali Diplomatic Mission."
+
+msgid "Find local Somali community support."
+msgstr "Find local Somali community support."
+
+msgid "Find verified Somali-led support networks for orientation, accommodation guidance, translation, transport help, and emergency community support."
+msgstr "Find verified Somali-led support networks for orientation, accommodation guidance, translation, transport help, and emergency community support."
+
+msgid "Follow the steps below to report a problem. Your draft is saved automatically."
+msgstr "Follow the steps below to report a problem. Your draft is saved automatically."
+
+msgid "Food/basic needs"
+msgstr "Food/basic needs"
+
+msgid "For Every Somali"
+msgstr "Muwaadin kasta oo Soomaaliyeed"
+
+msgid "Forgot password?"
+msgstr "Forgot password?"
+
+msgid "Frequently Asked Questions"
+msgstr "Frequently Asked Questions"
+
+msgid "Full Complaint Log (Per Consulate)"
+msgstr "Full Complaint Log (Per Consulate)"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "Full Name (Optional)"
+msgstr "Full Name (Optional)"
+
+msgid "Generate PDF"
+msgstr "Generate PDF"
+
+msgid "Generate and Export Reports"
+msgstr "Generate and Export Reports"
+
+msgid "Generate and Send Invitation"
+msgstr "Generate and Send Invitation"
+
+msgid "Geographic Directory Map"
+msgstr "Geographic Directory Map"
+
+msgid "Get urgent help and emergency contacts."
+msgstr "Hel caawimaad degdeg ah iyo xiriirrada gurmadka."
+
+msgid "Global Diplomatic Directory"
+msgstr "Global Diplomatic Directory"
+
+msgid "Global Distribution & Performance Map"
+msgstr "Global Distribution & Performance Map"
+
+msgid "Go to Login"
+msgstr "Go to Login"
+
+msgid "Government Logo"
+msgstr "Government Logo"
+
+msgid "Government Transparency Initiative"
+msgstr "Government Transparency Initiative"
+
+msgid "Group description"
+msgstr "Group description"
+
+msgid "Hardship and urgency factors"
+msgstr "Hardship and urgency factors"
+
+msgid "Head Office"
+msgstr "Head Office"
+
+msgid "Help Center"
+msgstr "Xarunta Caawinta"
+
+msgid "High"
+msgstr "High"
+
+msgid "Highest rated"
+msgstr "Highest rated"
+
+msgid "Home"
+msgstr "Bogga Hore"
+
+msgid "How can they help?"
+msgstr "How can they help?"
+
+msgid "How do I track my complaint?"
+msgstr "How do I track my complaint?"
+
+msgid "How long until I get a response?"
+msgstr "How long until I get a response?"
+
+msgid "Human Trafficking / Smuggling Case"
+msgstr "Human Trafficking / Smuggling Case"
+
+msgid "I already bought a return bus/flight ticket"
+msgstr "I already bought a return bus/flight ticket"
+
+msgid "I am at the consulate now"
+msgstr "I am at the consulate now"
+
+msgid "I am physically at the mission now"
+msgstr "I am physically at the mission now"
+
+msgid "I do not have accommodation"
+msgstr "I do not have accommodation"
+
+msgid "I have no accommodation tonight"
+msgstr "I have no accommodation tonight"
+
+msgid "I have waited more than 2 hours"
+msgstr "I have waited more than 2 hours"
+
+msgid "I may miss a return ticket"
+msgstr "I may miss a return ticket"
+
+msgid "I travelled a long distance"
+msgstr "I travelled a long distance"
+
+msgid "I travelled from another city or country"
+msgstr "I travelled from another city or country"
+
+msgid "If checked, your personal information (name, email, phone) will be completely hidden from government reviewers. You will track your complaint using a unique generated code."
+msgstr "If checked, your personal information (name, email, phone) will be completely hidden from government reviewers. You will track your complaint using a unique generated code."
+
+msgid "If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder."
+msgstr "If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder."
+
+msgid "Immediate hardship factors"
+msgstr "Immediate hardship factors"
+
+msgid "Important Legal Notice"
+msgstr "Important Legal Notice"
+
+msgid "In-app"
+msgstr "In-app"
+
+msgid "Include average score"
+msgstr "Include average score"
+
+msgid "Include complaint details"
+msgstr "Include complaint details"
+
+msgid "Include name of local authorities involved, hospitals, locations, and any immediate threats."
+msgstr "Include name of local authorities involved, hospitals, locations, and any immediate threats."
+
+msgid "Include sentiment ratio"
+msgstr "Include sentiment ratio"
+
+msgid "Incorrect answer. Please try again."
+msgstr "Incorrect answer. Please try again."
+
+msgid "Incorrect security check answer."
+msgstr "Incorrect security check answer."
+
+msgid "Independence note"
+msgstr "Independence note"
+
+msgid "Input your unique 8-character case tracking code to check status and read official responses."
+msgstr "Input your unique 8-character case tracking code to check status and read official responses."
+
+msgid "Instructions Sent"
+msgstr "Instructions Sent"
+
+msgid "Internal Chat"
+msgstr "Internal Chat"
+
+msgid "Internal Portal Guidelines"
+msgstr "Internal Portal Guidelines"
+
+msgid "Internal Staff Notes"
+msgstr "Internal Staff Notes"
+
+msgid "Invalid / Expired Link"
+msgstr "Invalid / Expired Link"
+
+msgid "Invalid submission."
+msgstr "Invalid submission."
+
+msgid "Invalid username or password."
+msgstr "Invalid username or password."
+
+msgid "Investigation"
+msgstr "Investigation"
+
+msgid "Invitation email sent successfully (simulated link printed to notification logs)."
+msgstr "Invitation email sent successfully (simulated link printed to notification logs)."
+
+msgid "Invite Embassy Staff"
+msgstr "Invite Embassy Staff"
+
+msgid "Invite New Embassy User"
+msgstr "Invite New Embassy User"
+
+msgid "Invited Email"
+msgstr "Invited Email"
+
+msgid "Invitee Details"
+msgstr "Invitee Details"
+
+msgid "Invitee Email Address"
+msgstr "Invitee Email Address"
+
+msgid "Language"
+msgstr "Luqad"
+
+msgid "Last 30 days"
+msgstr "Last 30 days"
+
+msgid "Last 365 days"
+msgstr "Last 365 days"
+
+msgid "Live Connection Active"
+msgstr "Live Connection Active"
+
+msgid "Live Progress Timeline"
+msgstr "Live Progress Timeline"
+
+msgid "Location"
+msgstr "Location"
+
+msgid "Location:"
+msgstr "Location:"
+
+msgid "Logout"
+msgstr "Ka bax"
+
+msgid "Look Up"
+msgstr "Look Up"
+
+msgid "Lost Documents"
+msgstr "Lost Documents"
+
+msgid "Lost Passport / Stranded Abroad"
+msgstr "Lost Passport / Stranded Abroad"
+
+msgid "Lost passport"
+msgstr "Lost passport"
+
+msgid "Low"
+msgstr "Low"
+
+msgid "Lowest rated"
+msgstr "Lowest rated"
+
+msgid "Malware Check Passed"
+msgstr "Malware Check Passed"
+
+msgid "Manage"
+msgstr "Manage"
+
+msgid "Manage Case"
+msgstr "Manage Case"
+
+msgid "Medical Crisis or Health Emergency"
+msgstr "Medical Crisis or Health Emergency"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Meeting"
+msgstr "Meeting"
+
+msgid "Message This Group"
+msgstr "Message This Group"
+
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Metrics compiled for the Somali Ministry of Foreign Affairs."
+msgstr "Metrics compiled for the Somali Ministry of Foreign Affairs."
+
+msgid "Min. Rating 1-5"
+msgstr "Qiimeyn ugu yar 1-5"
+
+msgid "Ministry"
+msgstr "Ministry"
+
+msgid "Ministry Administrator"
+msgstr "Ministry Administrator"
+
+msgid "Ministry Administrators can invite embassy officers and managers to join the portal securely."
+msgstr "Ministry Administrators can invite embassy officers and managers to join the portal securely."
+
+msgid "Ministry Command Center"
+msgstr "Ministry Command Center"
+
+msgid "Ministry Hotline: 800-555 (Mock)"
+msgstr "Ministry Hotline: 800-555 (Mock)"
+
+msgid "Ministry Reviewer"
+msgstr "Ministry Reviewer"
+
+msgid "Ministry of Foreign Affairs"
+msgstr "Wasaaradda Arrimaha Dibadda"
+
+msgid "Missing Person Abroad"
+msgstr "Missing Person Abroad"
+
+msgid "Mission"
+msgstr "Xafiis"
+
+msgid "Mission & Role"
+msgstr "Mission & Role"
+
+msgid "Mission Details"
+msgstr "Faahfaahinta Xafiiska"
+
+msgid "Mission Map"
+msgstr "Mission Map"
+
+msgid "Mission Type"
+msgstr "Nooca Xafiiska"
+
+msgid "Mission staff aim to review complaints within 14 working days. Urgent cases may be prioritized."
+msgstr "Mission staff aim to review complaints within 14 working days. Urgent cases may be prioritized."
+
+msgid "Missions Overview"
+msgstr "Missions Overview"
+
+msgid "Modern, transparent, citizen-centric consular services that meet global standards and foster public trust."
+msgstr "Modern, transparent, citizen-centric consular services that meet global standards and foster public trust."
+
+msgid "Modify Case Status"
+msgstr "Modify Case Status"
+
+msgid "Monthly Complaints"
+msgstr "Monthly Complaints"
+
+msgid "Monthly Performance Summary"
+msgstr "Monthly Performance Summary"
+
+msgid "Most complained"
+msgstr "Most complained"
+
+msgid "My Complaints"
+msgstr "My Complaints"
+
+msgid "My Dashboard"
+msgstr "My Dashboard"
+
+msgid "National Analytics"
+msgstr "National Analytics"
+
+msgid "National Complaints"
+msgstr "National Complaints"
+
+msgid "National ID (Optional)"
+msgstr "National ID (Optional)"
+
+msgid "National System Audit Logs"
+msgstr "National System Audit Logs"
+
+msgid "Nature of Crisis"
+msgstr "Nature of Crisis"
+
+msgid "Needs Improvement"
+msgstr "Needs Improvement"
+
+msgid "Negative"
+msgstr "Negative"
+
+msgid "Negative Ratio"
+msgstr "Negative Ratio"
+
+msgid "Neutral"
+msgstr "Neutral"
+
+msgid "New Complaint"
+msgstr "New Complaint"
+
+msgid "No active SLA violations detected."
+msgstr "No active SLA violations detected."
+
+msgid "No active cases registered on database."
+msgstr "No active cases registered on database."
+
+msgid "No active critical alerts."
+msgstr "No active critical alerts."
+
+msgid "No approved community representation is attached to your account yet."
+msgstr "No approved community representation is attached to your account yet."
+
+msgid "No audit logs registered."
+msgstr "No audit logs registered."
+
+msgid "No complaint found with this tracking code."
+msgstr "No complaint found with this tracking code."
+
+msgid "No complaints submitted yet."
+msgstr "No complaints submitted yet."
+
+msgid "No complaints."
+msgstr "No complaints."
+
+msgid "No data."
+msgstr "No data."
+
+msgid "No diplomatic missions found matching your search parameters."
+msgstr "No diplomatic missions found matching your search parameters."
+
+msgid "No directory data available."
+msgstr "No directory data available."
+
+msgid "No document checklist published yet."
+msgstr "No document checklist published yet."
+
+msgid "No embassies registered."
+msgstr "No embassies registered."
+
+msgid "No escalation actions logged yet."
+msgstr "No escalation actions logged yet."
+
+msgid "No evidence files uploaded for this case."
+msgstr "No evidence files uploaded for this case."
+
+msgid "No local support contacts are published yet."
+msgstr "No local support contacts are published yet."
+
+msgid "No messages in the portal chat yet."
+msgstr "No messages in the portal chat yet."
+
+msgid "No messages yet."
+msgstr "No messages yet."
+
+msgid "No missions assigned."
+msgstr "No missions assigned."
+
+msgid "No missions found."
+msgstr "No missions found."
+
+msgid "No pending invitations exist. Send one using the panel on the left."
+msgstr "No pending invitations exist. Send one using the panel on the left."
+
+msgid "No public announcements yet."
+msgstr "No public announcements yet."
+
+msgid "No public communications logged yet by diplomatic staff."
+msgstr "No public communications logged yet by diplomatic staff."
+
+msgid "No public events listed yet."
+msgstr "No public events listed yet."
+
+msgid "No rank statistics computed."
+msgstr "No rank statistics computed."
+
+msgid "No ratings"
+msgstr "No ratings"
+
+msgid "No registered staff officers. Invite staff using ministry tools."
+msgstr "No registered staff officers. Invite staff using ministry tools."
+
+msgid "No reports generated yet."
+msgstr "No reports generated yet."
+
+msgid "No secure messages posted yet."
+msgstr "No secure messages posted yet."
+
+msgid "No submissions registered."
+msgstr "No submissions registered."
+
+msgid "No success stories logged yet."
+msgstr "No success stories logged yet."
+
+msgid "No system audit logs recorded."
+msgstr "No system audit logs recorded."
+
+msgid "No verified emergency offers are currently listed."
+msgstr "No verified emergency offers are currently listed."
+
+msgid "No verified groups found for this search."
+msgstr "No verified groups found for this search."
+
+msgid "OPERATIONAL"
+msgstr "OPERATIONAL"
+
+msgid "Office/location"
+msgstr "Xafiis/goob"
+
+msgid "Official Consular Communications"
+msgstr "Official Consular Communications"
+
+msgid "Official Response"
+msgstr "Official Response"
+
+msgid "One network across global missions."
+msgstr "One network across global missions."
+
+msgid "Open Queue"
+msgstr "Open Queue"
+
+msgid "Open Workload"
+msgstr "Open Workload"
+
+msgid "Operations Command Center"
+msgstr "Operations Command Center"
+
+msgid "Optional"
+msgstr "Optional"
+
+msgid "Optional name, email, and phone (only if you choose not to submit anonymously)"
+msgstr "Optional name, email, and phone (only if you choose not to submit anonymously)"
+
+msgid "Other"
+msgstr "Other"
+
+msgid "Other Urgent Assist"
+msgstr "Other Urgent Assist"
+
+msgid "Overall Platform Analytics"
+msgstr "Overall Platform Analytics"
+
+msgid "Oversight & Performance Analytics"
+msgstr "Oversight & Performance Analytics"
+
+msgid "Oversight Analytics"
+msgstr "Oversight Analytics"
+
+msgid "PDF Evidence Document"
+msgstr "PDF Evidence Document"
+
+msgid "PDF, JPG, PNG, WEBP, MP3, WAV, MP4, MOV, AVI up to 10MB"
+msgstr "PDF, JPG, PNG, WEBP, MP3, WAV, MP4, MOV, AVI up to 10MB"
+
+msgid "Passport Delays"
+msgstr "Passport Delays"
+
+msgid "Passport renewal"
+msgstr "Passport renewal"
+
+msgid "Password"
+msgstr "Fure"
+
+msgid "Password Reset"
+msgstr "Password Reset"
+
+msgid "Password Reset Complete"
+msgstr "Password Reset Complete"
+
+msgid "Password must be at least 6 characters."
+msgstr "Password must be at least 6 characters."
+
+msgid "Passwords do not match."
+msgstr "Passwords do not match."
+
+msgid "Pending"
+msgstr "Sugaya"
+
+msgid "Pending review"
+msgstr "Pending review"
+
+msgid "Performance Reports"
+msgstr "Performance Reports"
+
+msgid "Personal details and full messages are hidden for privacy."
+msgstr "Personal details and full messages are hidden for privacy."
+
+msgid "Phone"
+msgstr "Telefoon"
+
+msgid "Phone Number"
+msgstr "Phone Number"
+
+msgid "Phone/WhatsApp"
+msgstr "Phone/WhatsApp"
+
+msgid "Phone/WhatsApp (optional)"
+msgstr "Phone/WhatsApp (optional)"
+
+msgid "Phone/WhatsApp:"
+msgstr "Phone/WhatsApp:"
+
+msgid "Please click the link in the email to activate your account."
+msgstr "Please click the link in the email to activate your account."
+
+msgid "Please enter your new password twice below."
+msgstr "Please enter your new password twice below."
+
+msgid "Please explain the details of the problem."
+msgstr "Please explain the details of the problem."
+
+msgid "Please provide a subject for your complaint."
+msgstr "Please provide a subject for your complaint."
+
+msgid "Please select a diplomatic mission or consulate."
+msgstr "Please select a diplomatic mission or consulate."
+
+msgid "Please take a moment to evaluate the response resolution. Your rating affects the embassy score."
+msgstr "Please take a moment to evaluate the response resolution. Your rating affects the embassy score."
+
+msgid "Popular searches:"
+msgstr "Raadinta caanka ah:"
+
+msgid "Portal Role"
+msgstr "Portal Role"
+
+msgid "Portal Role Assigned"
+msgstr "Portal Role Assigned"
+
+msgid "Positive"
+msgstr "Positive"
+
+msgid "Priority Level"
+msgstr "Priority Level"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgid "Profile"
+msgstr "Astaanta"
+
+msgid "Provide a trusted channel for citizens to report issues and highlight service quality across all Somali diplomatic missions."
+msgstr "Provide a trusted channel for citizens to report issues and highlight service quality across all Somali diplomatic missions."
+
+msgid "Public"
+msgstr "Public"
+
+msgid "Public Identity"
+msgstr "Public Identity"
+
+msgid "Public Transparency Portal"
+msgstr "Public Transparency Portal"
+
+msgid "Publicly verified identity"
+msgstr "Publicly verified identity"
+
+msgid "Publish Announcement"
+msgstr "Publish Announcement"
+
+msgid "Publish Event"
+msgstr "Publish Event"
+
+msgid "Quality Monitor"
+msgstr "Quality Monitor"
+
+msgid "RED ALERT"
+msgstr "RED ALERT"
+
+msgid "Rate service quality"
+msgstr "Rate service quality"
+
+msgid "Rating"
+msgstr "Qiimeyn"
+
+msgid "Real-time Citizen Submission Stream"
+msgstr "Real-time Citizen Submission Stream"
+
+msgid "Real-time global oversight of citizen protection and consular response metrics."
+msgstr "Real-time global oversight of citizen protection and consular response metrics."
+
+msgid "Real-time metrics for embassy resolution times, customer satisfaction, and queue size."
+msgstr "Real-time metrics for embassy resolution times, customer satisfaction, and queue size."
+
+msgid "Received"
+msgstr "Received"
+
+msgid "Recent Feedback"
+msgstr "Recent Feedback"
+
+msgid "Recent Submissions"
+msgstr "Recent Submissions"
+
+msgid "Recent complaints summary"
+msgstr "Recent complaints summary"
+
+msgid "Register"
+msgstr "Isdiiwaangeli"
+
+msgid "Register Account"
+msgstr "Register Account"
+
+msgid "Rejected"
+msgstr "La diiday"
+
+msgid "Remember me"
+msgstr "Remember me"
+
+msgid "Report Diplomatic Crisis"
+msgstr "Report Diplomatic Crisis"
+
+msgid "Report Problem"
+msgstr "Report Problem"
+
+msgid "Report issues and help improve services."
+msgstr "Report issues and help improve services."
+
+msgid "Reports"
+msgstr "Reports"
+
+msgid "Request Citizen Info"
+msgstr "Request Citizen Info"
+
+msgid "Request Crisis Rescue from this Mission"
+msgstr "Request Crisis Rescue from this Mission"
+
+msgid "Request New Link"
+msgstr "Request New Link"
+
+msgid "Requested more information from citizen."
+msgstr "Requested more information from citizen."
+
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+
+msgid "Reset Complete"
+msgstr "Reset Complete"
+
+msgid "Reset Password"
+msgstr "Reset Password"
+
+msgid "Reset Sent"
+msgstr "Reset Sent"
+
+msgid "Resolution Rate"
+msgstr "Resolution Rate"
+
+msgid "Resolution Rating"
+msgstr "Resolution Rating"
+
+msgid "Resolved"
+msgstr "La xalliyay"
+
+msgid "Resolved Complaints"
+msgstr "Cabashooyinka la xalliyay"
+
+msgid "Resolved vs total complaints"
+msgstr "Resolved vs total complaints"
+
+msgid "Respond"
+msgstr "Respond"
+
+msgid "Respond to Citizens"
+msgstr "Respond to Citizens"
+
+msgid "Responded"
+msgstr "Responded"
+
+msgid "Retention"
+msgstr "Retention"
+
+msgid "Return Home"
+msgstr "Return Home"
+
+msgid "Review"
+msgstr "Review"
+
+msgid "Review live status, communication threads, and complete feedback evaluations."
+msgstr "Review live status, communication threads, and complete feedback evaluations."
+
+msgid "Review requirements before travelling to avoid repeat visits and extra costs."
+msgstr "Review requirements before travelling to avoid repeat visits and extra costs."
+
+msgid "Reviewer"
+msgstr "Reviewer"
+
+msgid "SLA Compliance"
+msgstr "SLA Compliance"
+
+msgid "SLA Compliance Level"
+msgstr "SLA Compliance Level"
+
+msgid "SLA Escalation Alerts"
+msgstr "SLA Escalation Alerts"
+
+msgid "SLA Resolution"
+msgstr "SLA Resolution"
+
+msgid "SLA Resolution Deadlines"
+msgstr "SLA Resolution Deadlines"
+
+msgid "SLA escalation alert"
+msgstr "SLA escalation alert"
+
+msgid "SMS"
+msgstr "SMS"
+
+msgid "Save Event"
+msgstr "Save Event"
+
+msgid "Save Internal Notes"
+msgstr "Save Internal Notes"
+
+msgid "Save Profile"
+msgstr "Save Profile"
+
+msgid "Save response"
+msgstr "Save response"
+
+msgid "Save status"
+msgstr "Save status"
+
+msgid "Save this code to check your complaint status later."
+msgstr "Save this code to check your complaint status later."
+
+msgid "Search"
+msgstr "Raadi"
+
+msgid "Search by Country, City or Name..."
+msgstr "Search by Country, City or Name..."
+
+msgid "Search country, city, group..."
+msgstr "Search country, city, group..."
+
+msgid "Search embassies and consulates worldwide."
+msgstr "Search embassies and consulates worldwide."
+
+msgid "Search missions"
+msgstr "Search missions"
+
+msgid "Search missions, city, country..."
+msgstr "Raadi xafiis, magaalo, dal..."
+
+msgid "Secure Messaging Portal"
+msgstr "Secure Messaging Portal"
+
+msgid "Secure Password"
+msgstr "Secure Password"
+
+msgid "Secure Portal Chat"
+msgstr "Secure Portal Chat"
+
+msgid "Security Verification"
+msgstr "Security Verification"
+
+msgid "Security check"
+msgstr "Security check"
+
+msgid "See how the Ministry is taking direct action to solve complaints and improve services worldwide."
+msgstr "See how the Ministry is taking direct action to solve complaints and improve services worldwide."
+
+msgid "Select Complaint Category"
+msgstr "Select Complaint Category"
+
+msgid "Select Embassy or Consulate"
+msgstr "Select Embassy or Consulate"
+
+msgid "Select a complaint from the list."
+msgstr "Select a complaint from the list."
+
+msgid "Send"
+msgstr "Dir"
+
+msgid "Send Message"
+msgstr "Send Message"
+
+msgid "Send Portal Invitation"
+msgstr "Send Portal Invitation"
+
+msgid "Send Reset Link"
+msgstr "Send Reset Link"
+
+msgid "Send message"
+msgstr "Send message"
+
+msgid "Sent Date"
+msgstr "Sent Date"
+
+msgid "Service Transparency at a Glance"
+msgstr "Service Transparency at a Glance"
+
+msgid "Service checklist data is being prepared for this mission."
+msgstr "Service checklist data is being prepared for this mission."
+
+msgid "Services for citizens everywhere."
+msgstr "Services for citizens everywhere."
+
+msgid "Set New Password"
+msgstr "Set New Password"
+
+msgid "Shelter"
+msgstr "Shelter"
+
+msgid "Show summary response on public tracking page"
+msgstr "Show summary response on public tracking page"
+
+msgid "Sign In"
+msgstr "Gal"
+
+msgid "Sign In Now"
+msgstr "Sign In Now"
+
+msgid "Sign in to use the secure messaging portal to exchange files and message the embassy staff directly."
+msgstr "Sign in to use the secure messaging portal to exchange files and message the embassy staff directly."
+
+msgid "Signed by:"
+msgstr "Signed by:"
+
+msgid "Simulate Email Link Click"
+msgstr "Simulate Email Link Click"
+
+msgid "Somali Citizen Portal"
+msgstr "Somali Citizen Portal"
+
+msgid "Somali Coat of Arms"
+msgstr "Somali Coat of Arms"
+
+msgid "Somali Communities"
+msgstr "Bulshooyinka Soomaaliyeed"
+
+msgid "Somali Community Group"
+msgstr "Somali Community Group"
+
+msgid "Somali Community Groups"
+msgstr "Kooxaha Bulshada Soomaaliyeed"
+
+msgid "Somali Diplomatic Mission Portal"
+msgstr "Somali Diplomatic Mission Portal"
+
+msgid "Somali Flag"
+msgstr "Somali Flag"
+
+msgid "Somali Ministry of Foreign Affairs. All Rights Reserved."
+msgstr "Somali Ministry of Foreign Affairs. All Rights Reserved."
+
+msgid "Somali Missions"
+msgstr "Somali Missions"
+
+msgid "Somali Missions Complaint Portal"
+msgstr "Somali Missions Complaint Portal"
+
+msgid "Somali Missions Network"
+msgstr "Shabakadda Xafiisyada Soomaaliyeed"
+
+msgid "Somali Missions Platform"
+msgstr "Somali Missions Platform"
+
+msgid "Somali Oversight"
+msgstr "Somali Oversight"
+
+msgid "Somali Student Associations"
+msgstr "Ururrada Ardayda Soomaaliyeed"
+
+msgid "Somali association"
+msgstr "Somali association"
+
+msgid "Staff"
+msgstr "Staff"
+
+msgid "Staff (Legacy)"
+msgstr "Staff (Legacy)"
+
+msgid "Staff Dashboard"
+msgstr "Staff Dashboard"
+
+msgid "Staff Management"
+msgstr "Staff Management"
+
+msgid "Staff Misconduct"
+msgstr "Staff Misconduct"
+
+msgid "Staff Roster"
+msgstr "Staff Roster"
+
+msgid "Staff dashboard status update."
+msgstr "Staff dashboard status update."
+
+msgid "Statistics"
+msgstr "Tirakoob"
+
+msgid "Stats"
+msgstr "Tirakoob"
+
+msgid "Status Alert"
+msgstr "Status Alert"
+
+msgid "Stranded Citizen"
+msgstr "Stranded Citizen"
+
+msgid "Student Association"
+msgstr "Student Association"
+
+msgid "Student Associations"
+msgstr "Ururrada Ardayda"
+
+msgid "Student group"
+msgstr "Student group"
+
+msgid "Student orientation"
+msgstr "Student orientation"
+
+msgid "Students"
+msgstr "Ardayda"
+
+msgid "Subject"
+msgstr "Subject"
+
+msgid "Submission Trends (Last 6 Months)"
+msgstr "Submission Trends (Last 6 Months)"
+
+msgid "Submission Type"
+msgstr "Submission Type"
+
+msgid "Submissions"
+msgstr "Submissions"
+
+msgid "Submit Anonymously"
+msgstr "Submit Anonymously"
+
+msgid "Submit Complaint"
+msgstr "Gudbi Cabasho"
+
+msgid "Submit Rating"
+msgstr "Submit Rating"
+
+msgid "Submit Report"
+msgstr "Submit Report"
+
+msgid "Submit a Complaint"
+msgstr "Submit a Complaint"
+
+msgid "Submit anonymously"
+msgstr "Submit anonymously"
+
+msgid "Submit for Moderation"
+msgstr "Submit for Moderation"
+
+msgid "Submitted"
+msgstr "Submitted"
+
+msgid "Submitted (New)"
+msgstr "Submitted (New)"
+
+msgid "Submitted by"
+msgstr "Submitted by"
+
+msgid "Submitted on"
+msgstr "Submitted on"
+
+msgid "Submitting Date"
+msgstr "Submitting Date"
+
+msgid "Submitting Message in"
+msgstr "Submitting Message in"
+
+msgid "Successfully Resolved"
+msgstr "Successfully Resolved"
+
+msgid "Suspended"
+msgstr "Suspended"
+
+msgid "System Settings"
+msgstr "System Settings"
+
+msgid "Target Mission"
+msgstr "Target Mission"
+
+msgid "Target resolution SLA"
+msgstr "Target resolution SLA"
+
+msgid "Target response time"
+msgstr "Target response time"
+
+msgid "Technical data such as submission time for abuse prevention"
+msgstr "Technical data such as submission time for abuse prevention"
+
+msgid "Thank you for your feedback. Your complaint has been recorded."
+msgstr "Thank you for your feedback. Your complaint has been recorded."
+
+msgid "Thank you. Your email address has been verified. You can now log in to the portal and track your complaints."
+msgstr "Thank you. Your email address has been verified. You can now log in to the portal and track your complaints."
+
+msgid "The Somali Missions Complaint & Evaluation Platform empowers Somali citizens worldwide to share service experiences at embassies and consulates. Aggregated feedback enables transparency, performance benchmarking, and actionable improvement for the Ministry of Foreign Affairs."
+msgstr "The Somali Missions Complaint & Evaluation Platform empowers Somali citizens worldwide to share service experiences at embassies and consulates. Aggregated feedback enables transparency, performance benchmarking, and actionable improvement for the Ministry of Foreign Affairs."
+
+msgid "The following cases are older than 14 days and remain unresolved with no responses. Direct escalation warning has been triggered at Ministry HQ."
+msgstr "The following cases are older than 14 days and remain unresolved with no responses. Direct escalation warning has been triggered at Ministry HQ."
+
+msgid "The password reset link was invalid, possibly because it has already been used. Please request a new password reset."
+msgstr "The password reset link was invalid, possibly because it has already been used. Please request a new password reset."
+
+msgid "The platform supports the Ministry of Foreign Affairs in monitoring service quality at Somali missions worldwide."
+msgstr "The platform supports the Ministry of Foreign Affairs in monitoring service quality at Somali missions worldwide."
+
+msgid "The public sees only summary information (subject, rating, status). Full messages and contact details are visible only to authorized Ministry and mission staff."
+msgstr "The public sees only summary information (subject, rating, status). Full messages and contact details are visible only to authorized Ministry and mission staff."
+
+msgid "These answers help the Ministry identify critical cases and prevent citizens from being stranded."
+msgstr "These answers help the Ministry identify critical cases and prevent citizens from being stranded."
+
+msgid "This Month"
+msgstr "Bishan"
+
+msgid "This channel triggers immediate oversight. Files submitted here will bypass normal queue delays and alert rescue officers."
+msgstr "This channel triggers immediate oversight. Files submitted here will bypass normal queue delays and alert rescue officers."
+
+msgid "This platform collects complaints and ratings about Somali diplomatic missions to improve public services."
+msgstr "This platform collects complaints and ratings about Somali diplomatic missions to improve public services."
+
+msgid "Time to close out issue"
+msgstr "Time to close out issue"
+
+msgid "Timestamp"
+msgstr "Timestamp"
+
+msgid "Title"
+msgstr "Title"
+
+msgid "Toggle navigation"
+msgstr "Toggle navigation"
+
+msgid "Too many messages sent today. Please try again tomorrow."
+msgstr "Too many messages sent today. Please try again tomorrow."
+
+msgid "Top Performing Embassies"
+msgstr "Top Performing Embassies"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Total Complaints"
+msgstr "Tirada Cabashooyinka"
+
+msgid "Total Complaints Registered"
+msgstr "Total Complaints Registered"
+
+msgid "Total Filed"
+msgstr "Total Filed"
+
+msgid "Total Missions"
+msgstr "Tirada Xafiisyada"
+
+msgid "Total Volume"
+msgstr "Total Volume"
+
+msgid "Total registered life-to-date"
+msgstr "Total registered life-to-date"
+
+msgid "Track"
+msgstr "La soco"
+
+msgid "Track Case"
+msgstr "Track Case"
+
+msgid "Track Complaint"
+msgstr "La soco Cabashada"
+
+msgid "Track Status"
+msgstr "Track Status"
+
+msgid "Track Your Complaint"
+msgstr "Track Your Complaint"
+
+msgid "Track and view reviews from Somali Consular officials."
+msgstr "Track and view reviews from Somali Consular officials."
+
+msgid "Tracking code"
+msgstr "Tracking code"
+
+msgid "Translate to English"
+msgstr "Translate to English"
+
+msgid "Translation"
+msgstr "Translation"
+
+msgid "Transmit Emergency Alert Now"
+msgstr "Transmit Emergency Alert Now"
+
+msgid "Transparency"
+msgstr "Daahfurnaan"
+
+msgid "Transparency Portal"
+msgstr "Transparency Portal"
+
+msgid "Transparent Missions. Better Service. Stronger Somalia."
+msgstr "Xafiisyo Daahfuran. Adeeg Wanaagsan. Soomaaliya Xooggan."
+
+msgid "Transport guidance"
+msgstr "Transport guidance"
+
+msgid "Travel guidance"
+msgstr "Travel guidance"
+
+msgid "Unassigned"
+msgstr "Unassigned"
+
+msgid "Under Review"
+msgstr "Under Review"
+
+msgid "Under Review (In Progress)"
+msgstr "Under Review (In Progress)"
+
+msgid "Unique Username"
+msgstr "Unique Username"
+
+msgid "Unknown"
+msgstr "Unknown"
+
+msgid "Unresolved for"
+msgstr "Unresolved for"
+
+msgid "Update Status"
+msgstr "Update Status"
+
+msgid "Update profiles, publish events, send announcements for moderation, and read citizen messages."
+msgstr "Update profiles, publish events, send announcements for moderation, and read citizen messages."
+
+msgid "Update status"
+msgstr "Update status"
+
+msgid "Upload Supporting Evidence"
+msgstr "Upload Supporting Evidence"
+
+msgid "Urgent"
+msgstr "Urgent"
+
+msgid "Use your tracking code for updates."
+msgstr "Use your tracking code for updates."
+
+msgid "User"
+msgstr "User"
+
+msgid "User Management"
+msgstr "User Management"
+
+msgid "User Satisfaction Score"
+msgstr "User Satisfaction Score"
+
+msgid "Username or Email"
+msgstr "Username or Email"
+
+msgid "Verified"
+msgstr "La xaqiijiyay"
+
+msgid "Verified Emergency Offers"
+msgstr "Verified Emergency Offers"
+
+msgid "Verify Your Email"
+msgstr "Verify Your Email"
+
+msgid "View All Statistics"
+msgstr "Eeg Dhammaan Tirakoobka"
+
+msgid "View Analysis"
+msgstr "View Analysis"
+
+msgid "View Details"
+msgstr "Eeg Faahfaahin"
+
+msgid "Visa Problems"
+msgstr "Visa Problems"
+
+msgid "Visa issue"
+msgstr "Visa issue"
+
+msgid "Vision"
+msgstr "Vision"
+
+msgid "Volunteer campaign"
+msgstr "Volunteer campaign"
+
+msgid "Volunteer support"
+msgstr "Volunteer support"
+
+msgid "Walk-in"
+msgstr "Walk-in"
+
+msgid "War / Conflict Zone Extraction"
+msgstr "War / Conflict Zone Extraction"
+
+msgid "We monitor timely responses."
+msgstr "We monitor timely responses."
+
+msgid "We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly."
+msgstr "We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly."
+
+msgid "Website"
+msgstr "Website"
+
+msgid "Website URL"
+msgstr "Website URL"
+
+msgid "Welcome back,"
+msgstr "Welcome back,"
+
+msgid "What is"
+msgstr "What is"
+
+msgid "What is %(num1)s + %(num2)s?"
+msgstr "What is %(num1)s + %(num2)s?"
+
+msgid "What we collect"
+msgstr "What we collect"
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "Who can see your data"
+msgstr "Who can see your data"
+
+msgid "Who runs this platform?"
+msgstr "Who runs this platform?"
+
+msgid "Work Case"
+msgstr "Work Case"
+
+msgid "Worldwide"
+msgstr "Worldwide"
+
+msgid "Worldwide Network"
+msgstr "Shabakad Caalami ah"
+
+msgid "Write a message to the Embassy staff..."
+msgstr "Write a message to the Embassy staff..."
+
+msgid "Yes. Check 'Submit anonymously' and your name and contact details will not be stored."
+msgstr "Yes. Check 'Submit anonymously' and your name and contact details will not be stored."
+
+msgid "You do not have permission to manage any missions. Contact the Ministry administrator."
+msgstr "You do not have permission to manage any missions. Contact the Ministry administrator."
+
+msgid "You have not submitted any complaints yet."
+msgstr "You have not submitted any complaints yet."
+
+msgid "Your Identity & Callback Information"
+msgstr "Your Identity & Callback Information"
+
+msgid "Your Voice Matters"
+msgstr "Codkaagu Wuu Muhiim Yahay"
+
+msgid "Your information is protected."
+msgstr "Your information is protected."
+
+msgid "Your message has been sent. We will respond if needed."
+msgstr "Your message has been sent. We will respond if needed."
+
+msgid "Your name"
+msgstr "Your name"
+
+msgid "Your password has been set. You may go ahead and log in now."
+msgstr "Your password has been set. You may go ahead and log in now."
+
+msgid "Your tracking code"
+msgstr "Your tracking code"
+
+msgid "ago"
+msgstr "ago"
+
+msgid "cases"
+msgstr "cases"
+
+msgid "category indicates corruption, abuse, misconduct, or emergency"
+msgstr "category indicates corruption, abuse, misconduct, or emergency"
+
+msgid "citizen already has a return ticket"
+msgstr "citizen already has a return ticket"
+
+msgid "citizen has no accommodation"
+msgstr "citizen has no accommodation"
+
+msgid "citizen has waited more than two hours"
+msgstr "citizen has waited more than two hours"
+
+msgid "citizen is currently at the mission"
+msgstr "citizen is currently at the mission"
+
+msgid "citizen travelled from another city or country"
+msgstr "citizen travelled from another city or country"
+
+msgid "complaints"
+msgstr "complaints"
+
+msgid "days"
+msgstr "days"
+
+msgid "evidence was attached"
+msgstr "evidence was attached"
+
+msgid "hours"
+msgstr "hours"
+
+msgid "optional"
+msgstr "optional"
+
+msgid "reviews"
+msgstr "reviews"
