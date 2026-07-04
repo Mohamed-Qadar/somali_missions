@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Styles that previously lived in an inline <style> block in base.html. */
+@layer base {
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+    }
+
+    body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+    }
+
+    html,
+    body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+}

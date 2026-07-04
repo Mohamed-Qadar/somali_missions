@@ -6,51 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>{% block title %}{% trans "Somali Missions Complaint Portal" %}{% endblock %}</title>
     <link rel="icon" href="{% static 'missions/flag.jpg' %}">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Compiled + purged Tailwind (see tailwind.config.js / package.json build:css).
+         Replaces the old cdn.tailwindcss.com runtime script, which is not for
+         production and forced 'unsafe-inline'/external-CDN into the CSP. -->
+    <link href="{% static 'missions/app.css' %}" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        /* Darkened from the original brand hues (#00adef / #d4af37 / #ef4444) to meet
-                           WCAG AA 4.5:1 text contrast on white - the originals measured 2.55:1,
-                           2.10:1, and 3.76:1 respectively and failed for body/link text. */
-                        primary: "#0077a3", /* Somali sky blue, darkened for AA text contrast (5.0:1 on white) */
-                        secondary: "#183059", /* Deep trust navy */
-                        accent: "#8a6d1f", /* Gold accent, darkened for AA text contrast (4.9:1 on white) */
-                        background: "#f4f7f6",
-                        card: "#ffffff",
-                        border: "#e2e8f0",
-                        textPrimary: "#0f172a",
-                        textSecondary: "#475569",
-                        danger: "#dc2626" /* Darkened for AA text contrast (4.8:1 on white) */
-                    },
-                    fontFamily: { 
-                        sans: ["Plus Jakarta Sans", "sans-serif"] 
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .material-symbols-outlined { 
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
-            vertical-align: middle; 
-        }
-        body { 
-            font-family: "Plus Jakarta Sans", sans-serif; 
-        }
-        html, body {
-            overflow-x: hidden;
-            max-width: 100%;
-        }
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-    </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-background text-textPrimary min-h-screen flex flex-col w-full overflow-x-hidden">
@@ -296,7 +257,7 @@
         </div>
     </footer>
 
-    <script>
+    <script nonce="{{ request.csp_nonce }}">
         document.addEventListener('DOMContentLoaded', function () {
             // Mobile Menu Toggle
             const toggle = document.getElementById('navToggle');

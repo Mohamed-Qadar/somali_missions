@@ -11,6 +11,19 @@ python -m bandit -r . -x ./locale,./staticfiles,./venv -ll   # security scan (me
 python manage.py test           # 53 tests
 ```
 
+## Frontend CSS (Tailwind)
+
+Styling is Tailwind, **compiled and purged at build time** - not the runtime CDN (which is not for production and forced `'unsafe-inline'`/an external CDN into the CSP). The compiled `missions/static/missions/app.css` is committed so `runserver`/`collectstatic` work without Node, but after editing any template class or `tailwind.config.js`/`missions/static/missions/src/input.css`, rebuild it:
+
+```bash
+npm install          # first time only
+npm run build:css    # or: npm run watch:css  (rebuild on change during dev)
+```
+
+The Docker image rebuilds the CSS from scratch in a Node stage (see `Dockerfile`), and CI runs `npm run build:css` too, so a stale committed `app.css` can't reach production unnoticed.
+
+**CSP note:** every inline `<script>` in the app's own templates must carry `nonce="{{ request.csp_nonce }}"` - `script-src` does not allow `'unsafe-inline'` (see `missions/middleware.py`). If you add an inline script without the nonce, the browser will silently block it. Prefer `{{ data|json_script:"id" }}` + a nonce'd script that reads it, over interpolating server data directly into script text.
+
 ## Conventions
 
 **Mission-scoping**: any new view or API endpoint that touches complaint/appointment/queue data must go through `missions/utils/permissions.py`'s `user_is_ministry_admin`, `user_can_manage_mission`, or `missions_for_user` - don't write a new ad hoc permission check. See [ARCHITECTURE.md](ARCHITECTURE.md) for why there are two provisioning paths these functions reconcile.

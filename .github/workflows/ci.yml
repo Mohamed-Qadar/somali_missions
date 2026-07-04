@@ -18,8 +18,17 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Install dependencies
         run: pip install -r requirements-dev.txt
+
+      - name: Build CSS (Tailwind, purged + minified)
+        run: |
+          npm ci
+          npm run build:css
 
       - name: Lint (ruff)
         run: python -m ruff check .

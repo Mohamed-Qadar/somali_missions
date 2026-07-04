@@ -304,7 +304,7 @@
 
 </div>
 
-<script>
+<script nonce="{{ request.csp_nonce }}">
     document.addEventListener('DOMContentLoaded', function() {
         // Auto scroll chat list to bottom
         const chat = document.getElementById('chatHistory');

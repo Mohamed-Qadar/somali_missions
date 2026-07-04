@@ -227,7 +227,7 @@
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 		<div id="mission-map" class="h-72 rounded-xl border border-border overflow-hidden"></div>
 		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-		<script>
+		<script nonce="{{ request.csp_nonce }}">
 			const missions = {{ map_missions_json|safe }};
 			if (missions.length) {
 				const map = L.map('mission-map').setView([missions[0].lat, missions[0].lng], 2);

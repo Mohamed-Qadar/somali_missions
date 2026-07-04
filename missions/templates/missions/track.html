@@ -204,7 +204,7 @@
                             </div>
                         </form>
                         
-                        <script>
+                        <script nonce="{{ request.csp_nonce }}">
                             document.addEventListener('DOMContentLoaded', function() {
                                 const chat = document.getElementById('citizenChatHistory');
                                 if (chat) chat.scrollTop = chat.scrollHeight;
@@ -297,7 +297,7 @@
     {% endif %}
 </div>
 
-<script>
+<script nonce="{{ request.csp_nonce }}">
     document.addEventListener('DOMContentLoaded', function () {
         const stars = document.querySelectorAll('.sat-star-btn');
         const input = document.getElementById('satRatingInput');

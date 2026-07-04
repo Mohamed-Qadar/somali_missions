@@ -318,7 +318,7 @@
 
 </div>
 
-<script>
+<script nonce="{{ request.csp_nonce }}">
     // Map initialisation
     document.addEventListener('DOMContentLoaded', function () {
         const pins = {{ map_pins_json|safe }};

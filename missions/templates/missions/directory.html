@@ -99,7 +99,7 @@
 </div>
 
 {% if map_pins_json != '[]' %}
-<script>
+<script nonce="{{ request.csp_nonce }}">
     document.addEventListener('DOMContentLoaded', function () {
         const pins = {{ map_pins_json|safe }};
         if (pins.length) {
