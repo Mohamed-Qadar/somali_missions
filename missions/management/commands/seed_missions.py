@@ -231,7 +231,10 @@ class Command(BaseCommand):
                 },
             )
 
-        staff_user, user_created = User.objects.get_or_create(username='staff_london')
+        staff_user, user_created = User.objects.get_or_create(
+            username='staff_london',
+            defaults={'email': 'staff.london@mfa.gov.so'},
+        )
         if user_created:
             staff_user.set_password('staffpass123')
             staff_user.save()
@@ -239,13 +242,25 @@ class Command(BaseCommand):
         london = Mission.objects.filter(city='London').first()
         if london:
             london.staff_users.add(staff_user)
+            staff_user.profile.role = UserProfile.Role.EMBASSY_OFFICER
+            staff_user.profile.mission = london
+            staff_user.profile.email_verified = True
+            staff_user.profile.full_name = staff_user.profile.full_name or 'London Mission Staff'
+            staff_user.profile.save()
 
-        admin_user, admin_created = User.objects.get_or_create(username='ministry_admin')
+        admin_user, admin_created = User.objects.get_or_create(
+            username='ministry_admin',
+            defaults={'email': 'ministry.admin@mfa.gov.so'},
+        )
         if admin_created:
             admin_user.set_password('adminpass123')
             admin_user.is_staff = True
             admin_user.save()
         admin_user.groups.add(ministry_group)
+        admin_user.profile.role = UserProfile.Role.MINISTRY_ADMIN
+        admin_user.profile.email_verified = True
+        admin_user.profile.full_name = admin_user.profile.full_name or 'Ministry Administrator'
+        admin_user.profile.save()
 
         for name, hours, role in [
             ('Critical case manager alert', 2, UserProfile.Role.EMBASSY_MANAGER),
