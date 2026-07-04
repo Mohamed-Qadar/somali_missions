@@ -1,0 +1,37 @@
+# Keep the build context small and avoid copying host-only / secret files into
+# the image. The Docker build rebuilds CSS and collectstatic itself.
+.git
+.github
+.gitignore
+.dockerignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Node (CSS is rebuilt in the Dockerfile's node stage)
+node_modules/
+
+# Local data / secrets / artifacts - must never enter the image
+.env
+.env.*
+!.env.production.example
+db.sqlite3
+media/
+staticfiles/
+backups/
+*.log
+
+# Editor / OS
+.idea/
+.vscode/
+.claude/
+.DS_Store
+
+# Docs and tests aren't needed at runtime (kept small; remove these lines if
+# you want them in the image for reference)
+docs/

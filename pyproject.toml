@@ -1,0 +1,10 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+# Auto-generated migrations are not hand-maintained; don't lint them.
+extend-exclude = ["*/migrations/*", "node_modules"]
+
+[tool.ruff.lint]
+# Pyflakes (F) + the pycodestyle error subsets that catch real bugs
+# (undefined names, syntax errors, bad comparisons) rather than pure style.
+select = ["E4", "E7", "E9", "F"]

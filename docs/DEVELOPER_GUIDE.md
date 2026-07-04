@@ -55,4 +55,14 @@ Follow the pattern of `appointments`/`queue_management`/`assistant`/`notificatio
 
 ## Database
 
-SQLite locally by default; set `DATABASE_URL=postgres://...` to use Postgres (same as production). Both are exercised by the same migrations - don't write raw SQL that only works on one backend.
+SQLite locally by default; set `DATABASE_URL=postgres://...` to use Postgres (same as production). Both are exercised by the same migrations - don't write raw SQL that only works on one backend. `CONN_MAX_AGE` keeps connections persistent; `REDIS_URL` (when set) switches the cache from per-process memory to a shared Redis so caching/rate-limits work across gunicorn workers.
+
+## Settings & tooling
+
+Configuration is a single env-driven `somali_missions/settings.py` (12-factor style): behaviour differs by environment variable (`DEBUG`, `SECURE_SSL_ENABLED`, `DATABASE_URL`, `REDIS_URL`, `SENTRY_DSN`, `AXES_*`, ...), not by separate per-environment modules. This keeps one file to reason about; local dev needs almost no env vars, production sets them via `.env` (see `.env.production.example`).
+
+Helpers:
+- `make` targets wrap the common commands (`make all-checks` runs lint + security + system checks + tests, i.e. what CI runs). On Windows run the underlying commands directly.
+- `pyproject.toml` pins the ruff config so local, `pre-commit`, and CI lint identically.
+- `.pre-commit-config.yaml` runs ruff + hygiene hooks before each commit (`pip install pre-commit && pre-commit install`).
+- `.dockerignore` keeps host-only/secret files (`.env`, `db.sqlite3`, `node_modules`, `.git`) out of the image.
