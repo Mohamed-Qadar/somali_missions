@@ -116,13 +116,13 @@
                     
                     <!-- Star Rating -->
                     <div>
-                        <label class="block text-sm font-semibold text-secondary mb-1">{% trans "Rate service quality" %}</label>
-                        <div class="flex gap-2 text-3xl text-slate-300" id="starRatingZone">
-                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="1">★</button>
-                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="2">★</button>
-                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="3">★</button>
-                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="4">★</button>
-                            <button type="button" class="star-btn cursor-pointer hover:text-accent focus:outline-none transition-colors" data-val="5">★</button>
+                        <label id="starRatingLabel" class="block text-sm font-semibold text-secondary mb-1">{% trans "Rate service quality" %}</label>
+                        <div class="flex gap-2 text-3xl text-slate-300" id="starRatingZone" role="group" aria-labelledby="starRatingLabel">
+                            <button type="button" aria-label="{% blocktrans %}Rate 1 star{% endblocktrans %}" class="star-btn cursor-pointer hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded transition-colors" data-val="1">★</button>
+                            <button type="button" aria-label="{% blocktrans %}Rate 2 stars{% endblocktrans %}" class="star-btn cursor-pointer hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded transition-colors" data-val="2">★</button>
+                            <button type="button" aria-label="{% blocktrans %}Rate 3 stars{% endblocktrans %}" class="star-btn cursor-pointer hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded transition-colors" data-val="3">★</button>
+                            <button type="button" aria-label="{% blocktrans %}Rate 4 stars{% endblocktrans %}" class="star-btn cursor-pointer hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded transition-colors" data-val="4">★</button>
+                            <button type="button" aria-label="{% blocktrans %}Rate 5 stars{% endblocktrans %}" class="star-btn cursor-pointer hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded transition-colors" data-val="5">★</button>
                         </div>
                         <input type="hidden" name="rating" id="ratingInput" value="3">
                     </div>

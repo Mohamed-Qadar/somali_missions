@@ -12,8 +12,8 @@
     </div>
 
     <form method="get" class="bg-card border border-border rounded-2xl p-6 shadow-sm">
-        <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Embassy/Consulate" %}</label>
-        <select name="mission" class="w-full rounded-lg border border-border px-3 py-2" onchange="this.form.submit()">
+        <label for="id_queue_mission_select" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Embassy/Consulate" %}</label>
+        <select id="id_queue_mission_select" name="mission" class="w-full rounded-lg border border-border px-3 py-2" onchange="this.form.submit()">
             <option value="">{% trans "-- Select Mission --" %}</option>
             {% for m in missions %}
                 <option value="{{ m.id }}" {% if selected_mission_id == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }} ({{ m.city }}, {{ m.country }})</option>
@@ -27,16 +27,16 @@
         <input type="hidden" name="mission" value="{{ selected_mission_id }}">
         {% if services %}
         <div>
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Service" %}</label>
-            <select name="service" class="w-full rounded-lg border border-border px-3 py-2">
+            <label for="id_queue_service_select" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Service" %}</label>
+            <select id="id_queue_service_select" name="service" class="w-full rounded-lg border border-border px-3 py-2">
                 <option value="">{% trans "-- General --" %}</option>
                 {% for s in services %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
             </select>
         </div>
         {% endif %}
         <div>
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Full Name (optional)" %}</label>
-            <input type="text" name="full_name" class="w-full rounded-lg border border-border px-3 py-2">
+            <label for="id_queue_full_name" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Full Name (optional)" %}</label>
+            <input type="text" id="id_queue_full_name" name="full_name" class="w-full rounded-lg border border-border px-3 py-2">
         </div>
         <button type="submit" class="bg-primary text-white font-bold px-6 py-3 rounded-xl shadow-sm w-full">{% trans "Get My Ticket Number" %}</button>
     </form>

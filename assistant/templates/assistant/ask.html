@@ -13,7 +13,8 @@
 
     <form method="post" class="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-4">
         {% csrf_token %}
-        <textarea name="question" rows="3" required placeholder="{% trans 'e.g. How do I renew a lost passport?' %}"
+        <label for="id_assistant_question" class="sr-only">{% trans "Your question" %}</label>
+        <textarea name="question" id="id_assistant_question" rows="3" required placeholder="{% trans 'e.g. How do I renew a lost passport?' %}"
             class="w-full rounded-lg border border-border px-3 py-2">{{ question }}</textarea>
         <button type="submit" class="bg-primary text-white font-bold px-6 py-3 rounded-xl shadow-sm w-full sm:w-auto">
             {% trans "Ask" %}

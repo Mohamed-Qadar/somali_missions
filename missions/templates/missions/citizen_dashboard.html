@@ -84,8 +84,8 @@
                             <p class="font-extrabold text-sm text-primary uppercase mt-0.5">{{ c.get_status_display }}</p>
                         </div>
                         
-                        <a href="{% url 'track' %}?tracking_code={{ c.tracking_code }}" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border hover:border-primary hover:bg-primary/5 text-textSecondary hover:text-primary transition-all shadow-sm">
-                            <span class="material-symbols-outlined text-base">arrow_forward</span>
+                        <a href="{% url 'track' %}?tracking_code={{ c.tracking_code }}" aria-label="{% blocktrans with code=c.tracking_code %}Track complaint {{ code }}{% endblocktrans %}" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border hover:border-primary hover:bg-primary/5 text-textSecondary hover:text-primary transition-all shadow-sm focus-visible:ring-2 focus-visible:ring-primary">
+                            <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span>
                         </a>
                     </div>
                 </div>

@@ -15,15 +15,18 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: "#00adef", /* Somali sky blue */
+                        /* Darkened from the original brand hues (#00adef / #d4af37 / #ef4444) to meet
+                           WCAG AA 4.5:1 text contrast on white - the originals measured 2.55:1,
+                           2.10:1, and 3.76:1 respectively and failed for body/link text. */
+                        primary: "#0077a3", /* Somali sky blue, darkened for AA text contrast (5.0:1 on white) */
                         secondary: "#183059", /* Deep trust navy */
-                        accent: "#d4af37", /* Gold accent */
+                        accent: "#8a6d1f", /* Gold accent, darkened for AA text contrast (4.9:1 on white) */
                         background: "#f4f7f6",
                         card: "#ffffff",
                         border: "#e2e8f0",
                         textPrimary: "#0f172a",
                         textSecondary: "#475569",
-                        danger: "#ef4444"
+                        danger: "#dc2626" /* Darkened for AA text contrast (4.8:1 on white) */
                     },
                     fontFamily: { 
                         sans: ["Plus Jakarta Sans", "sans-serif"] 
@@ -51,6 +54,9 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-background text-textPrimary min-h-screen flex flex-col w-full overflow-x-hidden">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold">
+        {% trans "Skip to main content" %}
+    </a>
     <div class="bg-secondary text-white">
         <div class="max-w-[1200px] mx-auto px-3 sm:px-5 lg:px-6 h-8 sm:h-9 flex items-center justify-between gap-3 text-[11px] sm:text-xs">
             <div class="flex items-center gap-2 min-w-0 font-bold">
@@ -113,7 +119,7 @@
                             {% endif %}
                         </a>
                         <div class="relative hidden lg:block" id="profileDropdownContainer">
-                            <button id="profileDropdownBtn" class="flex h-10 items-center gap-2 rounded-lg border border-border bg-white px-3 text-xs text-secondary hover:border-primary hover:text-primary font-bold focus:outline-none">
+                            <button id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" aria-controls="profileDropdownMenu" class="flex h-10 items-center gap-2 rounded-lg border border-border bg-white px-3 text-xs text-secondary hover:border-primary hover:text-primary font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                                 <span class="material-symbols-outlined">account_circle</span>
                                 <span>{{ user.username }}</span>
                                 <span class="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded uppercase font-semibold">
@@ -182,7 +188,7 @@
                     {% endif %}
 
                     <!-- Mobile Menu Button -->
-                    <button id="navToggle" class="lg:hidden inline-flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-lg border border-border text-secondary bg-slate-50" aria-label="{% trans 'Toggle navigation' %}">
+                    <button id="navToggle" class="lg:hidden inline-flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-lg border border-border text-secondary bg-slate-50 focus-visible:ring-2 focus-visible:ring-primary" aria-label="{% trans 'Toggle navigation' %}" aria-expanded="false" aria-controls="navMobilePanel">
                         <span class="material-symbols-outlined">menu</span>
                     </button>
                 </div>
@@ -267,7 +273,7 @@
     </div>
     {% endif %}
 
-    <main class="flex-1">
+    <main id="main-content" tabindex="-1" class="flex-1">
         {% block content %}{% endblock %}</main>
 
     <footer class="border-t border-border bg-card mt-12 py-10">
@@ -296,7 +302,10 @@
             const toggle = document.getElementById('navToggle');
             const panel = document.getElementById('navMobilePanel');
             if (toggle && panel) {
-                toggle.addEventListener('click', () => panel.classList.toggle('hidden'));
+                toggle.addEventListener('click', () => {
+                    const isHidden = panel.classList.toggle('hidden');
+                    toggle.setAttribute('aria-expanded', String(!isHidden));
+                });
             }
 
             // Profile Dropdown Interactivity
@@ -311,6 +320,7 @@
                 function openDropdown() {
                     if (closeTimeout) clearTimeout(closeTimeout);
                     isOpen = true;
+                    btn.setAttribute('aria-expanded', 'true');
                     menu.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
                     menu.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
                 }
@@ -318,6 +328,7 @@
                 function closeDropdown() {
                     if (closeTimeout) clearTimeout(closeTimeout);
                     isOpen = false;
+                    btn.setAttribute('aria-expanded', 'false');
                     menu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
                     menu.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
                 }

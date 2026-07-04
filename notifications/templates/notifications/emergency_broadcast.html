@@ -11,20 +11,20 @@
     <form method="post" class="bg-card border-2 border-red-200 rounded-2xl p-6 shadow-sm space-y-4">
         {% csrf_token %}
         <div>
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Audience" %}</label>
-            <select name="audience" class="w-full rounded-lg border border-border px-3 py-2">
+            <label for="id_broadcast_audience" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Audience" %}</label>
+            <select id="id_broadcast_audience" name="audience" class="w-full rounded-lg border border-border px-3 py-2">
                 <option value="all_staff">{% trans "All Embassy Staff" %}</option>
                 <option value="all_citizens">{% trans "All Registered Citizens" %}</option>
                 <option value="all">{% trans "Everyone" %}</option>
             </select>
         </div>
         <div>
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Title" %}</label>
-            <input type="text" name="title" required class="w-full rounded-lg border border-border px-3 py-2">
+            <label for="id_broadcast_title" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Title" %}</label>
+            <input type="text" id="id_broadcast_title" name="title" required class="w-full rounded-lg border border-border px-3 py-2">
         </div>
         <div>
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Message" %}</label>
-            <textarea name="body" rows="4" required class="w-full rounded-lg border border-border px-3 py-2"></textarea>
+            <label for="id_broadcast_body" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Message" %}</label>
+            <textarea id="id_broadcast_body" name="body" rows="4" required class="w-full rounded-lg border border-border px-3 py-2"></textarea>
         </div>
         <button type="submit" class="bg-danger text-white font-bold px-6 py-3 rounded-xl shadow-sm w-full">{% trans "Send Emergency Broadcast" %}</button>
     </form>

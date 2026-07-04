@@ -10,23 +10,23 @@
     <form method="post" class="bg-card border border-border rounded-2xl p-6 shadow-sm grid sm:grid-cols-3 gap-4">
         {% csrf_token %}
         <div class="sm:col-span-3">
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Service" %}</label>
+            <label for="{{ form.service.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Service" %}</label>
             {{ form.service }}
         </div>
         <div>
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Date" %}</label>
+            <label for="{{ form.date.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Date" %}</label>
             {{ form.date }}
         </div>
         <div>
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Start" %}</label>
+            <label for="{{ form.start_time.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Start" %}</label>
             {{ form.start_time }}
         </div>
         <div>
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "End" %}</label>
+            <label for="{{ form.end_time.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "End" %}</label>
             {{ form.end_time }}
         </div>
         <div>
-            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Max Appointments" %}</label>
+            <label for="{{ form.capacity.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Max Appointments" %}</label>
             {{ form.capacity }}
         </div>
         <div class="flex items-end">
