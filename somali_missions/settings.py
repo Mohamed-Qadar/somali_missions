@@ -2,6 +2,7 @@
 Django settings for somali_missions project.
 """
 
+from datetime import timedelta
 from pathlib import Path
 import os
 
@@ -25,6 +26,11 @@ INSTALLED_APPS = [
     'queue_management.apps.QueueManagementConfig',
     'assistant.apps.AssistantConfig',
     'notifications.apps.NotificationsConfig',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_spectacular',
+    'django_filters',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -134,4 +140,50 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
+
+# Assistant provider selection - see assistant/providers.py. Only 'rule_based'
+# is implemented; this is the extension point for a future AI backend.
+ASSISTANT_PROVIDER = config('ASSISTANT_PROVIDER', default='rule_based')
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/hour',
+        'user': '1000/hour',
+    },
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Somali Missions API',
+    'DESCRIPTION': (
+        'Official REST API for the Somali Ministry of Foreign Affairs citizen '
+        'protection platform. Intended for future mobile app clients.'
+    ),
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
 

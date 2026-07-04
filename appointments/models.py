@@ -35,13 +35,13 @@ class AppointmentSlot(models.Model):
         return f"{self.mission.name} - {self.service.name} - {self.date} {self.start_time}"
 
     @property
-    def booked_count(self):
+    def booked_count(self) -> int:
         return self.appointments.filter(
             status__in=[Appointment.Status.PENDING, Appointment.Status.CONFIRMED]
         ).count()
 
     @property
-    def is_full(self):
+    def is_full(self) -> bool:
         return self.booked_count >= self.capacity
 
 

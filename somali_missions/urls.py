@@ -10,6 +10,7 @@ urlpatterns = [
     path('queue/', include('queue_management.urls')),
     path('assistant/', include('assistant.urls')),
     path('notifications/', include('notifications.urls')),
+    path('api/v1/', include('api.urls')),
     path('', include('missions.urls')),
 ]
 
