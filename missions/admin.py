@@ -6,22 +6,50 @@ from .models import (
     MissionPerformanceScore, AuditLog, CommunityStatus, CommunityGroup,
     StudentAssociation, CommunityRepresentative, CommunityEvent,
     CommunityAnnouncement, CommunityVerificationRequest, CommunityMessage,
-    EmergencySupportOffer,
+    EmergencySupportOffer, UserProfile, EmbassyInvitation, SecureMessage,
 )
 
 
+@admin.register(Complaint)
 class ComplaintAdmin(admin.ModelAdmin):
-    list_display = ('tracking_code', 'mission', 'subject', 'category', 'rating', 'sentiment', 'status', 'created_at')
-    list_filter = ('status', 'mission', 'sentiment', 'rating', 'category')
+    list_display = ('tracking_code', 'mission', 'subject', 'is_anonymous', 'category', 'rating', 'sentiment', 'status', 'created_at')
+    list_filter = ('status', 'mission', 'sentiment', 'rating', 'category', 'is_anonymous')
     search_fields = ('tracking_code', 'subject', 'message', 'full_name', 'email')
     readonly_fields = ('tracking_code', 'created_at', 'updated_at')
+    date_hierarchy = 'created_at'
+    list_per_page = 50
 
 
+@admin.register(Mission)
 class MissionAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'city', 'mission_type')
     list_filter = ('mission_type', 'country')
     search_fields = ('name', 'country', 'city')
     filter_horizontal = ('staff_users',)
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'role', 'mission', 'full_name', 'email_verified')
+    list_filter = ('role', 'email_verified', 'mission')
+    search_fields = ('user__username', 'user__email', 'full_name', 'national_id', 'phone_number')
+    autocomplete_fields = ('mission',)
+
+
+@admin.register(EmbassyInvitation)
+class EmbassyInvitationAdmin(admin.ModelAdmin):
+    list_display = ('email', 'mission', 'role', 'is_used', 'created_at')
+    list_filter = ('role', 'is_used', 'mission')
+    search_fields = ('email', 'mission__name')
+    readonly_fields = ('token', 'created_at')
+
+
+@admin.register(SecureMessage)
+class SecureMessageAdmin(admin.ModelAdmin):
+    list_display = ('complaint', 'sender', 'sender_type', 'is_read', 'created_at')
+    list_filter = ('sender_type', 'is_read')
+    search_fields = ('complaint__tracking_code', 'sender__username', 'message')
+    readonly_fields = ('created_at',)
 
 
 def mark_verified(modeladmin, request, queryset):
@@ -41,6 +69,7 @@ mark_suspended.short_description = "Suspend selected groups"
 mark_public_moderated.short_description = "Approve and publish selected announcements"
 
 
+@admin.register(EmbassyResponse)
 class EmbassyResponseAdmin(admin.ModelAdmin):
     list_display = ('complaint', 'responder_name', 'is_public', 'created_at')
     list_filter = ('is_public',)
@@ -181,8 +210,3 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('subject', 'name', 'email', 'created_at')
     search_fields = ('subject', 'name', 'email', 'message')
     readonly_fields = ('created_at',)
-
-
-admin.site.register(Mission, MissionAdmin)
-admin.site.register(Complaint, ComplaintAdmin)
-admin.site.register(EmbassyResponse, EmbassyResponseAdmin)
