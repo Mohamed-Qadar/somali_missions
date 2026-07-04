@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Manage Appointment Slots" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10 space-y-6">
+    <h1 class="text-2xl font-bold text-secondary">{% trans "Appointment Slots" %} &mdash; {{ mission.name }}</h1>
+
+    <form method="post" class="bg-card border border-border rounded-2xl p-6 shadow-sm grid sm:grid-cols-3 gap-4">
+        {% csrf_token %}
+        <div class="sm:col-span-3">
+            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Service" %}</label>
+            {{ form.service }}
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Date" %}</label>
+            {{ form.date }}
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Start" %}</label>
+            {{ form.start_time }}
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "End" %}</label>
+            {{ form.end_time }}
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Max Appointments" %}</label>
+            {{ form.capacity }}
+        </div>
+        <div class="flex items-end">
+            <button type="submit" class="bg-primary text-white font-bold px-6 py-2 rounded-lg w-full">{% trans "Create Slot" %}</button>
+        </div>
+    </form>
+
+    <div class="bg-card border border-border rounded-2xl shadow-sm overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead class="bg-slate-50 text-textSecondary text-xs uppercase">
+                <tr>
+                    <th class="text-left px-4 py-3">{% trans "Service" %}</th>
+                    <th class="text-left px-4 py-3">{% trans "Date" %}</th>
+                    <th class="text-left px-4 py-3">{% trans "Time" %}</th>
+                    <th class="text-left px-4 py-3">{% trans "Booked / Capacity" %}</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+                {% for slot in slots %}
+                <tr>
+                    <td class="px-4 py-3">{{ slot.service.name }}</td>
+                    <td class="px-4 py-3">{{ slot.date }}</td>
+                    <td class="px-4 py-3">{{ slot.start_time|time:"H:i" }}-{{ slot.end_time|time:"H:i" }}</td>
+                    <td class="px-4 py-3">{{ slot.booked_count }} / {{ slot.capacity }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="px-4 py-8 text-center text-textSecondary italic">{% trans "No upcoming slots yet." %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

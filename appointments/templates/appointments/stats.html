@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Appointment Statistics" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10 space-y-6">
+    <h1 class="text-2xl font-bold text-secondary">{% trans "Appointment Statistics" %}</h1>
+
+    <div class="grid sm:grid-cols-3 gap-4">
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm">
+            <p class="text-3xl font-black text-secondary">{{ total }}</p>
+            <p class="text-xs text-textSecondary uppercase font-bold">{% trans "Total Appointments" %}</p>
+        </div>
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm">
+            <p class="text-3xl font-black text-secondary">{{ completed_count }}</p>
+            <p class="text-xs text-textSecondary uppercase font-bold">{% trans "Completed" %}</p>
+        </div>
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm">
+            <p class="text-3xl font-black text-danger">{{ no_show_rate }}%</p>
+            <p class="text-xs text-textSecondary uppercase font-bold">{% trans "No-Show Rate" %}</p>
+        </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-card border border-border rounded-2xl p-6 shadow-sm">
+            <h2 class="font-bold text-secondary mb-3">{% trans "By Status" %}</h2>
+            {% for row in by_status %}
+                <div class="flex justify-between text-sm py-1 border-b border-border last:border-0">
+                    <span>{{ row.status }}</span><span class="font-bold">{{ row.count }}</span>
+                </div>
+            {% empty %}
+                <p class="text-textSecondary italic text-sm">{% trans "No data yet." %}</p>
+            {% endfor %}
+        </div>
+        <div class="bg-card border border-border rounded-2xl p-6 shadow-sm">
+            <h2 class="font-bold text-secondary mb-3">{% trans "Top Services" %}</h2>
+            {% for row in by_service %}
+                <div class="flex justify-between text-sm py-1 border-b border-border last:border-0">
+                    <span>{{ row.service__name }}</span><span class="font-bold">{{ row.count }}</span>
+                </div>
+            {% empty %}
+                <p class="text-textSecondary italic text-sm">{% trans "No data yet." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

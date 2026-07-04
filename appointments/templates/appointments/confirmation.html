@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Appointment Confirmation" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-16 text-center">
+    <div class="bg-card border border-border rounded-2xl p-8 shadow-sm space-y-5">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full
+            {% if appointment.status == 'CONFIRMED' %}bg-green-100 text-green-600
+            {% elif appointment.status == 'WAITLISTED' %}bg-yellow-100 text-yellow-700
+            {% elif appointment.status == 'REJECTED' or appointment.status == 'CANCELLED' %}bg-red-100 text-danger
+            {% else %}bg-blue-100 text-primary{% endif %}">
+            <span class="material-symbols-outlined text-3xl">event_available</span>
+        </div>
+        <h1 class="text-2xl font-bold">{{ appointment.get_status_display }}</h1>
+        <p class="text-textSecondary text-sm">{{ appointment.mission.name }} &mdash; {{ appointment.service.name }}</p>
+        {% if appointment.slot %}
+            <p class="text-sm font-semibold">{{ appointment.slot.date }} · {{ appointment.slot.start_time|time:"H:i" }}</p>
+        {% endif %}
+        <p class="text-xs text-textSecondary">{% trans "Reference code" %}: <span class="font-black tracking-widest text-primary">{{ appointment.qr_token }}</span></p>
+        <img src="{% url 'appointment_qr_image' appointment.qr_token %}" alt="{% trans 'Appointment QR code' %}" class="mx-auto w-40 h-40 border border-border rounded-lg p-2">
+        <p class="text-xs text-textSecondary">{% trans "Show this QR code at the mission on the day of your appointment." %}</p>
+        <a href="{% url 'home' %}" class="block w-full bg-primary text-white font-bold py-3 rounded-lg">{% trans "Return Home" %}</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Book an Appointment" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12 space-y-8">
+    <div class="text-center space-y-2">
+        <p class="text-sm uppercase font-bold tracking-[0.3em] text-primary">{% trans "Appointment Booking" %}</p>
+        <h1 class="text-3xl md:text-4xl font-black text-secondary">{% trans "Book an Appointment" %}</h1>
+        <p class="text-textSecondary text-sm max-w-xl mx-auto">{% trans "Choose your mission, the service you need, and an available time slot." %}</p>
+    </div>
+
+    <form method="get" class="bg-card border border-border rounded-2xl p-6 shadow-sm grid sm:grid-cols-2 gap-4">
+        <div>
+            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Embassy/Consulate" %}</label>
+            <select name="mission" class="w-full rounded-lg border border-border px-3 py-2" onchange="this.form.submit()">
+                <option value="">{% trans "-- Select Mission --" %}</option>
+                {% for m in missions %}
+                    <option value="{{ m.id }}" {% if selected_mission_id == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }} ({{ m.city }}, {{ m.country }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Service" %}</label>
+            <select name="service" class="w-full rounded-lg border border-border px-3 py-2" onchange="this.form.submit()" {% if not services %}disabled{% endif %}>
+                <option value="">{% trans "-- Select Service --" %}</option>
+                {% for s in services %}
+                    <option value="{{ s.id }}" {% if selected_service_id == s.id|stringformat:"s" %}selected{% endif %}>{{ s.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% if selected_mission_id %}<input type="hidden" name="mission" value="{{ selected_mission_id }}">{% endif %}
+    </form>
+
+    {% if selected_mission_id and selected_service_id %}
+    <form method="post" class="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-4">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 text-danger text-sm rounded-lg p-3">{{ form.non_field_errors.0 }}</div>
+        {% endif %}
+
+        <div>
+            <label class="block text-xs font-bold text-textSecondary mb-2">{% trans "Available Time Slots" %}</label>
+            <div class="grid sm:grid-cols-2 gap-2">
+                {% for slot in slots %}
+                    <label class="flex items-center gap-2 border border-border rounded-lg px-3 py-2 cursor-pointer hover:border-primary {% if slot.is_full %}opacity-60{% endif %}">
+                        <input type="radio" name="slot" value="{{ slot.pk }}" required>
+                        <span class="text-sm">{{ slot.date }} · {{ slot.start_time|time:"H:i" }}-{{ slot.end_time|time:"H:i" }}
+                            {% if slot.is_full %}<em class="text-danger text-xs">({% trans "Full - joins waitlist" %})</em>{% endif %}
+                        </span>
+                    </label>
+                {% empty %}
+                    <p class="text-sm text-textSecondary italic col-span-2">{% trans "No slots published yet for this service. Please check back later." %}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-bold text-textSecondary mb-1">{{ form.full_name.label }}</label>
+                {{ form.full_name }}
+                {% if form.full_name.errors %}<p class="text-danger text-xs mt-1">{{ form.full_name.errors.0 }}</p>{% endif %}
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-textSecondary mb-1">{{ form.email.label }}</label>
+                {{ form.email }}
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-textSecondary mb-1">{{ form.phone.label }}</label>
+                {{ form.phone }}
+            </div>
+        </div>
+
+        <button type="submit" class="bg-primary text-white font-bold px-6 py-3 rounded-xl shadow-sm hover:bg-opacity-90 w-full sm:w-auto">
+            {% trans "Request Appointment" %}
+        </button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

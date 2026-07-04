@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Appointment Waitlist" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10 space-y-6">
+    <h1 class="text-2xl font-bold text-secondary">{% trans "Waitlist" %}</h1>
+    <div class="bg-card border border-border rounded-2xl shadow-sm overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead class="bg-slate-50 text-textSecondary text-xs uppercase">
+                <tr>
+                    <th class="text-left px-4 py-3">{% trans "Code" %}</th>
+                    <th class="text-left px-4 py-3">{% trans "Mission" %}</th>
+                    <th class="text-left px-4 py-3">{% trans "Service" %}</th>
+                    <th class="text-left px-4 py-3">{% trans "Citizen" %}</th>
+                    <th class="text-left px-4 py-3">{% trans "Requested" %}</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+                {% for a in waitlisted %}
+                <tr>
+                    <td class="px-4 py-3 font-mono">{{ a.qr_token }}</td>
+                    <td class="px-4 py-3">{{ a.mission.name }}</td>
+                    <td class="px-4 py-3">{{ a.service.name }}</td>
+                    <td class="px-4 py-3">{{ a.full_name }}</td>
+                    <td class="px-4 py-3">{{ a.created_at|date:"Y-m-d H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="px-4 py-8 text-center text-textSecondary italic">{% trans "No one is currently waitlisted." %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
