@@ -32,6 +32,20 @@ MISSIONS = [
     {'name': 'Embassy of Somalia in Qatar', 'country': 'Qatar', 'city': 'Doha', 'mission_type': 'EM', 'lat': '25.2854', 'lng': '51.5310', 'address': 'Doha, Qatar', 'phone': '+974 0000 0000', 'email': 'doha@mfa.gov.so'},
     {'name': 'Embassy of Somalia in South Africa', 'country': 'South Africa', 'city': 'Pretoria', 'mission_type': 'EM', 'lat': '-25.7479', 'lng': '28.2293', 'address': 'Pretoria, South Africa', 'phone': '+27 12 000 0000', 'email': 'pretoria@mfa.gov.so'},
     {'name': 'Consulate General of Somalia in Toronto', 'country': 'Canada', 'city': 'Toronto', 'mission_type': 'CO', 'lat': '43.6532', 'lng': '-79.3832', 'address': 'Toronto, Canada', 'phone': '+1 416 000 0000', 'email': 'toronto@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Djibouti', 'country': 'Djibouti', 'city': 'Djibouti', 'mission_type': 'EM', 'lat': '11.5721', 'lng': '43.1456', 'address': 'Djibouti City, Djibouti', 'phone': '+253 21 000 000', 'email': 'djibouti@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Uganda', 'country': 'Uganda', 'city': 'Kampala', 'mission_type': 'EM', 'lat': '0.3476', 'lng': '32.5825', 'address': 'Kampala, Uganda', 'phone': '+256 41 000 0000', 'email': 'kampala@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Belgium', 'country': 'Belgium', 'city': 'Brussels', 'mission_type': 'EM', 'lat': '50.8503', 'lng': '4.3517', 'address': 'Brussels, Belgium', 'phone': '+32 2 000 0000', 'email': 'brussels@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in China', 'country': 'China', 'city': 'Beijing', 'mission_type': 'EM', 'lat': '39.9042', 'lng': '116.4074', 'address': 'Beijing, China', 'phone': '+86 10 0000 0000', 'email': 'beijing@mfa.gov.so'},
+    {'name': 'Permanent Mission of Somalia to the UN in Geneva', 'country': 'Switzerland', 'city': 'Geneva', 'mission_type': 'EM', 'lat': '46.2044', 'lng': '6.1432', 'address': 'Geneva, Switzerland', 'phone': '+41 22 000 0000', 'email': 'geneva@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in India', 'country': 'India', 'city': 'New Delhi', 'mission_type': 'EM', 'lat': '28.6139', 'lng': '77.2090', 'address': 'New Delhi, India', 'phone': '+91 11 0000 0000', 'email': 'newdelhi@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Malaysia', 'country': 'Malaysia', 'city': 'Kuala Lumpur', 'mission_type': 'EM', 'lat': '3.1390', 'lng': '101.6869', 'address': 'Kuala Lumpur, Malaysia', 'phone': '+60 3 0000 0000', 'email': 'kualalumpur@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Oman', 'country': 'Oman', 'city': 'Muscat', 'mission_type': 'EM', 'lat': '23.5880', 'lng': '58.3829', 'address': 'Muscat, Oman', 'phone': '+968 24 000 000', 'email': 'muscat@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Pakistan', 'country': 'Pakistan', 'city': 'Islamabad', 'mission_type': 'EM', 'lat': '33.6844', 'lng': '73.0479', 'address': 'Islamabad, Pakistan', 'phone': '+92 51 000 0000', 'email': 'islamabad@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Russia', 'country': 'Russia', 'city': 'Moscow', 'mission_type': 'EM', 'lat': '55.7558', 'lng': '37.6173', 'address': 'Moscow, Russia', 'phone': '+7 495 000 0000', 'email': 'moscow@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Kuwait', 'country': 'Kuwait', 'city': 'Kuwait City', 'mission_type': 'EM', 'lat': '29.3759', 'lng': '47.9774', 'address': 'Kuwait City, Kuwait', 'phone': '+965 2 000 0000', 'email': 'kuwaitcity@mfa.gov.so'},
+    {'name': 'Consulate General of Somalia in Jeddah', 'country': 'Saudi Arabia', 'city': 'Jeddah', 'mission_type': 'CO', 'lat': '21.4858', 'lng': '39.1925', 'address': 'Jeddah, Saudi Arabia', 'phone': '+966 12 000 0000', 'email': 'jeddah@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Italy', 'country': 'Italy', 'city': 'Rome', 'mission_type': 'EM', 'lat': '41.9028', 'lng': '12.4964', 'address': 'Rome, Italy', 'phone': '+39 06 000 0000', 'email': 'rome@mfa.gov.so'},
+    {'name': 'Embassy of Somalia in Sudan', 'country': 'Sudan', 'city': 'Khartoum', 'mission_type': 'EM', 'lat': '15.5007', 'lng': '32.5599', 'address': 'Khartoum, Sudan', 'phone': '+249 15 000 0000', 'email': 'khartoum@mfa.gov.so'},
 ]
 
 
