@@ -32,6 +32,7 @@ urlpatterns = [
     path('api/translate/<int:pk>/', views.ai_translation_api, name='ai_translation_api'),
     path('transparency/', views.transparency_portal_view, name='transparency'),
     path('directory/', views.directory_view, name='directory'),
+    path('before-you-travel/', views.before_you_travel_view, name='before_you_travel'),
     path('communities/', views.community_directory_view, name='community_directory'),
     path('communities/students/', views.student_association_directory_view, name='student_association_directory'),
     path('communities/group/<int:pk>/', views.community_group_detail_view, name='community_group_detail'),

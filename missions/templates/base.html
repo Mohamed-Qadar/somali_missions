@@ -97,13 +97,12 @@
                     <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'transparency' %}">{% trans "Transparency" %}</a>
                     <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'analysis' %}">{% trans "Stats" %}</a>
                     <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'track' %}">{% trans "Track" %}</a>
-                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'emergency_hotline' %}">{% trans "Campaign" %}</a>
                 </nav>
 
                 <div class="flex items-center justify-end gap-1.5 sm:gap-2 shrink-0">
                     <a class="inline-flex h-9 md:h-10 items-center gap-1.5 rounded-lg bg-danger px-2.5 sm:px-3 text-xs font-black text-white shadow-sm hover:bg-red-600 transition-colors" href="{% url 'emergency_hotline' %}">
                         <span class="material-symbols-outlined text-base">warning</span>
-                        <span class="hidden min-[380px]:inline">{% trans "Emergency" %}</span>
+                        <span class="hidden min-[380px]:inline">{% trans "Emergency Support" %}</span>
                     </a>
 
                     {% if user.is_authenticated %}
@@ -188,6 +187,7 @@
                 <div class="flex flex-col gap-2 text-sm font-semibold">
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'home' %}">{% trans "Home" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'directory' %}">{% trans "Directory" %}</a>
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'before_you_travel' %}">{% trans "Before You Travel" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'student_association_directory' %}">{% trans "Student Associations" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'community_directory' %}">{% trans "Somali Communities" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'transparency' %}">{% trans "Transparency Portal" %}</a>
@@ -195,7 +195,7 @@
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'track' %}">{% trans "Track Complaint" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-red-50 text-danger bg-red-50/50 border border-red-100 flex items-center gap-2" href="{% url 'emergency_hotline' %}">
                         <span class="material-symbols-outlined text-sm animate-pulse">campaign</span>
-                        {% trans "EMERGENCY PORTAL" %}
+                        {% trans "Emergency Support" %}
                     </a>
                     <hr class="border-border my-1">
                     {% if user.is_authenticated %}
@@ -240,6 +240,24 @@
             </div>
         </div>
     </header>
+
+    {% if messages %}
+    <div id="toastContainer" class="fixed top-20 right-3 z-50 flex flex-col gap-2 w-[calc(100%-1.5rem)] max-w-sm">
+        {% for message in messages %}
+            <div class="toast-message flex items-start gap-2 rounded-xl border px-4 py-3 shadow-md text-sm font-semibold
+                {% if message.tags == 'error' %}bg-red-50 border-red-200 text-danger
+                {% elif message.tags == 'warning' %}bg-yellow-50 border-yellow-200 text-yellow-800
+                {% elif message.tags == 'success' %}bg-green-50 border-green-200 text-green-700
+                {% else %}bg-blue-50 border-blue-200 text-primary{% endif %}">
+                <span class="material-symbols-outlined text-lg shrink-0">
+                    {% if message.tags == 'error' %}error{% elif message.tags == 'warning' %}warning{% elif message.tags == 'success' %}check_circle{% else %}info{% endif %}
+                </span>
+                <span class="flex-1">{{ message }}</span>
+                <button type="button" class="toast-close text-lg leading-none opacity-60 hover:opacity-100" aria-label="{% trans 'Dismiss' %}">&times;</button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <main class="flex-1">
         {% block content %}{% endblock %}</main>
@@ -342,6 +360,35 @@
                     }
                 });
             }
+
+            // Toast messages: dismiss button + auto-hide after a few seconds
+            document.querySelectorAll('.toast-message').forEach(function (toast) {
+                var hide = function () {
+                    toast.style.transition = 'opacity 0.3s ease';
+                    toast.style.opacity = '0';
+                    setTimeout(function () { toast.remove(); }, 300);
+                };
+                var closeBtn = toast.querySelector('.toast-close');
+                if (closeBtn) closeBtn.addEventListener('click', hide);
+                setTimeout(hide, 6000);
+            });
+
+            // Prevent double-submits: disable the submit button once a form
+            // actually submits (skipped if another handler already blocked
+            // it, e.g. client-side validation calling preventDefault()).
+            document.addEventListener('submit', function (e) {
+                if (e.defaultPrevented) return;
+                var form = e.target;
+                if (!(form instanceof HTMLFormElement)) return;
+                var btn = form.querySelector('button:not([type=button]):not([type=reset]), input[type=submit]');
+                if (btn && !btn.disabled) {
+                    btn.dataset.originalText = btn.innerHTML;
+                    btn.disabled = true;
+                    btn.style.opacity = '0.7';
+                    btn.style.cursor = 'not-allowed';
+                    btn.innerHTML = '{% trans "Submitting..." %}';
+                }
+            });
         });
     </script>
     {% block extra_js %}{% endblock %}

@@ -24,7 +24,7 @@
                 <h1 class="text-3xl md:text-4xl font-black text-secondary mt-3">{{ group.name }}</h1>
                 <p class="text-textSecondary mt-1">
                     {{ group.city }}, {{ group.country }}
-                    {% if is_student %} â€¢ {{ group.university_name }}{% endif %}
+                    {% if is_student %} • {{ group.university_name }}{% endif %}
                 </p>
                 <p class="text-sm text-textPrimary leading-relaxed mt-5">{{ group.description|default:"This group has not added a full description yet." }}</p>
             </div>

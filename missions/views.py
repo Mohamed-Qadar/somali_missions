@@ -705,6 +705,7 @@ def staff_mission_manage(request, pk):
                 status_form.save()
                 selected_complaint.refresh_from_db()
                 _record_status_change(request.user, selected_complaint, old_status, selected_complaint.status, _('Staff dashboard status update.'))
+                messages.success(request, _('Complaint status updated to %(status)s.') % {'status': selected_complaint.get_status_display()})
                 return redirect(f'{request.path}?complaint={selected_complaint.pk}')
 
         if request.method == 'POST' and 'save_response' in request.POST:
@@ -713,12 +714,15 @@ def staff_mission_manage(request, pk):
                 response = response_form.save(commit=False)
                 response.complaint = selected_complaint
                 response.save()
+                messages.success(request, _('Your response has been saved.'))
                 return redirect(f'{request.path}?complaint={selected_complaint.pk}')
 
     return render(request, 'missions/staff_mission_manage.html', {
         'mission': mission,
         'complaints': complaints,
         'selected_complaint': selected_complaint,
+        'status_form': status_form,
+        'response_form': response_form,
     })
 
 
@@ -1164,6 +1168,41 @@ def transparency_portal_view(request):
         'top_performing': top_performing,
         'needs_improvement': needs_improvement,
         'success_stories': success_stories,
+    })
+
+
+def before_you_travel_view(request):
+    missions = Mission.objects.all().order_by('country', 'name')
+    selected_mission = None
+    services = []
+    support_contacts = []
+    nearby_community_groups = []
+    nearby_student_associations = []
+
+    mission_id = request.GET.get('mission')
+    if mission_id:
+        selected_mission = Mission.objects.filter(pk=mission_id).first()
+        if selected_mission:
+            services = selected_mission.services.filter(is_active=True).prefetch_related('required_documents')
+            support_contacts = selected_mission.support_contacts.filter(is_public=True)
+            nearby_community_groups = CommunityGroup.objects.filter(
+                status=CommunityStatus.VERIFIED,
+                country__iexact=selected_mission.country,
+                city__iexact=selected_mission.city,
+            )[:6]
+            nearby_student_associations = StudentAssociation.objects.filter(
+                status=CommunityStatus.VERIFIED,
+                country__iexact=selected_mission.country,
+                city__iexact=selected_mission.city,
+            )[:6]
+
+    return render(request, 'missions/before_you_travel.html', {
+        'missions': missions,
+        'selected_mission': selected_mission,
+        'services': services,
+        'support_contacts': support_contacts,
+        'nearby_community_groups': nearby_community_groups,
+        'nearby_student_associations': nearby_student_associations,
     })
 
 
@@ -1676,6 +1715,7 @@ def post_secure_message_view(request, pk):
     if request.method == 'POST':
         text = request.POST.get('message_text', '').strip()
         attachment_file = request.FILES.get('message_attachment')
+        attachment_rejected = False
 
         if attachment_file and (
             attachment_file.size > MAX_EVIDENCE_SIZE
@@ -1683,6 +1723,7 @@ def post_secure_message_view(request, pk):
         ):
             messages.error(request, _('Attachment rejected: file must be under 10MB and a photo, PDF, audio, or video file.'))
             attachment_file = None
+            attachment_rejected = True
 
         if text or attachment_file:
             # Determine sender type
@@ -1719,6 +1760,9 @@ def post_secure_message_view(request, pk):
                     subject="New Secure Message - Case " + complaint.tracking_code,
                     message=f"You have received a new secure portal message on case {complaint.tracking_code}.\n\nMessage body: {text[:50]}..."
                 )
+            messages.success(request, _('Message sent.'))
+        elif not attachment_rejected:
+            messages.error(request, _('Please enter a message or attach a file before sending.'))
 
     # Redirect to appropriate dashboard / tracking view
     referer = request.META.get('HTTP_REFERER', '')

@@ -59,7 +59,7 @@
 				{% for assoc in nearby_student_associations %}
 					<a href="{% url 'student_association_detail' assoc.pk %}" class="block border border-blue-100 bg-blue-50/40 rounded-xl p-4 hover:border-primary transition-colors">
 						<p class="font-bold text-sm text-secondary">{{ assoc.name }}</p>
-						<p class="text-[10px] uppercase tracking-wider font-bold text-primary">{% trans "Student Association" %} â€¢ {{ assoc.university_name }}</p>
+						<p class="text-[10px] uppercase tracking-wider font-bold text-primary">{% trans "Student Association" %} • {{ assoc.university_name }}</p>
 						{% if assoc.phone_whatsapp %}<p class="text-xs text-textSecondary mt-1">{{ assoc.phone_whatsapp }}</p>{% endif %}
 						{% if assoc.emergency_support_available %}<p class="text-xs text-red-600 font-bold mt-1">{% trans "Emergency support available" %}</p>{% endif %}
 					</a>

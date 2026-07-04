@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Before You Travel" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+
+    <div class="text-center space-y-3">
+        <p class="text-sm uppercase font-bold tracking-[0.4em] text-primary">{% trans "Plan Ahead" %}</p>
+        <h1 class="text-4xl md:text-5xl font-black text-secondary">{% trans "Before You Travel" %}</h1>
+        <p class="text-textSecondary text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            {% trans "Check document requirements, appointment rules, and local support before visiting a Somali mission - so your visit succeeds on the first try." %}
+        </p>
+    </div>
+
+    <!-- Universal checklist -->
+    <div class="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-sm">
+        <h2 class="text-lg font-extrabold text-secondary mb-4">{% trans "General Checklist for Every Visit" %}</h2>
+        <div class="grid sm:grid-cols-2 gap-4 text-sm">
+            <div class="flex gap-2.5"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>{% trans "Bring printed copies of every document - do not rely on phone photos alone." %}</span></div>
+            <div class="flex gap-2.5"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>{% trans "Arrive early; many services are first-come, first-served even with an appointment." %}</span></div>
+            <div class="flex gap-2.5"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>{% trans "Confirm working hours and appointment requirements before you leave home." %}</span></div>
+            <div class="flex gap-2.5"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>{% trans "Keep your complaint tracking code safe if you ever need to report a service issue." %}</span></div>
+            <div class="flex gap-2.5"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>{% trans "Contact a local Somali student or community association for translation or transport help." %}</span></div>
+            <div class="flex gap-2.5"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>{% trans "If it is a genuine emergency, use the Emergency Support page instead of the regular queue." %}</span></div>
+        </div>
+    </div>
+
+    <!-- Mission picker -->
+    <div class="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-sm">
+        <h2 class="text-lg font-extrabold text-secondary mb-4">{% trans "Get Document Requirements for a Specific Mission" %}</h2>
+        <form method="get" class="flex flex-col sm:flex-row gap-3">
+            <select name="mission" class="flex-1 rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card focus:border-primary" onchange="this.form.submit()">
+                <option value="">{% trans "-- Select Embassy/Consulate --" %}</option>
+                {% for m in missions %}
+                    <option value="{{ m.id }}" {% if selected_mission and selected_mission.id == m.id %}selected{% endif %}>{{ m.name }} ({{ m.city }}, {{ m.country }})</option>
+                {% empty %}
+                    <option value="" disabled>{% trans "No missions available yet." %}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="bg-primary text-white font-bold px-6 py-3 rounded-xl shadow-sm hover:bg-opacity-90">{% trans "View Requirements" %}</button>
+        </form>
+    </div>
+
+    {% if selected_mission %}
+    <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-2xl border border-border p-6 shadow-sm">
+            <h2 class="text-xl font-bold mb-1">{{ selected_mission.name }}</h2>
+            <p class="text-textSecondary text-sm mb-4">{{ selected_mission.city }}, {{ selected_mission.country }}</p>
+            {% if selected_mission.working_hours %}<p class="text-xs text-textSecondary mb-1"><span class="font-bold">{% trans "Hours:" %}</span> {{ selected_mission.working_hours }}</p>{% endif %}
+            {% if selected_mission.phone %}<p class="text-xs text-textSecondary mb-1"><span class="font-bold">{% trans "Phone:" %}</span> {{ selected_mission.phone }}</p>{% endif %}
+            {% if selected_mission.address %}<p class="text-xs text-textSecondary mb-4"><span class="font-bold">{% trans "Address:" %}</span> {{ selected_mission.address }}</p>{% endif %}
+
+            <h3 class="font-bold text-secondary mb-2 mt-4">{% trans "Document Pre-check" %}</h3>
+            <div class="space-y-4">
+                {% for service in services %}
+                    <div class="border border-border rounded-xl p-4 bg-slate-50/50">
+                        <div class="flex justify-between gap-3">
+                            <h4 class="font-bold text-secondary text-sm">{{ service.name }}</h4>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-blue-50 text-blue-700 shrink-0">
+                                {% if service.appointment_required %}{% trans "Appointment" %}{% else %}{% trans "Walk-in" %}{% endif %}
+                            </span>
+                        </div>
+                        {% if service.expected_processing_time %}<p class="text-xs text-textSecondary mt-1">{{ service.expected_processing_time }}</p>{% endif %}
+                        {% if service.best_arrival_time %}<p class="text-xs text-textSecondary mt-1">{% trans "Best arrival:" %} {{ service.best_arrival_time }}</p>{% endif %}
+                        <ul class="mt-3 space-y-1.5 text-xs text-textPrimary">
+                            {% for doc in service.required_documents.all %}
+                                <li class="flex gap-2"><span class="material-symbols-outlined text-sm text-green-600">check_circle</span><span>{{ doc.name }}{% if not doc.is_required %} <em class="text-textSecondary">({% trans "optional" %})</em>{% endif %}</span></li>
+                            {% empty %}
+                                <li class="text-textSecondary italic">{% trans "No document checklist published yet." %}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% empty %}
+                    <p class="text-sm text-textSecondary italic">{% trans "Service checklist data is being prepared for this mission." %}</p>
+                {% endfor %}
+            </div>
+
+            <a href="{% url 'mission_detail' selected_mission.pk %}" class="inline-flex items-center gap-1 text-primary text-sm font-bold mt-4 hover:underline">
+                {% trans "View full mission page" %} <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-border p-6 shadow-sm">
+            <h2 class="text-xl font-bold mb-2">{% trans "Local Support Nearby" %}</h2>
+            <p class="text-xs text-textSecondary mb-4">{% trans "Emergency contacts, community help, transport, and accommodation guidance." %}</p>
+            <div class="space-y-3">
+                {% for assoc in nearby_student_associations %}
+                    <a href="{% url 'student_association_detail' assoc.pk %}" class="block border border-blue-100 bg-blue-50/40 rounded-xl p-4 hover:border-primary transition-colors">
+                        <p class="font-bold text-sm text-secondary">{{ assoc.name }}</p>
+                        <p class="text-[10px] uppercase tracking-wider font-bold text-primary">{% trans "Student Association" %} • {{ assoc.university_name }}</p>
+                        {% if assoc.phone_whatsapp %}<p class="text-xs text-textSecondary mt-1">{{ assoc.phone_whatsapp }}</p>{% endif %}
+                    </a>
+                {% endfor %}
+                {% for group in nearby_community_groups %}
+                    <a href="{% url 'community_group_detail' group.pk %}" class="block border border-green-100 bg-green-50/40 rounded-xl p-4 hover:border-primary transition-colors">
+                        <p class="font-bold text-sm text-secondary">{{ group.name }}</p>
+                        <p class="text-[10px] uppercase tracking-wider font-bold text-green-700">{% trans "Somali Community Group" %}</p>
+                        {% if group.phone_whatsapp %}<p class="text-xs text-textSecondary mt-1">{{ group.phone_whatsapp }}</p>{% endif %}
+                    </a>
+                {% endfor %}
+                {% for contact in support_contacts %}
+                    <div class="border border-border rounded-xl p-4">
+                        <p class="font-bold text-sm text-secondary">{{ contact.name }}</p>
+                        <p class="text-[10px] uppercase tracking-wider font-bold text-textSecondary">{{ contact.get_contact_type_display }}</p>
+                        {% if contact.phone %}<p class="text-xs text-textSecondary mt-1">{{ contact.phone }}</p>{% endif %}
+                    </div>
+                {% endfor %}
+                {% if not nearby_student_associations and not nearby_community_groups and not support_contacts %}
+                    <p class="text-sm text-textSecondary italic">{% trans "No local support contacts published for this mission yet." %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

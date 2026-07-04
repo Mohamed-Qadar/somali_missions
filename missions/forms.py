@@ -111,12 +111,34 @@ class TrackComplaintForm(forms.Form):
 
 
 class ComplaintStatusForm(forms.ModelForm):
+    # Only offer the current status names in the dropdown - Complaint.Status
+    # also carries legacy values (NEW/PRO/RES/CLO) kept for old rows and
+    # existing filters elsewhere, which would otherwise show as confusing
+    # duplicate options here (e.g. "Resolved" appearing twice).
+    CURRENT_STATUSES = [
+        Complaint.Status.SUBMITTED,
+        Complaint.Status.ASSIGNED,
+        Complaint.Status.UNDER_REVIEW,
+        Complaint.Status.INVESTIGATION,
+        Complaint.Status.AWAITING_RESPONSE,
+        Complaint.Status.RESOLVED,
+        Complaint.Status.CLOSED,
+    ]
+
     class Meta:
         model = Complaint
         fields = ['status']
         widgets = {
             'status': forms.Select(attrs={'class': 'form-control rounded-lg border border-border px-3 py-2'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        current_choices = [(value, label) for value, label in Complaint.Status.choices if value in self.CURRENT_STATUSES]
+        instance_status = self.instance.status if self.instance else None
+        if instance_status and instance_status not in self.CURRENT_STATUSES:
+            current_choices.insert(0, (instance_status, dict(Complaint.Status.choices).get(instance_status, instance_status)))
+        self.fields['status'].choices = current_choices
 
 
 class EmbassyResponseForm(forms.ModelForm):
