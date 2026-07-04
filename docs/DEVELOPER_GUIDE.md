@@ -49,6 +49,17 @@ Follow the pattern of `appointments`/`queue_management`/`assistant`/`notificatio
 6. Real tests in `tests.py` - see any of the four apps above for the expected depth (not just "does the page return 200", but the actual guarantees: scoping, no-double-booking, etc.)
 7. If it needs API exposure, add serializers/viewsets to `api/` rather than building parallel API code inside the new app
 
+## Local dev in a synced folder (OneDrive/Dropbox) — stale server gotcha
+
+If the project lives in a OneDrive/Dropbox-synced folder, Django's `runserver`
+auto-reloader (`StatReloader`) can miss file changes because the sync client
+interferes with file-modification events. Symptom: you edit a view/URL/template,
+the browser still shows old behaviour or a `NoReverseMatch`/500 for something
+you already added. **Fix: stop and restart `runserver`** after changes (or move
+the project outside the synced folder for development). This only affects the
+dev auto-reloader — production runs under gunicorn with no reloader, so it is
+not a production concern.
+
 ## Gettext tooling on Windows
 
 `compilemessages` needs `msgfmt` (part of GNU gettext), which isn't bundled with Git for Windows. Options: WSL, a standalone gettext installer, or run `compilemessages` in the Docker build (the `Dockerfile` installs `gettext` via apt and compiles translations at build time) if you don't want to install it locally.
