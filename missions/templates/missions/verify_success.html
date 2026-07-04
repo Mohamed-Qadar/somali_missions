@@ -6,6 +6,18 @@
 {% block content %}
 <div class="max-w-md mx-auto px-4 py-16">
     <div class="bg-white border border-border rounded-xl p-8 shadow-sm text-center space-y-6">
+        {% if invalid %}
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-danger">
+            <span class="material-symbols-outlined text-3xl">error</span>
+        </div>
+        <h1 class="text-2xl font-bold">{% trans "Verification Link Invalid or Expired" %}</h1>
+        <p class="text-textSecondary text-sm">
+            {% trans "This verification link is no longer valid. Please register again or contact support if the problem continues." %}
+        </p>
+        <a href="{% url 'register' %}" class="block w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 rounded-lg shadow-sm">
+            {% trans "Back to Registration" %}
+        </a>
+        {% else %}
         <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600">
             <span class="material-symbols-outlined text-3xl">verified</span>
         </div>
@@ -17,6 +29,7 @@
         <a href="{% url 'login' %}" class="block w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 rounded-lg shadow-sm">
             {% trans "Go to Login" %}
         </a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

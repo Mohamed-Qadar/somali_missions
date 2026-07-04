@@ -29,6 +29,16 @@
             </div>
         </div>
 
+        {% if rate_limit_error %}
+        <div class="p-4 bg-red-50 border border-red-200 rounded-xl text-danger text-xs flex gap-2.5 mb-6">
+            <span class="material-symbols-outlined shrink-0 text-sm mt-0.5">error</span>
+            <div>
+                <p class="font-bold">{% trans "Submission Limit Reached" %}</p>
+                <p class="mt-0.5">{{ rate_limit_error }}</p>
+            </div>
+        </div>
+        {% endif %}
+
         <form method="post" enctype="multipart/form-data" class="space-y-5" novalidate>
             {% csrf_token %}
 

@@ -3,12 +3,19 @@ import json
 import random
 from datetime import timedelta
 
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
 from django.db.models import Avg, Count, Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext as _
 
 from .forms import (
@@ -530,21 +537,27 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect(redirect_after_login(request.user))
     error = None
+    login_rate_limited = is_rate_limited(request, 'login_attempts', limit=10, window_seconds=600)
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            remember_me = form.cleaned_data['remember_me']
-            user = authenticate(request, username=username, password=password)
-            if user is not None and user.is_active:
-                login(request, user)
-                if remember_me:
-                    request.session.set_expiry(1209600)  # 2 weeks
-                else:
-                    request.session.set_expiry(0)  # browser close
-                return redirect(redirect_after_login(user))
-            error = _('Invalid username or password.')
+        if login_rate_limited:
+            error = _('Too many login attempts. Please wait a few minutes and try again.')
+            form = LoginForm(request.POST)
+        else:
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                remember_me = form.cleaned_data['remember_me']
+                user = authenticate(request, username=username, password=password)
+                if user is not None and user.is_active:
+                    login(request, user)
+                    if remember_me:
+                        request.session.set_expiry(1209600)  # 2 weeks
+                    else:
+                        request.session.set_expiry(0)  # browser close
+                    return redirect(redirect_after_login(user))
+                increment_rate_limit(request, 'login_attempts', window_seconds=600)
+                error = _('Invalid username or password.')
     else:
         form = LoginForm()
     return render(request, 'missions/login.html', {'form': form, 'error': error})
@@ -555,6 +568,24 @@ def logout_view(request):
     return redirect('home')
 
 
+def _send_verification_email(request, user):
+    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+    token = default_token_generator.make_token(user)
+    verify_url = request.build_absolute_uri(
+        f'/verify-email/{uidb64}/{token}/'
+    )
+    send_mail(
+        subject=_('Verify your Somali Missions account'),
+        message=_(
+            'Please confirm your email address by opening this link:\n%(url)s'
+        ) % {'url': verify_url},
+        from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', None),
+        recipient_list=[user.email],
+        fail_silently=True,
+    )
+    return uidb64, token
+
+
 def register_view(request):
     if request.user.is_authenticated:
         return redirect(redirect_after_login(request.user))
@@ -562,22 +593,32 @@ def register_view(request):
         form = CitizenRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            uidb64, token = _send_verification_email(request, user)
             return render(request, 'missions/verify_pending.html', {
-                'user_id': user.id,
-                'email': user.email
+                'email': user.email,
+                'uidb64': uidb64,
+                'token': token,
+                'is_debug': settings.DEBUG,
             })
     else:
         form = CitizenRegistrationForm()
     return render(request, 'missions/register.html', {'form': form})
 
 
-def verify_email_view(request, user_id):
-    from django.contrib.auth.models import User
-    user = get_object_or_404(User, id=user_id)
+def verify_email_view(request, uidb64, token):
+    try:
+        user_id = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=user_id)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is None or not default_token_generator.check_token(user, token):
+        return render(request, 'missions/verify_success.html', {'invalid': True})
+
     profile = user.profile
     profile.email_verified = True
-    profile.save()
-    return render(request, 'missions/verify_success.html')
+    profile.save(update_fields=['email_verified'])
+    return render(request, 'missions/verify_success.html', {'invalid': False})
 
 
 @login_required
@@ -685,8 +726,18 @@ def submit_complaint_wizard(request):
     captcha = _captcha_numbers(request)
     missions = Mission.objects.all().order_by('country', 'name')
     selected_mission_id = request.GET.get('mission', '')
+    wizard_rate_limited = is_rate_limited(request, 'complaint_wizard', limit=5)
 
     if request.method == 'POST':
+        if wizard_rate_limited:
+            _refresh_captcha(request)
+            captcha = _captcha_numbers(request)
+            return render(request, 'missions/submit_wizard.html', {
+                'missions': missions,
+                'selected_mission_id': selected_mission_id,
+                'captcha_error': _('Daily submission limit reached from this network. Please try again tomorrow.'),
+                'captcha': captcha,
+            })
         mission_id = request.POST.get('mission')
         category = request.POST.get('category', 'OTHER')
         rating = request.POST.get('rating', '3')
@@ -769,14 +820,15 @@ def submit_complaint_wizard(request):
                 message=f"Critical factors: {complaint.critical_reason or 'Emergency category'}",
             )
             
+        increment_rate_limit(request, 'complaint_wizard')
         _refresh_captcha(request)
         request.session['last_tracking_code'] = complaint.tracking_code
         return redirect('complaint_success')
-        
+
     else:
         _refresh_captcha(request)
         captcha = _captcha_numbers(request)
-        
+
     return render(request, 'missions/submit_wizard.html', {
         'missions': missions,
         'selected_mission_id': selected_mission_id,
@@ -792,8 +844,15 @@ def emergency_hotline_view(request):
 def submit_emergency_view(request):
     missions = Mission.objects.all().order_by('country', 'name')
     selected_mission_id = request.GET.get('mission', '')
+    emergency_rate_limited = is_rate_limited(request, 'emergency_submit', limit=8)
 
     if request.method == 'POST':
+        if emergency_rate_limited:
+            return render(request, 'missions/submit_emergency.html', {
+                'missions': missions,
+                'selected_mission_id': selected_mission_id,
+                'rate_limit_error': _('This network has reached the daily emergency submission limit. If this is a genuine emergency, please call the mission or your local police directly.'),
+            })
         mission_id = request.POST.get('mission')
         category = request.POST.get('category', 'EMERGENCY')
         message = request.POST.get('message', '').strip()
@@ -851,7 +910,8 @@ def submit_emergency_view(request):
             subject=f"Emergency mission alert - {complaint.tracking_code}",
             message=f"Emergency case for {mission.name}. Critical factors: {complaint.critical_reason}",
         )
-            
+
+        increment_rate_limit(request, 'emergency_submit')
         request.session['last_tracking_code'] = complaint.tracking_code
         return redirect('complaint_success')
         
@@ -1616,7 +1676,14 @@ def post_secure_message_view(request, pk):
     if request.method == 'POST':
         text = request.POST.get('message_text', '').strip()
         attachment_file = request.FILES.get('message_attachment')
-        
+
+        if attachment_file and (
+            attachment_file.size > MAX_EVIDENCE_SIZE
+            or attachment_file.content_type not in ALLOWED_EVIDENCE_TYPES
+        ):
+            messages.error(request, _('Attachment rejected: file must be under 10MB and a photo, PDF, audio, or video file.'))
+            attachment_file = None
+
         if text or attachment_file:
             # Determine sender type
             if is_ministry:
