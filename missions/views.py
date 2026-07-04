@@ -33,6 +33,7 @@ from .models import (
 
 from .pdf_reports import build_pdf_report
 from .utils.permissions import user_can_manage_mission, missions_for_user
+from .utils.audit import log_audit_action
 from .utils.rate_limit import is_rate_limited, increment_rate_limit
 
 
@@ -494,6 +495,7 @@ def export_complaints_csv(request):
     if form.is_valid():
         complaints_qs = _filtered_complaints(form)
 
+    log_audit_action(request.user, None, 'Export', 'Exported complaints to CSV.', request=request)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="complaints_export.csv"'
     writer = csv.writer(response)
@@ -509,6 +511,52 @@ def export_complaints_csv(request):
             complaint.get_sentiment_display(),
             complaint.created_at.isoformat(),
         ])
+    return response
+
+
+@login_required
+def export_complaints_excel(request):
+    import openpyxl
+    from openpyxl.styles import Font, PatternFill
+
+    form = ReportForm(request.GET or None)
+    complaints_qs = Complaint.objects.select_related('mission').all()
+    if form.is_valid():
+        complaints_qs = _filtered_complaints(form)
+
+    log_audit_action(request.user, None, 'Export', 'Exported complaints to Excel.', request=request)
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+    sheet.title = 'Complaints'
+
+    headers = ['Tracking Code', 'Mission', 'Country', 'Subject', 'Category', 'Rating', 'Status', 'Sentiment', 'Created At']
+    sheet.append(headers)
+    for cell in sheet[1]:
+        cell.font = Font(bold=True, color='FFFFFF')
+        cell.fill = PatternFill(start_color='183059', end_color='183059', fill_type='solid')
+
+    for complaint in complaints_qs.order_by('-created_at'):
+        sheet.append([
+            complaint.tracking_code,
+            complaint.mission.name,
+            complaint.mission.country,
+            complaint.subject,
+            complaint.get_category_display(),
+            complaint.rating,
+            complaint.get_status_display(),
+            complaint.get_sentiment_display(),
+            complaint.created_at.replace(tzinfo=None).isoformat(),
+        ])
+
+    for column_cells in sheet.columns:
+        length = max(len(str(cell.value)) for cell in column_cells if cell.value is not None) if column_cells else 10
+        sheet.column_dimensions[column_cells[0].column_letter].width = min(max(length + 2, 12), 50)
+
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = 'attachment; filename="complaints_export.xlsx"'
+    workbook.save(response)
     return response
 
 
@@ -1096,6 +1144,37 @@ def ministry_analytics_view(request):
     satisfaction_avg = complaints.filter(satisfaction_rating__isnull=False).aggregate(avg=Avg('satisfaction_rating'))['avg'] or 0.0
     satisfaction_rate = round((float(satisfaction_avg) / 5.0) * 100, 1) if satisfaction_avg else 0.0
 
+    # Stats 7: Complaints per assigned officer
+    officer_stats = list(
+        complaints.exclude(assigned_officer__isnull=True)
+        .values('assigned_officer__username').annotate(count=Count('id')).order_by('-count')[:10]
+    )
+
+    # Stats 8: Country x Month heatmap (last 6 months, top 8 countries by volume)
+    heatmap_countries = [c['mission__country'] for c in country_stats]
+    heatmap_months = []
+    for i in range(5, -1, -1):
+        target_date = now - timedelta(days=i * 30)
+        heatmap_months.append({'label': target_date.strftime('%b %Y'), 'year': target_date.year, 'month': target_date.month})
+    heatmap_rows = []
+    for country in heatmap_countries:
+        row_counts = []
+        for m in heatmap_months:
+            row_counts.append(
+                complaints.filter(mission__country=country, created_at__year=m['year'], created_at__month=m['month']).count()
+            )
+        heatmap_rows.append({'country': country, 'counts': row_counts})
+    heatmap_max = max((c for row in heatmap_rows for c in row['counts']), default=0)
+
+    # Stats 9: Operational wait times from real Appointment/Queue data (today)
+    from appointments.models import Appointment as _Appointment
+    from queue_management.models import QueueTicket as _QueueTicket
+    today = timezone.now().date()
+    todays_tickets = _QueueTicket.objects.filter(date=today, status=_QueueTicket.Status.COMPLETED)
+    queue_wait_seconds = [t.wait_seconds for t in todays_tickets if t.wait_seconds is not None]
+    avg_queue_wait_minutes = round((sum(queue_wait_seconds) / len(queue_wait_seconds)) / 60, 1) if queue_wait_seconds else 0
+    appointments_today_count = _Appointment.objects.filter(slot__date=today).count()
+
     return render(request, 'missions/ministry_analytics.html', {
         'period': period,
         'avg_resolution_days': avg_resolution_days,
@@ -1108,6 +1187,12 @@ def ministry_analytics_view(request):
         'category_counts_json': json.dumps(category_counts),
         'monthly_labels_json': json.dumps(monthly_labels),
         'monthly_counts_json': json.dumps(monthly_counts),
+        'officer_stats': officer_stats,
+        'heatmap_months': heatmap_months,
+        'heatmap_rows': heatmap_rows,
+        'heatmap_max': heatmap_max,
+        'avg_queue_wait_minutes': avg_queue_wait_minutes,
+        'appointments_today_count': appointments_today_count,
     })
 
 
@@ -1418,15 +1503,6 @@ def community_admin_dashboard_view(request):
     })
 
 
-def log_audit_action(user, complaint, action, details=""):
-    AuditLog.objects.create(
-        user=user if (user and user.is_authenticated) else None,
-        complaint=complaint,
-        action=action,
-        details=details
-    )
-
-
 @login_required
 def invite_embassy_user_view(request):
     if request.user.profile.role != UserProfile.Role.MINISTRY_ADMIN and not request.user.is_superuser:
@@ -1457,7 +1533,11 @@ def invite_embassy_user_view(request):
                 role=role,
                 token=token
             )
-            
+            log_audit_action(
+                request.user, None, 'Invited Embassy User',
+                f'Invited {email} as {role} for {mission.name}.', request=request,
+            )
+
             # Log simulated invitation email
             activation_url = request.build_absolute_uri(f'/embassy/activate/{token}/')
             
@@ -1507,6 +1587,10 @@ def activate_embassy_account_view(request, token):
             profile.full_name = full_name
             profile.email_verified = True
             profile.save()
+            log_audit_action(
+                user, None, 'Role Assigned',
+                f'Account activated with role {invitation.role} for {invitation.mission.name}.', request=request,
+            )
 
             # Mark invitation as used
             invitation.is_used = True
@@ -1584,11 +1668,11 @@ def embassy_dashboard_view(request):
                 complaint.assigned_officer = officer
                 complaint.status = Complaint.Status.ASSIGNED
                 complaint.save()
-                log_audit_action(request.user, complaint, "Assigned Case", f"Assigned case to officer: {officer.username}")
+                log_audit_action(request.user, complaint, "Assigned Case", f"Assigned case to officer: {officer.username}", request=request)
             else:
                 complaint.assigned_officer = None
                 complaint.save()
-                log_audit_action(request.user, complaint, "Unassigned Case", "Removed assignment from case")
+                log_audit_action(request.user, complaint, "Unassigned Case", "Removed assignment from case", request=request)
             return redirect('dashboard_router')
 
     return render(request, 'missions/embassy_dashboard.html', {
@@ -1632,14 +1716,14 @@ def embassy_case_detail_view(request, pk):
                 complaint.status = new_status
                 complaint.save()
                 _record_status_change(request.user, complaint, old_status, new_status, _('Case detail status update.'))
-                log_audit_action(request.user, complaint, "Updated Status", f"Status changed from {old_status} to {new_status}")
+                log_audit_action(request.user, complaint, "Updated Status", f"Status changed from {old_status} to {new_status}", request=request)
 
         # 2. Update internal notes
         elif 'save_notes' in request.POST:
             notes = request.POST.get('internal_notes', '').strip()
             complaint.internal_notes = notes
             complaint.save()
-            log_audit_action(request.user, complaint, "Updated Internal Notes", "Modified internal Notes details")
+            log_audit_action(request.user, complaint, "Updated Internal Notes", "Modified internal Notes details", request=request)
 
         # 3. Request more information
         elif 'request_info' in request.POST:
@@ -1647,7 +1731,7 @@ def embassy_case_detail_view(request, pk):
             complaint.status = Complaint.Status.AWAITING_RESPONSE
             complaint.save()
             _record_status_change(request.user, complaint, old_status, Complaint.Status.AWAITING_RESPONSE, _('Requested more information from citizen.'))
-            log_audit_action(request.user, complaint, "Information Request", "Sent information clarification request to citizen")
+            log_audit_action(request.user, complaint, "Information Request", "Sent information clarification request to citizen", request=request)
             
             # Notify citizen
             if complaint.email:
@@ -1664,7 +1748,7 @@ def embassy_case_detail_view(request, pk):
             complaint.priority = Complaint.Priority.CRITICAL
             # Escalate status if needed
             complaint.save()
-            log_audit_action(request.user, complaint, "Escalated to Ministry", "Escalated case status to ministry headquarters oversight")
+            log_audit_action(request.user, complaint, "Escalated to Ministry", "Escalated case status to ministry headquarters oversight", request=request)
             EscalationLog.objects.create(
                 complaint=complaint,
                 target_role=UserProfile.Role.MINISTRY_REVIEWER,
@@ -1756,7 +1840,7 @@ def post_secure_message_view(request, pk):
             )
 
             # Audit action
-            log_audit_action(request.user, complaint, "Sent Secure Message", f"Sent secure message via portal. Sender type: {sender_type}")
+            log_audit_action(request.user, complaint, "Sent Secure Message", f"Sent secure message via portal. Sender type: {sender_type}", request=request)
 
             # Notify recipient
             notify_email = ""

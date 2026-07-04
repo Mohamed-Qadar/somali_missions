@@ -14,6 +14,7 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from missions.models import Mission, MissionService
+from missions.utils.audit import log_audit_action
 from missions.utils.permissions import missions_for_user, user_can_manage_mission
 from notifications.channels import notify
 
@@ -200,6 +201,11 @@ def appointment_action_view(request, pk):
                 appointment.staff_notes = note
             appointment.save()
             _record_appointment_status(appointment, old_status, appointment.status, user=request.user, note=note)
+            log_audit_action(
+                request.user, None, f'Appointment {action}',
+                f'Appointment {appointment.qr_token} ({appointment.mission.name}): {old_status} -> {appointment.status}',
+                request=request,
+            )
             if appointment.citizen_user:
                 notify(
                     appointment.citizen_user,

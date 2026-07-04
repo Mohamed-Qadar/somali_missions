@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from missions.models import Mission, MissionService
+from missions.utils.audit import log_audit_action
 from missions.utils.permissions import missions_for_user, user_can_manage_mission
 
 from .models import QueueTicket
@@ -115,6 +116,10 @@ def queue_call_next_view(request, mission_pk):
             next_ticket.called_at = timezone.now()
             next_ticket.called_by = request.user
             next_ticket.save(update_fields=['status', 'called_at', 'called_by'])
+            log_audit_action(
+                request.user, None, 'Queue Call Next',
+                f'Called ticket #{next_ticket.ticket_number} at {mission.name}.', request=request,
+            )
             messages.success(request, _('Now serving ticket #%(number)s.') % {'number': next_ticket.ticket_number})
         else:
             messages.error(request, _('No one is waiting in the queue.'))
@@ -138,6 +143,10 @@ def queue_ticket_action_view(request, pk, action):
     elif action == 'no_show':
         ticket.status = QueueTicket.Status.NO_SHOW
     ticket.save()
+    log_audit_action(
+        request.user, None, f'Queue Ticket {action}',
+        f'Ticket #{ticket.ticket_number} at {ticket.mission.name}.', request=request,
+    )
     return redirect('staff_queue_dashboard')
 
 

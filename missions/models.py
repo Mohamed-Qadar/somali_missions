@@ -672,16 +672,23 @@ class EmbassyInvitation(models.Model):
 
 class AuditLog(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
-    complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE, related_name='audit_logs')
+    complaint = models.ForeignKey(
+        Complaint, on_delete=models.CASCADE, related_name='audit_logs', null=True, blank=True,
+        help_text='Set for complaint-specific actions; left blank for account-level events (login, role change, export, etc).',
+    )
     action = models.CharField(max_length=150)
     details = models.TextField(blank=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.CharField(max_length=300, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-timestamp']
+        indexes = [models.Index(fields=['user', 'timestamp'])]
 
     def __str__(self):
-        return f"{self.action} on Case #{self.complaint.id} at {self.timestamp}"
+        target = f"Case #{self.complaint_id}" if self.complaint_id else 'account'
+        return f"{self.action} on {target} at {self.timestamp}"
 
 
 class MissionPerformanceScore(models.Model):

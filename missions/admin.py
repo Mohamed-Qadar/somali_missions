@@ -200,9 +200,11 @@ class MissionPerformanceScoreAdmin(admin.ModelAdmin):
 
 @admin.register(AuditLog)
 class AuditLogAdmin(admin.ModelAdmin):
-    list_display = ('complaint', 'user', 'action', 'timestamp')
-    search_fields = ('complaint__tracking_code', 'action', 'details', 'user__username')
+    list_display = ('action', 'user', 'complaint', 'ip_address', 'timestamp')
+    list_filter = ('action',)
+    search_fields = ('complaint__tracking_code', 'action', 'details', 'user__username', 'ip_address')
     readonly_fields = ('timestamp',)
+    date_hierarchy = 'timestamp'
 
 
 @admin.register(ContactMessage)

@@ -89,6 +89,60 @@
 
     </div>
 
+    <!-- Operational wait times (today) -->
+    <div class="grid sm:grid-cols-2 gap-6">
+        <div class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+            <p class="text-xs text-textSecondary uppercase font-bold">{% trans "Avg. Queue Wait (Today)" %}</p>
+            <p class="text-3xl font-black text-secondary mt-1">{{ avg_queue_wait_minutes }} {% trans "min" %}</p>
+        </div>
+        <div class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+            <p class="text-xs text-textSecondary uppercase font-bold">{% trans "Appointments Today" %}</p>
+            <p class="text-3xl font-black text-secondary mt-1">{{ appointments_today_count }}</p>
+        </div>
+    </div>
+
+    <!-- Complaints per officer -->
+    <div class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+        <h3 class="font-bold text-secondary text-sm border-b border-border pb-2 mb-4">{% trans "Complaints Handled per Officer" %}</h3>
+        <div class="space-y-2">
+            {% for row in officer_stats %}
+                <div class="flex justify-between text-sm py-1 border-b border-border last:border-0">
+                    <span>{{ row.assigned_officer__username }}</span><span class="font-bold">{{ row.count }}</span>
+                </div>
+            {% empty %}
+                <p class="text-textSecondary italic text-sm">{% trans "No complaints assigned to officers yet." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Country x Month heatmap -->
+    <div class="bg-card border border-border rounded-3xl p-6 shadow-sm overflow-x-auto">
+        <h3 class="font-bold text-secondary text-sm border-b border-border pb-2 mb-4">{% trans "Complaint Volume Heatmap (Country x Month)" %}</h3>
+        <table class="text-xs w-full">
+            <thead>
+                <tr>
+                    <th class="text-left px-2 py-1">{% trans "Country" %}</th>
+                    {% for m in heatmap_months %}<th class="px-2 py-1">{{ m.label }}</th>{% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in heatmap_rows %}
+                <tr>
+                    <td class="px-2 py-1 font-bold">{{ row.country }}</td>
+                    {% for count in row.counts %}
+                        <td class="px-2 py-1 text-center"
+                            style="background-color: rgba(0, 173, 239, {% widthratio count heatmap_max 90 %}%);">
+                            {{ count }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% empty %}
+                    <tr><td colspan="7" class="text-center text-textSecondary italic py-4">{% trans "No data yet." %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 {% block extra_js %}
