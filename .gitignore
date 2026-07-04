@@ -14,3 +14,5 @@ dist/
 build/
 staticfiles/
 media/
+backups/
+.claude/settings.local.json

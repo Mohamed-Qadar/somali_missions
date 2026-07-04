@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Lint (ruff)
+        run: python -m ruff check .
+
+      - name: Security scan (bandit)
+        run: python -m bandit -r . -x ./locale,./staticfiles,./venv,./.venv -ll
+
+      - name: Django system checks
+        env:
+          SECRET_KEY: ci-only-secret-key-not-for-production
+          DEBUG: 'False'
+          ALLOWED_HOSTS: testserver,localhost
+        run: |
+          python manage.py check
+          python manage.py check --deploy
+          python manage.py makemigrations --check --dry-run
+
+      - name: Run tests
+        env:
+          SECRET_KEY: ci-only-secret-key-not-for-production
+        run: python manage.py test
+
+      - name: Collect static files
+        env:
+          SECRET_KEY: ci-only-secret-key-not-for-production
+        run: python manage.py collectstatic --noinput
+
+      - name: Build Docker image
+        run: docker build -t somali-missions:ci .

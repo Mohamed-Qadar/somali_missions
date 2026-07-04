@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'django_filters',
     'api.apps.ApiConfig',
     'corsheaders',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -129,6 +131,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'missions/static')]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -139,6 +142,12 @@ LOGIN_URL = 'login'
 
 EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='no-reply@mfa.gov.so')
+# Only used when EMAIL_BACKEND is the SMTP backend; harmless no-ops otherwise.
+EMAIL_HOST = config('EMAIL_HOST', default='')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
 CACHES = {
     'default': {
@@ -213,4 +222,39 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
+
+# Error monitoring: no-op unless SENTRY_DSN is actually configured. Wrapped in
+# a try/except since sentry-sdk is an optional dependency - a deployment that
+# doesn't want Sentry shouldn't be forced to install it.
+SENTRY_DSN = config('SENTRY_DSN', default='')
+if SENTRY_DSN:
+    try:
+        import sentry_sdk
+        from sentry_sdk.integrations.django import DjangoIntegration
+
+        sentry_sdk.init(
+            dsn=SENTRY_DSN,
+            integrations=[DjangoIntegration()],
+            traces_sample_rate=config('SENTRY_TRACES_SAMPLE_RATE', default=0.1, cast=float),
+            send_default_pii=False,
+            environment=config('SENTRY_ENVIRONMENT', default='production'),
+        )
+    except ImportError:
+        pass
+
+# Prometheus metrics (see missions/monitoring.py) - safe no-op if
+# prometheus_client isn't installed.
+METRICS_ENABLED = config('METRICS_ENABLED', default=True, cast=bool)
+
+# Celery: used for scheduled/background jobs (e.g. appointment reminders,
+# see appointments/tasks.py). Defaults to a local Redis instance for Docker
+# Compose; override via env for other setups. Not required to run the site
+# itself - only to have reminders/periodic jobs actually fire on a schedule.
+CELERY_BROKER_URL = config('CELERY_BROKER_URL', default='redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 

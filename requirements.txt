@@ -9,3 +9,9 @@ drf-spectacular>=0.27,<0.28
 django-filter>=25.0,<26.0
 openpyxl>=3.1,<4.0
 django-cors-headers>=4.0,<5.0
+sentry-sdk>=2.0,<3.0
+prometheus_client>=0.20,<1.0
+
+# Production-only (Docker/deployment); not required for local SQLite dev
+gunicorn>=22.0,<23.0
+psycopg2-binary>=2.9,<3.0
