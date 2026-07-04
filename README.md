@@ -1,16 +1,16 @@
-# Somali Missions — Complaint & Evaluation Platform
+# Somali Missions — Complaints & Citizen Protection Platform
 
-Django web application for collecting and analyzing citizen feedback on Somali embassies and consulates worldwide.
+Official Django platform for the Somali Ministry of Foreign Affairs: citizens abroad find their nearest mission, submit and track complaints, book appointments, join a walk-in queue, get instant answers from a rule-based assistant, and connect with verified student/community groups. Embassy staff and Ministry users get scoped dashboards, analytics, and a REST API for future mobile clients.
 
 ## Requirements
 
 - Python 3.11+
 - pip
+- Docker + Docker Compose, for a production-like deployment (optional for local dev)
 
-## Quick start
+## Quick start (local development, SQLite)
 
 ```bash
-cd somali_missions
 python -m venv venv
 venv\Scripts\activate          # Windows
 # source venv/bin/activate     # Linux/macOS
@@ -21,13 +21,18 @@ copy .env.example .env         # Windows — edit SECRET_KEY
 
 python manage.py migrate
 python manage.py seed_missions
+python manage.py seed_assistant_topics
 python manage.py createsuperuser
 python manage.py runserver
 ```
 
 Open http://127.0.0.1:8000/
 
+For a production-style deployment with Postgres, Redis, Celery, and nginx, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
 ## Environment variables (`.env`)
+
+See `.env.example` for local dev and `.env.production.example` for the full list used in production (email, Sentry, CORS, Celery, etc). Core variables:
 
 | Variable | Description |
 |----------|-------------|
@@ -35,35 +40,38 @@ Open http://127.0.0.1:8000/
 | `DEBUG` | `True` / `False` |
 | `ALLOWED_HOSTS` | Comma-separated hosts |
 | `DATABASE_URL` | Optional PostgreSQL URL, e.g. `postgres://user:pass@localhost:5432/dbname` |
-
-When `DEBUG=False`, these security settings are enabled automatically:
-
-- `SECURE_BROWSER_XSS_FILTER`
-- `SESSION_COOKIE_SECURE`
-- `CSRF_COOKIE_SECURE`
-- `X_FRAME_OPTIONS = DENY`
-
-Use HTTPS in production so secure cookies work correctly.
+| `SECURE_SSL_ENABLED` | Set `True` only once HTTPS is actually terminating in front of the app - enables HSTS/SSL redirect |
 
 ## Seed data
 
-`python manage.py seed_missions` creates 16 missions, sample complaints, and demo users:
+```bash
+python manage.py seed_missions          # 30 missions worldwide + services + sample complaints
+python manage.py seed_assistant_topics  # 12 topics for the Smart Citizen Assistant
+python manage.py cleanup_missions       # idempotent - only needed if re-seeding onto old/dirty data
+```
 
-| User | Password | Role |
-|------|----------|------|
-| `staff_london` | `staffpass123` | Mission staff (London embassy) |
-| `ministry_admin` | `adminpass123` | Ministry admin group |
+Demo accounts created by `seed_missions`:
+
+| User | Password | Lands on |
+|------|----------|----------|
+| `staff_london` | `staffpass123` | `/dashboard/embassy/` (Embassy Officer, London mission) |
+| `ministry_admin` | `adminpass123` | `/dashboard/admin/` (Ministry Administrator, all missions) |
+
+Change or remove these before a real production launch - see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Main features
 
-- Mission search with country / type / rating filters and map
-- Complaint submission with tracking code, anonymity, CAPTCHA, rate limiting
-- Public track page (`/track/`) with optional official response
-- Analysis dashboard with Chart.js and period filters
-- PDF reports (3 types) and CSV export (login required)
-- Staff panel for status updates and public responses
+- Mission directory with country/type/rating filters and a map
+- Complaint submission with tracking code, anonymity, CAPTCHA, rate limiting; public track page with optional official response
+- **Appointments**: book a time slot per mission/service, QR-coded confirmation, no-double-booking (auto-waitlist), staff approve/reject/reschedule/cancel, daily/weekly/monthly views, reminders
+- **Digital queue**: walk-in ticket numbers, live "now serving" display screen, staff call-next/skip/recall/complete, wait-time analytics
+- **Smart Citizen Assistant**: rule-based Q&A over 12 topics (passport, visa, documents, appointments, etc.) with a pluggable architecture for a future AI backend
+- **Notifications**: in-app + email (SMS/WhatsApp interfaces ready, no provider wired), unread badge, ministry emergency broadcast
+- **REST API** at `/api/v1/` (JWT auth, Swagger docs at `/api/v1/docs/`) for future mobile apps
+- Ministry KPI dashboard: complaints by mission/country/category, monthly trends, complaints-per-officer, a country×month heatmap, real appointment/queue wait times, CSV + Excel + PDF export
+- Full audit log (login/logout/failed-login with IP+user-agent, complaint/appointment/queue/role-change actions, exports)
 - English + Somali language switcher
-- Contact form, FAQ, privacy policy
+- `/health/` and `/metrics/` (Prometheus) endpoints; Sentry error tracking (opt-in via `SENTRY_DSN`)
 
 ## Tests
 
@@ -71,12 +79,30 @@ Use HTTPS in production so secure cookies work correctly.
 python manage.py test
 ```
 
+53 tests covering models, views, permissions/IDOR scoping, the appointment/queue no-double-booking guarantees, the assistant's matching logic, notification channels, and the API.
+
+## Documentation
+
+- [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — Docker/production deployment, backups, scheduled jobs
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — app/component overview
+- [docs/ER_DIAGRAM.md](docs/ER_DIAGRAM.md) — data model
+- [docs/API.md](docs/API.md) — REST API overview
+- [docs/DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) — codebase conventions for contributors
+- [docs/ADMIN_GUIDE.md](docs/ADMIN_GUIDE.md) · [docs/EMBASSY_STAFF_GUIDE.md](docs/EMBASSY_STAFF_GUIDE.md) · [docs/MINISTRY_GUIDE.md](docs/MINISTRY_GUIDE.md) · [docs/CITIZEN_GUIDE.md](docs/CITIZEN_GUIDE.md)
+
 ## Project structure
 
 ```
-somali_missions/     # Django project settings
-missions/            # Main app (models, views, templates)
+somali_missions/     # Django project settings, celery app, root urls
+missions/            # Core app: missions, complaints, communities, admin
+appointments/        # Appointment booking
+queue_management/    # Walk-in digital queue
+assistant/           # Smart Citizen Assistant (rule-based)
+notifications/       # In-app/email notification center
+api/                 # REST API (DRF, JWT, Swagger)
 locale/so/           # Somali translations
+docs/                # Deployment + architecture + user guides
 manage.py
-requirements.txt
+requirements.txt / requirements-dev.txt
+Dockerfile / docker-compose.yml / nginx.conf
 ```

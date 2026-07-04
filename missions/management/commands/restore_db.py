@@ -35,12 +35,11 @@ class Command(BaseCommand):
                 return
 
         with tempfile.TemporaryDirectory() as tmp_dir:
+            # filter='data' rejects path-traversal/absolute-path/device-file
+            # entries (PEP 706). Requires Python 3.11.4+, which is already
+            # this project's minimum supported version - no fallback needed.
             with tarfile.open(archive_path, 'r:gz') as tar:
-                try:
-                    tar.extractall(tmp_dir, filter='data')
-                except TypeError:
-                    # Python <3.11.4 doesn't support the `filter` argument yet.
-                    tar.extractall(tmp_dir)
+                tar.extractall(tmp_dir, filter='data')
 
             json_files = [f for f in os.listdir(tmp_dir) if f.endswith('.json')]
             if not json_files:
