@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Smart Citizen Assistant" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-12 space-y-6">
+    <div class="text-center space-y-2">
+        <p class="text-sm uppercase font-bold tracking-[0.3em] text-primary">{% trans "Smart Citizen Assistant" %}</p>
+        <h1 class="text-3xl font-black text-secondary">{% trans "Ask a Question" %}</h1>
+        <p class="text-textSecondary text-sm">{% trans "Ask about passports, visas, appointments, or any consular service." %}</p>
+    </div>
+
+    <form method="post" class="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-4">
+        {% csrf_token %}
+        <textarea name="question" rows="3" required placeholder="{% trans 'e.g. How do I renew a lost passport?' %}"
+            class="w-full rounded-lg border border-border px-3 py-2">{{ question }}</textarea>
+        <button type="submit" class="bg-primary text-white font-bold px-6 py-3 rounded-xl shadow-sm w-full sm:w-auto">
+            {% trans "Ask" %}
+        </button>
+    </form>
+
+    {% if answer %}
+    <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 space-y-3">
+        <p class="text-xs font-bold text-primary uppercase tracking-wider">{{ answer.title }}</p>
+        <p class="text-sm text-textPrimary leading-relaxed">{{ answer.answer_text }}</p>
+        {% if action_url_name %}
+            <a href="{% url action_url_name %}" class="inline-flex items-center gap-1 text-primary font-bold text-sm hover:underline">
+                {% trans "Take action" %} <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'missions.apps.MissionsConfig',
     'appointments.apps.AppointmentsConfig',
     'queue_management.apps.QueueManagementConfig',
+    'assistant.apps.AssistantConfig',
 ]
 
 MIDDLEWARE = [

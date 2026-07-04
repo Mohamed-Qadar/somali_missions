@@ -8,6 +8,7 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('appointments/', include('appointments.urls')),
     path('queue/', include('queue_management.urls')),
+    path('assistant/', include('assistant.urls')),
     path('', include('missions.urls')),
 ]
 

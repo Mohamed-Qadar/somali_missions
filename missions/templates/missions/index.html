@@ -153,6 +153,12 @@
 			<p class="mt-2 min-h-10 text-xs leading-5 text-textSecondary">{% trans "Reserve a time slot and get a QR code confirmation." %}</p>
 			<span class="mt-3 inline-flex text-primary transition-transform group-hover:translate-x-1"><span class="material-symbols-outlined text-lg">arrow_forward</span></span>
 		</a>
+		<a href="{% url 'ask_assistant' %}" class="group rounded-xl border border-border bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-primary hover:shadow-md">
+			<span class="flex h-11 w-11 items-center justify-center rounded-lg bg-teal-50 text-teal-600"><span class="material-symbols-outlined">support_agent</span></span>
+			<h3 class="mt-4 text-sm font-black text-secondary">{% trans "Ask the Assistant" %}</h3>
+			<p class="mt-2 min-h-10 text-xs leading-5 text-textSecondary">{% trans "Get quick answers about passports, visas, and services." %}</p>
+			<span class="mt-3 inline-flex text-primary transition-transform group-hover:translate-x-1"><span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+		</a>
 		<a href="{% url 'student_association_directory' %}" class="group rounded-xl border border-border bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-primary hover:shadow-md">
 			<span class="flex h-11 w-11 items-center justify-center rounded-lg bg-sky-50 text-sky-600"><span class="material-symbols-outlined">school</span></span>
 			<h3 class="mt-4 text-sm font-black text-secondary">{% trans "Somali Student Associations" %}</h3>
