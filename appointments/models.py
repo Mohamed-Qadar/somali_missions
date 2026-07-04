@@ -10,7 +10,7 @@ from missions.models import Mission, MissionService
 
 def generate_qr_token():
     alphabet = string.ascii_uppercase + string.digits
-    for _ in range(20):
+    for _attempt in range(20):
         token = ''.join(secrets.choice(alphabet) for _ in range(10))
         if not Appointment.objects.filter(qr_token=token).exists():
             return token

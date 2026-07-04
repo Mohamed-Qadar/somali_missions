@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from missions.models import Mission, Complaint, UserProfile, ComplaintEvidence, EmbassyInvitation, SecureMessage, AuditLog
+from missions.models import Mission, Complaint, UserProfile, EmbassyInvitation, SecureMessage, AuditLog
 from missions.utils.ai_helpers import classify_complaint_ai
 
 class EnhancedPlatformTests(TestCase):
@@ -129,7 +129,7 @@ class EnhancedPlatformTests(TestCase):
         
         # Create 6 unresolved complaints with low satisfaction ratings for our mission
         for i in range(6):
-            comp = Complaint.objects.create(
+            Complaint.objects.create(
                 mission=self.mission,
                 subject=f"Bad service {i}",
                 message="Rude staff",

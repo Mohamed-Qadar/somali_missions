@@ -1,6 +1,3 @@
-from django.utils.translation import gettext_lazy as _
-
-
 def classify_complaint_ai(subject, message, category=None):
     """
     Simulates AI classification of a complaint based on keyword analysis.

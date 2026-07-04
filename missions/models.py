@@ -3,13 +3,15 @@ import string
 
 from django.conf import settings
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 def generate_tracking_code():
     alphabet = string.ascii_uppercase + string.digits
-    for _ in range(20):
+    for _attempt in range(20):
         code = ''.join(secrets.choice(alphabet) for _ in range(8))
         if not Complaint.objects.filter(tracking_code=code).exists():
             return code
@@ -650,10 +652,7 @@ class ContactMessage(models.Model):
         return f"{self.subject} ({self.email})"
 
 
-# Signals to automatically create user profile
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
+# Signal to automatically create a UserProfile whenever a User is created.
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

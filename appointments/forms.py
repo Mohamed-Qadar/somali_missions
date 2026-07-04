@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from .models import Appointment, AppointmentSlot
+from .models import AppointmentSlot
 
 
 class BookAppointmentForm(forms.Form):

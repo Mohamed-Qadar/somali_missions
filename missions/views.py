@@ -25,11 +25,11 @@ from .forms import (
     LoginForm, CitizenRegistrationForm,
 )
 from .models import (
-    Mission, MissionService, Complaint, ContactMessage, UserProfile, ComplaintEvidence,
+    Mission, Complaint, UserProfile, ComplaintEvidence,
     NotificationLog, EmbassyInvitation, AuditLog, SecureMessage, ComplaintStatusHistory,
-    EscalationRule, EscalationLog, EmergencySupportContact, CommunityStatus,
+    EscalationRule, EscalationLog, CommunityStatus,
     CommunityGroup, StudentAssociation, CommunityEvent, CommunityAnnouncement,
-    CommunityRepresentative, CommunityMessage, EmergencySupportOffer,
+    CommunityRepresentative, CommunityMessage,
 )
 
 from .pdf_reports import build_pdf_report
@@ -1855,7 +1855,7 @@ def post_secure_message_view(request, pk):
             else:
                 sender_type = SecureMessage.SenderType.CITIZEN
 
-            msg = SecureMessage.objects.create(
+            SecureMessage.objects.create(
                 complaint=complaint,
                 sender=request.user,
                 sender_type=sender_type,

@@ -4,7 +4,6 @@ Django settings for somali_missions project.
 
 from datetime import timedelta
 from pathlib import Path
-import os
 
 from decouple import Csv, config
 
@@ -130,7 +129,9 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'missions/static')]
+# No STATICFILES_DIRS: missions/static/ is already auto-discovered by the
+# default AppDirectoriesFinder since `missions` is an installed app - adding
+# it again here just made collectstatic report every file as a duplicate.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = 'media/'
