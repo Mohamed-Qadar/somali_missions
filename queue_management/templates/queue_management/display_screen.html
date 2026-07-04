@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Queue Display" %} - {{ mission.name }}{% endblock %}
+
+{% block extra_head %}
+<meta http-equiv="refresh" content="10">
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12 space-y-8 text-center">
+    <h1 class="text-2xl font-bold text-secondary">{{ mission.name }}</h1>
+
+    <div class="bg-secondary text-white rounded-3xl p-10 shadow-lg">
+        <p class="text-sm uppercase tracking-[0.3em] text-white/70">{% trans "Now Serving" %}</p>
+        <p class="text-8xl font-black mt-2">{% if now_serving %}#{{ now_serving.ticket_number }}{% else %}&mdash;{% endif %}</p>
+    </div>
+
+    <div class="bg-card border border-border rounded-2xl p-6 shadow-sm">
+        <h2 class="text-sm font-bold text-textSecondary uppercase tracking-wider mb-4">{% trans "Upcoming" %}</h2>
+        <div class="flex flex-wrap justify-center gap-3">
+            {% for t in upcoming %}
+                <span class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-slate-100 text-xl font-black text-secondary">#{{ t.ticket_number }}</span>
+            {% empty %}
+                <p class="text-textSecondary italic text-sm">{% trans "No one waiting." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

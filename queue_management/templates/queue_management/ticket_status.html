@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Your Queue Ticket" %}{% endblock %}
+
+{% block extra_head %}
+<meta http-equiv="refresh" content="20">
+{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-16 text-center">
+    <div class="bg-card border border-border rounded-2xl p-8 shadow-sm space-y-4">
+        <p class="text-xs uppercase font-bold text-textSecondary tracking-wider">{{ ticket.mission.name }}</p>
+        <p class="text-6xl font-black text-primary">#{{ ticket.ticket_number }}</p>
+        <p class="text-sm font-bold">{{ ticket.get_status_display }}</p>
+
+        {% if now_serving %}
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-4">
+                <p class="text-xs text-textSecondary">{% trans "Now Serving" %}</p>
+                <p class="text-3xl font-black text-secondary">#{{ now_serving.ticket_number }}</p>
+            </div>
+        {% endif %}
+
+        <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="bg-slate-50 rounded-xl p-3">
+                <p class="text-textSecondary text-xs">{% trans "People Ahead" %}</p>
+                <p class="font-bold text-lg">{{ people_ahead }}</p>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-3">
+                <p class="text-textSecondary text-xs">{% trans "Estimated Wait" %}</p>
+                <p class="font-bold text-lg">{% if estimated_wait_minutes %}{{ estimated_wait_minutes }} {% trans "min" %}{% else %}&mdash;{% endif %}</p>
+            </div>
+        </div>
+        <p class="text-[11px] text-textSecondary">{% trans "This page refreshes automatically every 20 seconds." %}</p>
+    </div>
+</div>
+{% endblock %}

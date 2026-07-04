@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'missions.apps.MissionsConfig',
     'appointments.apps.AppointmentsConfig',
+    'queue_management.apps.QueueManagementConfig',
 ]
 
 MIDDLEWARE = [

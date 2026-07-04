@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Join the Queue" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto px-4 py-12 space-y-6">
+    <div class="text-center space-y-2">
+        <p class="text-sm uppercase font-bold tracking-[0.3em] text-primary">{% trans "Walk-in Queue" %}</p>
+        <h1 class="text-3xl font-black text-secondary">{% trans "Get a Queue Number" %}</h1>
+        <p class="text-textSecondary text-sm">{% trans "Skip the guesswork - get a ticket number and estimated wait time." %}</p>
+    </div>
+
+    <form method="get" class="bg-card border border-border rounded-2xl p-6 shadow-sm">
+        <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Embassy/Consulate" %}</label>
+        <select name="mission" class="w-full rounded-lg border border-border px-3 py-2" onchange="this.form.submit()">
+            <option value="">{% trans "-- Select Mission --" %}</option>
+            {% for m in missions %}
+                <option value="{{ m.id }}" {% if selected_mission_id == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }} ({{ m.city }}, {{ m.country }})</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if selected_mission_id %}
+    <form method="post" class="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-4">
+        {% csrf_token %}
+        <input type="hidden" name="mission" value="{{ selected_mission_id }}">
+        {% if services %}
+        <div>
+            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Service" %}</label>
+            <select name="service" class="w-full rounded-lg border border-border px-3 py-2">
+                <option value="">{% trans "-- General --" %}</option>
+                {% for s in services %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <div>
+            <label class="block text-xs font-bold text-textSecondary mb-1">{% trans "Full Name (optional)" %}</label>
+            <input type="text" name="full_name" class="w-full rounded-lg border border-border px-3 py-2">
+        </div>
+        <button type="submit" class="bg-primary text-white font-bold px-6 py-3 rounded-xl shadow-sm w-full">{% trans "Get My Ticket Number" %}</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

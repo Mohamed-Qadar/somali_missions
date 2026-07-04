@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Queue Analytics" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10 space-y-6">
+    <h1 class="text-2xl font-bold text-secondary">{% trans "Queue Analytics (Today)" %}</h1>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm">
+            <p class="text-3xl font-black text-secondary">{{ total_today }}</p>
+            <p class="text-xs text-textSecondary uppercase font-bold">{% trans "Tickets Today" %}</p>
+        </div>
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm">
+            <p class="text-3xl font-black text-secondary">{{ waiting_today }}</p>
+            <p class="text-xs text-textSecondary uppercase font-bold">{% trans "Currently Waiting" %}</p>
+        </div>
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm">
+            <p class="text-3xl font-black text-secondary">{{ avg_wait_minutes }}</p>
+            <p class="text-xs text-textSecondary uppercase font-bold">{% trans "Avg. Wait (min)" %}</p>
+        </div>
+        <div class="bg-card border border-border rounded-2xl p-6 text-center shadow-sm">
+            <p class="text-3xl font-black text-secondary">{{ avg_service_minutes }}</p>
+            <p class="text-xs text-textSecondary uppercase font-bold">{% trans "Avg. Service Time (min)" %}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

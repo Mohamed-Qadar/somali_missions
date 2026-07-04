@@ -8,6 +8,7 @@
 	<h1 class="text-3xl font-black mb-6">{% trans "Staff Dashboard" %}</h1>
 	<div class="flex flex-wrap gap-2 mb-6 text-sm">
 		<a href="{% url 'staff_appointments' %}" class="px-3 py-2 rounded-lg border border-border hover:border-primary">{% trans "Appointments" %}</a>
+		<a href="{% url 'staff_queue_dashboard' %}" class="px-3 py-2 rounded-lg border border-border hover:border-primary">{% trans "Queue" %}</a>
 	</div>
 	{% if denied %}
 		<p class="text-textSecondary">{% trans "You do not have permission to manage any missions. Contact the Ministry administrator." %}</p>
