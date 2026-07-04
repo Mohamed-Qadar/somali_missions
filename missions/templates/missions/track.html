@@ -66,7 +66,7 @@
                             <div>
                                 <span class="font-bold text-textSecondary">{% trans "Priority Level" %}:</span>
                                 <p class="text-textPrimary mt-0.5">
-                                    <span class="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full {% if complaint.priority == 'CRITICAL' %}bg-red-100 text-red-600{% elif complaint.priority == 'HIGH' %}bg-orange-100 text-orange-600{% else %}bg-blue-100 text-blue-600{% endif %}">
+                                    <span class="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full {% if complaint.priority == 'CRITICAL' %}bg-red-100 text-red-700{% elif complaint.priority == 'HIGH' %}bg-orange-100 text-orange-700{% else %}bg-blue-100 text-blue-700{% endif %}">
                                         {{ complaint.get_priority_display }}
                                     </span>
                                 </p>
@@ -86,7 +86,7 @@
                                 <span class="absolute left-[-22px] w-4.5 h-4.5 rounded-full border-2 bg-card z-10 transition-all duration-300
                                     {% if forloop.counter0 <= current_step_idx %}
                                         {% if status_code == 'RESOLVED' or status_code == 'CLOSED' %}
-                                            border-green-500 bg-green-50 text-green-500
+                                            border-green-500 bg-green-50 text-green-700
                                         {% else %}
                                             border-primary bg-blue-50 text-primary
                                         {% endif %}
@@ -96,7 +96,7 @@
                                 </span>
                                 
                                 <div class="text-sm">
-                                    <p class="font-bold {% if forloop.counter0 <= current_step_idx %}text-secondary{% else %}text-slate-400{% endif %}">
+                                    <p class="font-bold {% if forloop.counter0 <= current_step_idx %}text-secondary{% else %}text-slate-500{% endif %}">
                                         {{ status_label }}
                                     </p>
                                     {% if forloop.counter0 == current_step_idx %}
@@ -144,7 +144,7 @@
 
                     {% if user.is_authenticated %}
                         <!-- Chat history -->
-                        <div class="space-y-3 max-h-[250px] overflow-y-auto p-4 bg-slate-50 border border-slate-150 rounded-2xl" id="citizenChatHistory">
+                        <div class="space-y-3 max-h-[250px] overflow-y-auto p-4 bg-slate-50 border border-slate-150 rounded-2xl" id="citizenChatHistory" tabindex="0" role="region" aria-label="{% trans 'Secure message history' %}">
                             {% for msg in messages %}
                                 <div class="flex flex-col {% if msg.sender == request.user %}items-end{% else %}items-start{% endif %} space-y-1">
                                     <span class="text-[10px] font-bold text-textSecondary px-1">
@@ -189,7 +189,7 @@
 
                             <div class="flex flex-wrap justify-between items-center gap-3">
                                 <div class="flex items-center gap-2 text-xs">
-                                    <span class="material-symbols-outlined text-slate-400">upload_file</span>
+                                    <span class="material-symbols-outlined text-slate-500">upload_file</span>
                                     <label for="citizen_message_attachment" class="font-bold text-textSecondary cursor-pointer hover:text-primary transition-all">
                                         {% trans "Add Attachment" %}
                                     </label>
@@ -212,7 +212,7 @@
                         </script>
                     {% else %}
                         <div class="p-5 rounded-2xl border border-dashed border-border bg-slate-50 text-center space-y-3">
-                            <span class="material-symbols-outlined text-slate-400 text-3xl">lock_open</span>
+                            <span class="material-symbols-outlined text-slate-500 text-3xl">lock_open</span>
                             <p class="text-xs text-textSecondary">
                                 {% trans "Sign in to use the secure messaging portal to exchange files and message the embassy staff directly." %}
                             </p>

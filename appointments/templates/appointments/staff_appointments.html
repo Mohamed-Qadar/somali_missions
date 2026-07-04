@@ -44,7 +44,7 @@
                         <form method="post" action="{% url 'appointment_action' a.pk %}" class="flex gap-1 flex-wrap">
                             {% csrf_token %}
                             <button name="action" value="approve" class="text-[10px] px-2 py-1 rounded bg-green-50 text-green-700 border border-green-200">{% trans "Approve" %}</button>
-                            <button name="action" value="reject" class="text-[10px] px-2 py-1 rounded bg-red-50 text-danger border border-red-200">{% trans "Reject" %}</button>
+                            <button name="action" value="reject" class="text-[10px] px-2 py-1 rounded bg-red-50 text-red-700 border border-red-200">{% trans "Reject" %}</button>
                             <button name="action" value="cancel" class="text-[10px] px-2 py-1 rounded bg-slate-50 text-textSecondary border border-border">{% trans "Cancel" %}</button>
                             <button name="action" value="complete" class="text-[10px] px-2 py-1 rounded bg-blue-50 text-primary border border-blue-200">{% trans "Complete" %}</button>
                             <button name="action" value="no_show" class="text-[10px] px-2 py-1 rounded bg-yellow-50 text-yellow-700 border border-yellow-200">{% trans "No-Show" %}</button>

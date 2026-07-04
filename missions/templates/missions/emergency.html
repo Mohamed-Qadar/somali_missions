@@ -46,7 +46,7 @@
                     <div class="space-y-2">
                         <div class="flex justify-between items-start">
                             <h3 class="font-bold text-lg text-secondary">{{ m.name }}</h3>
-                            <span class="text-xs bg-red-50 text-red-600 font-bold px-2 py-0.5 rounded border border-red-100">
+                            <span class="text-xs bg-red-50 text-red-700 font-bold px-2 py-0.5 rounded border border-red-100">
                                 {% trans "Emergency Active" %}
                             </span>
                         </div>
@@ -72,7 +72,7 @@
                         </div>
                     </div>
 
-                    <a href="{% url 'submit_emergency' %}?mission={{ m.id }}" class="block text-center border border-red-100 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold py-2.5 rounded-xl transition-all">
+                    <a href="{% url 'submit_emergency' %}?mission={{ m.id }}" class="block text-center border border-red-100 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold py-2.5 rounded-xl transition-all">
                         {% trans "Request Crisis Rescue from this Mission" %}
                     </a>
                 </div>

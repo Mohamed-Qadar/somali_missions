@@ -7,9 +7,9 @@
 <div class="max-w-md mx-auto px-4 py-16 text-center">
     <div class="bg-card border border-border rounded-2xl p-8 shadow-sm space-y-5">
         <div class="inline-flex items-center justify-center w-16 h-16 rounded-full
-            {% if appointment.status == 'CONFIRMED' %}bg-green-100 text-green-600
+            {% if appointment.status == 'CONFIRMED' %}bg-green-100 text-green-700
             {% elif appointment.status == 'WAITLISTED' %}bg-yellow-100 text-yellow-700
-            {% elif appointment.status == 'REJECTED' or appointment.status == 'CANCELLED' %}bg-red-100 text-danger
+            {% elif appointment.status == 'REJECTED' or appointment.status == 'CANCELLED' %}bg-red-100 text-red-700
             {% else %}bg-blue-100 text-primary{% endif %}">
             <span class="material-symbols-outlined text-3xl">event_available</span>
         </div>

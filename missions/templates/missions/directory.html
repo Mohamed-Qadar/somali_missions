@@ -21,10 +21,10 @@
         <form method="get" class="max-w-2xl mx-auto flex flex-col sm:flex-row gap-3 pt-4">
             <div class="flex-grow flex items-center bg-card border border-border rounded-xl px-3 shadow-sm">
                 <span class="material-symbols-outlined text-textSecondary">search</span>
-                <input type="search" name="q" value="{{ search_query }}" placeholder="{% trans 'Search by Country, City or Name...' %}" class="w-full border-none bg-transparent px-3 py-3 focus:outline-none focus:ring-0 text-sm">
+                <input type="search" name="q" value="{{ search_query }}" aria-label="{% trans 'Search missions by country, city or name' %}" placeholder="{% trans 'Search by Country, City or Name...' %}" class="w-full border-none bg-transparent px-3 py-3 focus:outline-none focus:ring-0 text-sm">
             </div>
             
-            <select name="type" class="rounded-xl border border-border bg-card px-4 py-3 text-sm focus:border-primary shadow-sm font-semibold">
+            <select name="type" aria-label="{% trans 'Filter by mission type' %}" class="rounded-xl border border-border bg-card px-4 py-3 text-sm focus:border-primary shadow-sm font-semibold">
                 <option value="">{% trans "All Types" %}</option>
                 <option value="EM" {% if selected_type == 'EM' %}selected{% endif %}>{% trans "Embassies" %}</option>
                 <option value="CO" {% if selected_type == 'CO' %}selected{% endif %}>{% trans "Consulates" %}</option>
@@ -84,7 +84,7 @@
                     <a href="{% url 'submit_complaint_wizard' %}?mission={{ m.id }}" class="block text-center border border-border hover:border-primary hover:bg-primary/5 text-textSecondary hover:text-primary text-[11px] font-bold py-2 rounded-xl transition-all">
                         {% trans "Report Problem" %}
                     </a>
-                    <a href="{% url 'submit_emergency' %}?mission={{ m.id }}" class="block text-center bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold py-2 rounded-xl transition-all">
+                    <a href="{% url 'submit_emergency' %}?mission={{ m.id }}" class="block text-center bg-red-50 hover:bg-red-100 text-red-700 text-[11px] font-bold py-2 rounded-xl transition-all">
                         {% trans "Emergency Ask" %}
                     </a>
                 </div>

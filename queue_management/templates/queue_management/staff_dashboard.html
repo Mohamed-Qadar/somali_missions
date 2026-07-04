@@ -47,7 +47,7 @@
                         <form method="post" action="{% url 'queue_ticket_action' t.pk 'skip' %}">{% csrf_token %}<button class="text-[10px] px-2 py-1 rounded bg-yellow-50 text-yellow-700 border border-yellow-200">{% trans "Skip" %}</button></form>
                         <form method="post" action="{% url 'queue_ticket_action' t.pk 'recall' %}">{% csrf_token %}<button class="text-[10px] px-2 py-1 rounded bg-blue-50 text-primary border border-blue-200">{% trans "Recall" %}</button></form>
                         <form method="post" action="{% url 'queue_ticket_action' t.pk 'complete' %}">{% csrf_token %}<button class="text-[10px] px-2 py-1 rounded bg-green-50 text-green-700 border border-green-200">{% trans "Complete" %}</button></form>
-                        <form method="post" action="{% url 'queue_ticket_action' t.pk 'no_show' %}">{% csrf_token %}<button class="text-[10px] px-2 py-1 rounded bg-red-50 text-danger border border-red-200">{% trans "No-Show" %}</button></form>
+                        <form method="post" action="{% url 'queue_ticket_action' t.pk 'no_show' %}">{% csrf_token %}<button class="text-[10px] px-2 py-1 rounded bg-red-50 text-red-700 border border-red-200">{% trans "No-Show" %}</button></form>
                     </td>
                 </tr>
                 {% empty %}

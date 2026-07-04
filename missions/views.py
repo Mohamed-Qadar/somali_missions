@@ -1126,7 +1126,10 @@ def ministry_analytics_view(request):
     
     # Stats 3: Complaints by Category
     category_stats_qs = list(complaints.values('category').annotate(count=Count('id')).order_by('-count'))
-    category_labels = [dict(Complaint.Category.choices).get(x['category'], x['category']) for x in category_stats_qs]
+    # str() forces gettext_lazy proxies to concrete strings - json.dumps cannot
+    # serialize the lazy __proxy__ objects that Category.choices labels are.
+    category_display = dict(Complaint.Category.choices)
+    category_labels = [str(category_display.get(x['category'], x['category'])) for x in category_stats_qs]
     category_counts = [x['count'] for x in category_stats_qs]
     
     # Stats 4: Monthly Trends (last 6 months)

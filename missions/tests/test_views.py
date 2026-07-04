@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from missions.models import CommunityGroup, CommunityStatus, Mission, Complaint, StudentAssociation
+from missions.models import CommunityGroup, CommunityStatus, Mission, Complaint, StudentAssociation, UserProfile
 
 
 class ViewTests(TestCase):
@@ -48,6 +48,23 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.client.login(username='testadmin', password='testpass123')
         response = self.client.get(reverse('report_dashboard'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_ministry_analytics_renders_with_recent_complaints(self):
+        # Regression: category chart labels come from Category.choices, whose
+        # values are gettext_lazy proxies. json.dumps() cannot serialize those,
+        # so the analytics page 500'd whenever the selected period contained any
+        # complaint (it only stayed hidden because seed complaints are backdated
+        # outside the default 30-day window). str()-coercing the labels fixes it.
+        admin = User.objects.create_user(username='min_admin', password='testpass123')
+        admin.profile.role = UserProfile.Role.MINISTRY_ADMIN
+        admin.profile.save()
+        Complaint.objects.create(
+            mission=self.mission, subject='Recent', message='x', rating=2,
+            category=Complaint.Category.PASSPORT,
+        )
+        self.client.login(username='min_admin', password='testpass123')
+        response = self.client.get(reverse('ministry_analytics'), {'period': '30'})
         self.assertEqual(response.status_code, 200)
 
     def test_community_directory_only_shows_verified_groups(self):

@@ -24,4 +24,11 @@
     *::after {
         box-sizing: border-box;
     }
+
+    /* Leaflet injects its "Leaflet" / OpenStreetMap attribution as links
+       distinguished only by colour, which fails WCAG "link in text block".
+       Underline them so they're distinguishable without relying on colour. */
+    .leaflet-control-attribution a {
+        text-decoration: underline;
+    }
 }

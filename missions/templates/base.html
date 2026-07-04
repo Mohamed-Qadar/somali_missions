@@ -134,7 +134,7 @@
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'ministry_admin_dashboard' %}#system-audit-logs">{% trans "Audit Logs" %}</a>
                                 {% endif %}
                                 <hr class="my-1 border-border">
-                                <a class="block px-4 py-2 text-danger hover:bg-red-50" href="{% url 'logout' %}">{% trans "Logout" %}</a>
+                                <a class="block px-4 py-2 text-red-700 hover:bg-red-50" href="{% url 'logout' %}">{% trans "Logout" %}</a>
                             </div>
                         </div>
                     {% else %}
@@ -168,7 +168,7 @@
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'transparency' %}">{% trans "Transparency Portal" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'analysis' %}">{% trans "Analysis" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'track' %}">{% trans "Track Complaint" %}</a>
-                    <a class="px-4 py-2.5 rounded-xl hover:bg-red-50 text-danger bg-red-50/50 border border-red-100 flex items-center gap-2" href="{% url 'emergency_hotline' %}">
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-red-50 text-red-700 bg-red-50/50 border border-red-100 flex items-center gap-2" href="{% url 'emergency_hotline' %}">
                         <span class="material-symbols-outlined text-sm animate-pulse">campaign</span>
                         {% trans "Emergency Support" %}
                     </a>
@@ -206,7 +206,7 @@
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_analytics' %}">{% trans "National Analytics" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ministry_admin_dashboard' %}#system-audit-logs">{% trans "Audit Logs" %}</a>
                         {% endif %}
-                        <a class="px-4 py-2.5 rounded-xl bg-red-50 text-danger text-center font-bold" href="{% url 'logout' %}">{% trans "Logout" %}</a>
+                        <a class="px-4 py-2.5 rounded-xl bg-red-50 text-red-700 text-center font-bold" href="{% url 'logout' %}">{% trans "Logout" %}</a>
                     {% else %}
                         <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary text-center" href="{% url 'login' %}">{% trans "Sign In" %}</a>
                         <a class="px-4 py-2.5 rounded-xl bg-primary text-white text-center font-bold" href="{% url 'register' %}">{% trans "Register" %}</a>
@@ -220,7 +220,7 @@
     <div id="toastContainer" class="fixed top-20 right-3 z-50 flex flex-col gap-2 w-[calc(100%-1.5rem)] max-w-sm">
         {% for message in messages %}
             <div class="toast-message flex items-start gap-2 rounded-xl border px-4 py-3 shadow-md text-sm font-semibold
-                {% if message.tags == 'error' %}bg-red-50 border-red-200 text-danger
+                {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-700
                 {% elif message.tags == 'warning' %}bg-yellow-50 border-yellow-200 text-yellow-800
                 {% elif message.tags == 'success' %}bg-green-50 border-green-200 text-green-700
                 {% else %}bg-blue-50 border-blue-200 text-primary{% endif %}">

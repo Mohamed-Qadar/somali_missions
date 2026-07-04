@@ -61,7 +61,7 @@
                     <span class="material-symbols-outlined text-orange-600">hourglass_empty</span>
                     {% trans "SLA Escalation Alerts" %}
                 </h3>
-                <span class="bg-orange-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                <span class="bg-orange-700 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                     {{ sla_violations.count }} {% trans "Delayed" %}
                 </span>
             </div>
@@ -73,7 +73,7 @@
                             <p class="font-bold text-secondary">{{ viol.tracking_code }} • {{ viol.mission.name }}</p>
                             <p class="text-textSecondary mt-0.5">{% trans "Unresolved for" %} {{ viol.created_at|timesince }}</p>
                         </div>
-                        <a href="/staff/mission/{{ viol.mission.id }}/?complaint={{ viol.id }}" class="bg-orange-500 text-white font-bold px-3 py-1.5 rounded-lg">
+                        <a href="/staff/mission/{{ viol.mission.id }}/?complaint={{ viol.id }}" class="bg-orange-700 text-white font-bold px-3 py-1.5 rounded-lg">
                             {% trans "Escalate" %}
                         </a>
                     </div>
@@ -221,11 +221,11 @@
                                 </span>
                                 <span class="px-2 py-0.5 rounded font-bold uppercase
                                     {% if c.priority == 'CRITICAL' %}
-                                        bg-red-100 text-red-600
+                                        bg-red-100 text-red-700
                                     {% elif c.priority == 'HIGH' %}
-                                        bg-orange-100 text-orange-600
+                                        bg-orange-100 text-orange-700
                                     {% else %}
-                                        bg-blue-100 text-blue-600
+                                        bg-blue-100 text-blue-700
                                     {% endif %}">
                                     {{ c.get_priority_display }}
                                 </span>
@@ -273,7 +273,7 @@
             <h2 class="text-xl font-bold text-secondary">{% trans "National System Audit Logs" %}</h2>
         </div>
         
-        <div class="overflow-x-auto max-h-[400px] overflow-y-auto pr-2">
+        <div class="overflow-x-auto max-h-[400px] overflow-y-auto pr-2" tabindex="0" role="region" aria-label="{% trans 'Diplomatic mission performance table' %}">
             <table class="w-full text-left text-xs border-collapse">
                 <thead>
                     <tr class="border-b border-border text-textSecondary uppercase tracking-wider font-extrabold bg-slate-50">

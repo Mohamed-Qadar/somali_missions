@@ -160,7 +160,7 @@
                 </div>
 
                 <!-- Chat history block -->
-                <div class="space-y-3 max-h-[360px] overflow-y-auto p-4 bg-slate-50 border border-slate-150 rounded-2xl space-y-4" id="chatHistory">
+                <div class="space-y-3 max-h-[360px] overflow-y-auto p-4 bg-slate-50 border border-slate-150 rounded-2xl space-y-4" id="chatHistory" tabindex="0" role="region" aria-label="{% trans 'Secure message history' %}">
                     {% for msg in messages %}
                         <div class="flex flex-col {% if msg.sender == request.user %}items-end{% else %}items-start{% endif %} space-y-1">
                             <span class="text-[10px] font-bold text-textSecondary px-1">
@@ -206,7 +206,7 @@
 
                     <div class="flex flex-wrap justify-between items-center gap-3">
                         <div class="flex items-center gap-2 text-xs">
-                            <span class="material-symbols-outlined text-slate-400">upload_file</span>
+                            <span class="material-symbols-outlined text-slate-500">upload_file</span>
                             <label for="message_attachment" class="font-bold text-textSecondary cursor-pointer hover:text-primary transition-all">
                                 {% trans "Add Attachment File" %}
                             </label>
@@ -276,7 +276,7 @@
                     <h3 class="text-lg font-extrabold text-secondary">{% trans "Case Audit Trail" %}</h3>
                 </div>
 
-                <div class="space-y-4 overflow-y-auto max-h-[300px] pr-2" id="auditTrail">
+                <div class="space-y-4 overflow-y-auto max-h-[300px] pr-2" id="auditTrail" tabindex="0" role="region" aria-label="{% trans 'Case audit trail' %}">
                     {% for log in audit_logs %}
                         <div class="flex gap-3 relative before:absolute before:left-3.5 before:top-8 before:h-full before:w-px before:bg-slate-200 last:before:hidden">
                             <span class="material-symbols-outlined text-secondary bg-slate-100 w-7 h-7 rounded-full flex items-center justify-center text-sm flex-shrink-0">
