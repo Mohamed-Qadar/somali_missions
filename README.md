@@ -79,7 +79,7 @@ Change or remove these before a real production launch - see [docs/DEPLOYMENT.md
 python manage.py test
 ```
 
-53 tests covering models, views, permissions/IDOR scoping, the appointment/queue no-double-booking guarantees, the assistant's matching logic, notification channels, and the API.
+64 tests covering models, views, permissions/IDOR scoping, the appointment/queue no-double-booking guarantees, the assistant's matching logic, notification channels, the API, brute-force lockout, permission-sync, and query-count (N+1) regressions.
 
 ## Documentation
 
@@ -87,7 +87,9 @@ python manage.py test
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — app/component overview
 - [docs/ER_DIAGRAM.md](docs/ER_DIAGRAM.md) — data model
 - [docs/API.md](docs/API.md) — REST API overview
-- [docs/DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) — codebase conventions for contributors
+- [docs/DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) · [CONTRIBUTING.md](CONTRIBUTING.md) — conventions & contribution workflow
+- [SECURITY.md](SECURITY.md) · [docs/DATA_PROTECTION.md](docs/DATA_PROTECTION.md) · [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) — governance
+- [CHANGELOG.md](CHANGELOG.md) — version history
 - [docs/ADMIN_GUIDE.md](docs/ADMIN_GUIDE.md) · [docs/EMBASSY_STAFF_GUIDE.md](docs/EMBASSY_STAFF_GUIDE.md) · [docs/MINISTRY_GUIDE.md](docs/MINISTRY_GUIDE.md) · [docs/CITIZEN_GUIDE.md](docs/CITIZEN_GUIDE.md)
 
 ## Project structure
