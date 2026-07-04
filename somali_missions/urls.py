@@ -9,6 +9,7 @@ urlpatterns = [
     path('appointments/', include('appointments.urls')),
     path('queue/', include('queue_management.urls')),
     path('assistant/', include('assistant.urls')),
+    path('notifications/', include('notifications.urls')),
     path('', include('missions.urls')),
 ]
 

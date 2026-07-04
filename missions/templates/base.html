@@ -106,6 +106,12 @@
                     </a>
 
                     {% if user.is_authenticated %}
+                        <a href="{% url 'notification_history' %}" class="relative hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-white hover:border-primary hover:text-primary text-secondary" aria-label="{% trans 'Notifications' %}">
+                            <span class="material-symbols-outlined">notifications</span>
+                            {% if unread_notification_count %}
+                                <span class="absolute -top-1.5 -right-1.5 bg-danger text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">{{ unread_notification_count }}</span>
+                            {% endif %}
+                        </a>
                         <div class="relative hidden lg:block" id="profileDropdownContainer">
                             <button id="profileDropdownBtn" class="flex h-10 items-center gap-2 rounded-lg border border-border bg-white px-3 text-xs text-secondary hover:border-primary hover:text-primary font-bold focus:outline-none">
                                 <span class="material-symbols-outlined">account_circle</span>

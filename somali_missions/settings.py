@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'appointments.apps.AppointmentsConfig',
     'queue_management.apps.QueueManagementConfig',
     'assistant.apps.AssistantConfig',
+    'notifications.apps.NotificationsConfig',
 ]
 
 MIDDLEWARE = [

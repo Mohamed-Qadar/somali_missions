@@ -7,14 +7,15 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.db import transaction
-from django.db.models import Avg, Count, Q
-from django.http import HttpResponse, Http404
+from django.db.models import Count
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from missions.models import Mission, MissionService
 from missions.utils.permissions import missions_for_user, user_can_manage_mission
+from notifications.channels import notify
 
 from .forms import AppointmentActionForm, AppointmentSlotForm, BookAppointmentForm
 from .models import Appointment, AppointmentSlot, AppointmentStatusHistory
@@ -199,6 +200,19 @@ def appointment_action_view(request, pk):
                 appointment.staff_notes = note
             appointment.save()
             _record_appointment_status(appointment, old_status, appointment.status, user=request.user, note=note)
+            if appointment.citizen_user:
+                notify(
+                    appointment.citizen_user,
+                    title=_('Appointment %(code)s: %(status)s') % {
+                        'code': appointment.qr_token, 'status': appointment.get_status_display(),
+                    },
+                    body=_('Your appointment at %(mission)s for %(service)s is now %(status)s.') % {
+                        'mission': appointment.mission.name, 'service': appointment.service.name,
+                        'status': appointment.get_status_display(),
+                    },
+                    link_url=f'/appointments/confirmation/{appointment.qr_token}/',
+                    channels=['email'],
+                )
             messages.success(request, _('Appointment %(code)s updated to %(status)s.') % {
                 'code': appointment.qr_token, 'status': appointment.get_status_display(),
             })

@@ -705,6 +705,19 @@ def staff_mission_manage(request, pk):
                 status_form.save()
                 selected_complaint.refresh_from_db()
                 _record_status_change(request.user, selected_complaint, old_status, selected_complaint.status, _('Staff dashboard status update.'))
+                if selected_complaint.citizen_user:
+                    from notifications.channels import notify
+                    notify(
+                        selected_complaint.citizen_user,
+                        title=_('Complaint %(code)s: %(status)s') % {
+                            'code': selected_complaint.tracking_code, 'status': selected_complaint.get_status_display(),
+                        },
+                        body=_('Your complaint about %(mission)s is now %(status)s.') % {
+                            'mission': mission.name, 'status': selected_complaint.get_status_display(),
+                        },
+                        link_url=f'/track/?tracking_code={selected_complaint.tracking_code}',
+                        channels=['email'],
+                    )
                 messages.success(request, _('Complaint status updated to %(status)s.') % {'status': selected_complaint.get_status_display()})
                 return redirect(f'{request.path}?complaint={selected_complaint.pk}')
 
