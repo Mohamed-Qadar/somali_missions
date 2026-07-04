@@ -31,18 +31,29 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'django_filters',
     'api.apps.ApiConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'missions.middleware.SecurityHeadersMiddleware',
 ]
+
+# CORS is scoped to the API only (/api/...) - the main site uses session
+# cookies + CSRF and has no need for cross-origin requests. Mobile/third-party
+# API clients authenticate with JWT instead, so opening CORS here doesn't
+# weaken the cookie-based web session.
+CORS_URLS_REGEX = r'^/api/.*$'
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='', cast=Csv())
+CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=False, cast=bool)
 
 ROOT_URLCONF = 'somali_missions.urls'
 
@@ -135,11 +146,27 @@ CACHES = {
     }
 }
 
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REFERRER_POLICY = 'same-origin'
+X_FRAME_OPTIONS = 'DENY'
+
 if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    X_FRAME_OPTIONS = 'DENY'
+
+# HSTS is gated on its own flag, not just `not DEBUG`: turning it on before
+# HTTPS is actually terminating in front of this app would make browsers
+# refuse to load the site over HTTP with no way back for the HSTS-cached
+# duration. Only enable once TLS is confirmed working in production.
+if config('SECURE_SSL_ENABLED', default=False, cast=bool):
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 # Assistant provider selection - see assistant/providers.py. Only 'rule_based'
 # is implemented; this is the extension point for a future AI backend.

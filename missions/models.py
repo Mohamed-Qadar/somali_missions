@@ -42,6 +42,12 @@ class Mission(models.Model):
         related_name='assigned_missions',
     )
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['country', 'city']),
+            models.Index(fields=['mission_type']),
+        ]
+
     def __str__(self):
         return self.name
 
@@ -457,6 +463,13 @@ class Complaint(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['status']),
+            models.Index(fields=['created_at']),
+            models.Index(fields=['mission', 'status']),
+        ]
+
     def calculate_critical_reason(self, has_evidence=False):
         reasons = []
         if self.currently_at_mission:
@@ -522,10 +535,13 @@ class Complaint(models.Model):
 
     @property
     def has_public_response(self):
-        return self.responses.filter(is_public=True).exists()
+        # Filtering the already-fetched self.responses.all() in Python (rather
+        # than calling .filter() again) lets this reuse a prefetch_related('responses')
+        # cache instead of issuing one query per complaint in a list/loop context.
+        return any(r.is_public for r in self.responses.all())
 
     def public_responses(self):
-        return self.responses.filter(is_public=True).order_by('created_at')
+        return sorted((r for r in self.responses.all() if r.is_public), key=lambda r: r.created_at)
 
 
 class ComplaintEvidence(models.Model):

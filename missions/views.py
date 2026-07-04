@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.core.cache import cache
 from django.core.mail import send_mail
 from django.db.models import Avg, Count, Q
 from django.http import HttpResponse
@@ -256,7 +257,7 @@ def mission_detail(request, pk):
     else:
         form = ComplaintForm(captcha_expected=captcha)
 
-    complaints = mission.complaints.all().order_by('-created_at')[:20]
+    complaints = mission.complaints.all().prefetch_related('responses').order_by('-created_at')[:20]
     services = mission.services.filter(is_active=True).prefetch_related('required_documents')
     support_contacts = mission.support_contacts.filter(is_public=True)
     nearby_community_groups = CommunityGroup.objects.filter(
@@ -1093,10 +1094,15 @@ def ministry_operations_view(request):
 def ministry_analytics_view(request):
     if request.user.profile.role not in [UserProfile.Role.MINISTRY_REVIEWER, UserProfile.Role.MINISTRY_ADMIN] and not request.user.is_superuser:
         return redirect('home')
-        
+
     period = request.GET.get('period', '30')
+    cache_key = f'ministry_analytics_data_v2:{period}'
+    cached_context = cache.get(cache_key)
+    if cached_context is not None:
+        return render(request, 'missions/ministry_analytics.html', cached_context)
+
     now = timezone.now()
-    
+
     if period == '365':
         start_date = now - timedelta(days=365)
     elif period == 'all':
@@ -1175,7 +1181,7 @@ def ministry_analytics_view(request):
     avg_queue_wait_minutes = round((sum(queue_wait_seconds) / len(queue_wait_seconds)) / 60, 1) if queue_wait_seconds else 0
     appointments_today_count = _Appointment.objects.filter(slot__date=today).count()
 
-    return render(request, 'missions/ministry_analytics.html', {
+    context = {
         'period': period,
         'avg_resolution_days': avg_resolution_days,
         'satisfaction_rate': satisfaction_rate,
@@ -1193,7 +1199,9 @@ def ministry_analytics_view(request):
         'heatmap_max': heatmap_max,
         'avg_queue_wait_minutes': avg_queue_wait_minutes,
         'appointments_today_count': appointments_today_count,
-    })
+    }
+    cache.set(cache_key, context, 300)
+    return render(request, 'missions/ministry_analytics.html', context)
 
 
 @login_required
@@ -1219,27 +1227,41 @@ def ai_translation_api(request, pk):
 
 
 def transparency_portal_view(request):
+    cache_key = 'transparency_portal_data_v2'
+    context = cache.get(cache_key)
+    if context is not None:
+        return render(request, 'missions/transparency.html', context)
+
     complaints = Complaint.objects.all()
     total = complaints.count()
-    resolved = complaints.filter(status__in=[Complaint.Status.RESOLVED, Complaint.Status.CLOSED, Complaint.Status.RES, Complaint.Status.CLO]).count()
-    
+    resolved_statuses = [Complaint.Status.RESOLVED, Complaint.Status.CLOSED, Complaint.Status.RES, Complaint.Status.CLO]
+    resolved = complaints.filter(status__in=resolved_statuses).count()
+
     # Calculate response times
-    resolved_cases = complaints.filter(status__in=[Complaint.Status.RESOLVED, Complaint.Status.CLOSED, Complaint.Status.RES, Complaint.Status.CLO])
+    resolved_cases = complaints.filter(status__in=resolved_statuses)
     total_days = 0
     resolved_count = resolved_cases.count()
     for c in resolved_cases:
         total_days += (c.updated_at - c.created_at).days
     avg_response_time = round(total_days / resolved_count, 1) if resolved_count else 0
-    
+
     # Embassy Statistics & Rankings
     missions = Mission.objects.annotate(
         complaint_count=Count('complaints'),
         avg_rating=Avg('complaints__rating')
     ).order_by('-complaint_count')
-    
+
+    # One aggregate query for satisfaction averages per mission, instead of one
+    # query per mission in the loop below.
+    satisfaction_by_mission = {
+        row['mission_id']: row['avg']
+        for row in Complaint.objects.filter(satisfaction_rating__isnull=False)
+        .values('mission_id').annotate(avg=Avg('satisfaction_rating'))
+    }
+
     ranked_missions = []
     for m in missions:
-        sat_avg = m.complaints.filter(satisfaction_rating__isnull=False).aggregate(avg=Avg('satisfaction_rating'))['avg']
+        sat_avg = satisfaction_by_mission.get(m.id)
         if sat_avg is None:
             sat_avg = m.avg_rating or 3.0
         score = round(float(sat_avg) * 20, 1)
@@ -1249,24 +1271,26 @@ def transparency_portal_view(request):
             'rating': round(m.avg_rating or 0, 1),
             'score': score
         })
-        
+
     ranked_missions = sorted(ranked_missions, key=lambda x: x['score'], reverse=True)
-    
+
     top_performing = [x for x in ranked_missions if x['score'] >= 70][:5]
     needs_improvement = [x for x in ranked_missions if x['score'] < 70][:5]
-    
+
     success_stories = complaints.filter(
-        status__in=[Complaint.Status.RESOLVED, Complaint.Status.CLOSED, Complaint.Status.RES, Complaint.Status.CLO]
-    ).select_related('mission').order_by('-updated_at')[:5]
-    
-    return render(request, 'missions/transparency.html', {
+        status__in=resolved_statuses
+    ).select_related('mission').prefetch_related('responses').order_by('-updated_at')[:5]
+
+    context = {
         'total': total,
         'resolved': resolved,
         'avg_response_time': avg_response_time,
         'top_performing': top_performing,
         'needs_improvement': needs_improvement,
-        'success_stories': success_stories,
-    })
+        'success_stories': list(success_stories),
+    }
+    cache.set(cache_key, context, 300)
+    return render(request, 'missions/transparency.html', context)
 
 
 def before_you_travel_view(request):
