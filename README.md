@@ -68,7 +68,7 @@ Change or remove these before a real production launch - see [docs/DEPLOYMENT.md
 | `EMBASSY_MANAGER` | All cases + staff assignment at their own mission |
 | `MINISTRY_REVIEWER` | National oversight, escalations, analytics (read/act, no user admin) |
 | `MINISTRY_ADMIN` | Everything above + user/embassy management |
-| `COMMUNITY_REP` | Reserved for community organizations (records managed via Django admin today; no self-service portal yet) |
+| `COMMUNITY_REP` | Community organizations: self-register at `/communities/register/`, manage their profile/announcements/events from the portal at `/communities/admin/` (content goes live after Ministry moderation) |
 | Super Admin | A Django superuser (`createsuperuser`) — bypasses role checks and owns `/admin/` |
 
 Roles are the single source of truth: Django Groups and mission staff lists are auto-projected from `UserProfile.role` by a signal (see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)).
@@ -81,6 +81,8 @@ Roles are the single source of truth: Django Groups and mission staff lists are 
 - **Appointments**: book a time slot per mission/service, required-documents checklist shown before booking, QR-coded confirmation, no-double-booking (auto-waitlist), staff approve/reject/reschedule/cancel, daily/weekly/monthly views, reminders
 - **Digital queue**: walk-in ticket numbers, live "now serving" display screen, staff call-next/skip/recall/complete, wait-time analytics
 - **Smart Citizen Assistant**: rule-based Q&A over 12 topics (passport, visa, documents, appointments, etc.) with a pluggable architecture for a future AI backend
+- **Community self-service portal**: organizations register their own account (Pending → Verified/Rejected/Suspended), edit their public profile (logo/banner uploads with type+size validation, service categories, languages, emergency-support availability), publish announcements/events that go live only after Ministry moderation, and read citizen messages; public abuse reporting on profiles and events
+- **Embassy events**: staff publish consular events and service campaigns (Passport Day, mobile consular service, orientations, medical/legal support, awareness) scoped to their own mission, with a public `/events/` listing filterable by country/city/mission/type; mission pages show upcoming events and verified community partners
 - **Notifications**: in-app + email (SMS/WhatsApp interfaces ready, no provider wired), unread badge, ministry emergency broadcast
 - **REST API** at `/api/v1/` (JWT auth, Swagger docs at `/api/v1/docs/`) for future mobile apps
 - Ministry KPI dashboard: complaints by mission/country/category, monthly trends, complaints-per-officer, a country×month heatmap, real appointment/queue wait times, CSV + Excel + PDF export

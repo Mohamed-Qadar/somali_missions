@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.cache import cache
 from django.core.mail import send_mail
+from django.db import transaction
 from django.db.models import Avg, Case, Count, IntegerField, Q, Value, When
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -23,17 +24,20 @@ from .forms import (
     ComplaintForm, ReportForm, TrackComplaintForm,
     ComplaintStatusForm, EmbassyResponseForm, ContactForm,
     LoginForm, CitizenRegistrationForm, EmergencyReportForm,
+    CommunityOrganizationRegistrationForm, CommunityProfileForm,
+    MissionEventForm, AbuseReportForm,
 )
 from .models import (
     Mission, Complaint, UserProfile, ComplaintEvidence,
     NotificationLog, EmbassyInvitation, AuditLog, SecureMessage, ComplaintStatusHistory,
-    EscalationRule, EscalationLog, CommunityStatus,
+    EscalationRule, EscalationLog, CommunityStatus, ModerationStatus,
     CommunityGroup, StudentAssociation, CommunityEvent, CommunityAnnouncement,
-    CommunityRepresentative, CommunityMessage,
+    CommunityRepresentative, CommunityMessage, CommunityVerificationRequest,
+    MissionEvent, AbuseReport,
 )
 
 from .pdf_reports import build_pdf_report
-from .utils.permissions import user_can_manage_mission, missions_for_user
+from .utils.permissions import user_can_manage_mission, missions_for_user, user_is_ministry_admin
 from .utils.audit import log_audit_action
 from .utils.rate_limit import is_rate_limited, increment_rate_limit
 
@@ -270,6 +274,10 @@ def mission_detail(request, pk):
         country__iexact=mission.country,
         city__iexact=mission.city,
     )[:6]
+    upcoming_events = mission.events.filter(
+        moderation_status=ModerationStatus.APPROVED,
+        starts_at__gte=timezone.now() - timedelta(hours=6),
+    ).order_by('starts_at')[:6]
 
     return render(request, 'missions/mission_detail.html', {
         'mission': mission,
@@ -280,6 +288,7 @@ def mission_detail(request, pk):
         'support_contacts': support_contacts,
         'nearby_community_groups': nearby_community_groups,
         'nearby_student_associations': nearby_student_associations,
+        'upcoming_events': upcoming_events,
     })
 
 
@@ -578,6 +587,8 @@ def redirect_after_login(user):
         return 'ministry_admin_dashboard'
     elif role == 'EMBASSY_STAFF':
         return 'staff_dashboard'
+    elif role == 'COMMUNITY_REP':
+        return 'community_admin_dashboard'
     else:
         return 'home'
 
@@ -1423,8 +1434,8 @@ def student_association_directory_view(request):
 
 
 def _community_profile_context(target):
-    events = target.events.filter(is_public=True)[:10]
-    announcements = target.announcements.filter(is_public=True, is_moderated=True)[:10]
+    events = target.events.filter(moderation_status=ModerationStatus.APPROVED)[:10]
+    announcements = target.announcements.filter(moderation_status=ModerationStatus.APPROVED)[:10]
     offers = target.support_offers.filter(is_active=True, is_verified=True)
     return {
         'group': target,
@@ -1489,46 +1500,81 @@ def community_admin_dashboard_view(request):
             selected = target
             break
 
+    profile_form = None
     if request.method == 'POST' and selected:
         action = request.POST.get('action')
         is_student = isinstance(selected, StudentAssociation)
+        back = f"{request.path}?type={'student' if is_student else 'community'}&id={selected.pk}"
         if action == 'profile':
-            for field in ['description', 'contact_email', 'phone_whatsapp', 'facebook_url', 'instagram_url', 'x_url', 'website_url', 'office_location']:
-                setattr(selected, field, request.POST.get(field, '').strip())
-            selected.emergency_support_available = request.POST.get('emergency_support_available') == 'on'
-            selected.save()
+            profile_form = CommunityProfileForm(request.POST, request.FILES)
+            if profile_form.is_valid():
+                profile_form.apply_to(selected, request.user)
+                log_audit_action(request.user, None, "Community Profile Updated",
+                                 f"Updated profile of {selected}", request=request)
+                messages.success(request, _('Your organization profile has been saved.'))
+                return redirect(back)
+            messages.error(request, _('The profile was not saved - please correct the highlighted fields.'))
         elif action == 'announcement':
-            CommunityAnnouncement.objects.create(
-                student_association=selected if is_student else None,
-                community_group=selected if not is_student else None,
-                title=request.POST.get('title', '').strip(),
-                announcement_type=request.POST.get('announcement_type', CommunityAnnouncement.AnnouncementType.GENERAL),
-                body=request.POST.get('body', '').strip(),
-                is_public=False,
-                is_moderated=False,
-                created_by=request.user,
-            )
+            title = request.POST.get('title', '').strip()
+            body = request.POST.get('body', '').strip()
+            if not title or not body:
+                messages.error(request, _('An announcement needs both a title and a message.'))
+            else:
+                CommunityAnnouncement.objects.create(
+                    student_association=selected if is_student else None,
+                    community_group=selected if not is_student else None,
+                    title=title,
+                    announcement_type=request.POST.get('announcement_type', CommunityAnnouncement.AnnouncementType.GENERAL),
+                    body=body,
+                    is_public=False,
+                    is_moderated=False,
+                    created_by=request.user,
+                )
+                messages.success(request, _('Announcement submitted - it will appear publicly once the Ministry approves it.'))
+                return redirect(back)
         elif action == 'event':
+            title = request.POST.get('title', '').strip()
+            description = request.POST.get('description', '').strip()
             starts_at = request.POST.get('starts_at')
-            if starts_at:
+            if not title or not description or not starts_at:
+                messages.error(request, _('An event needs a title, a description, and a start date/time.'))
+            else:
                 CommunityEvent.objects.create(
                     student_association=selected if is_student else None,
                     community_group=selected if not is_student else None,
-                    title=request.POST.get('title', '').strip(),
+                    title=title,
                     event_type=request.POST.get('event_type', CommunityEvent.EventType.EVENT),
-                    description=request.POST.get('description', '').strip(),
+                    description=description,
                     location=request.POST.get('location', '').strip(),
                     starts_at=starts_at,
                     is_public=False,
                     created_by=request.user,
                 )
+                messages.success(request, _('Event submitted - it will appear publicly once the Ministry approves it.'))
+                return redirect(back)
         elif action == 'delete_announcement':
             selected.announcements.filter(pk=request.POST.get('announcement_id'), created_by=request.user).delete()
-        return redirect(f"{request.path}?type={'student' if is_student else 'community'}&id={selected.pk}")
+            messages.success(request, _('Announcement deleted.'))
+            return redirect(back)
+
+    if profile_form is None and selected:
+        profile_form = CommunityProfileForm(initial={
+            'description': selected.description,
+            'contact_email': selected.contact_email,
+            'phone_whatsapp': selected.phone_whatsapp,
+            'facebook_url': selected.facebook_url,
+            'instagram_url': selected.instagram_url,
+            'x_url': selected.x_url,
+            'website_url': selected.website_url,
+            'office_location': selected.office_location,
+            'languages_spoken': selected.languages_spoken,
+            'service_categories': selected.service_categories or [],
+            'emergency_support_available': selected.emergency_support_available,
+        })
 
     announcements = selected.announcements.all()[:20] if selected else []
     events = selected.events.all()[:20] if selected else []
-    messages = selected.messages.all()[:20] if selected else []
+    inbox_messages = selected.messages.all()[:20] if selected else []
     return render(request, 'missions/community_admin.html', {
         'denied': False,
         'targets': targets,
@@ -1536,7 +1582,312 @@ def community_admin_dashboard_view(request):
         'selected_is_student': isinstance(selected, StudentAssociation),
         'announcements': announcements,
         'events': events,
-        'messages': messages,
+        'inbox_messages': inbox_messages,
+        'profile_form': profile_form,
+    })
+
+
+def community_register_view(request):
+    """Self-registration for community groups / student associations: creates
+    the representative account (COMMUNITY_REP), the organization in Pending
+    review, and a verification request for the Ministry queue. Mirrors the
+    citizen flow: email verification first, then log in."""
+    if request.user.is_authenticated:
+        messages.info(request, _('You are already signed in. To register an organization, please log out first.'))
+        return redirect(redirect_after_login(request.user))
+
+    if request.method == 'POST':
+        form = CommunityOrganizationRegistrationForm(request.POST)
+        if form.is_valid():
+            with transaction.atomic():
+                user = User.objects.create_user(
+                    username=form.cleaned_data['username'],
+                    email=form.cleaned_data['email'],
+                    password=form.cleaned_data['password'],
+                )
+                profile = user.profile
+                profile.role = UserProfile.Role.COMMUNITY_REP
+                profile.full_name = form.cleaned_data['rep_full_name']
+                profile.country_of_residence = form.cleaned_data['country']
+                profile.email_verified = False
+                profile.save()
+
+                common = dict(
+                    name=form.cleaned_data['org_name'],
+                    country=form.cleaned_data['country'],
+                    city=form.cleaned_data['city'],
+                    description=form.cleaned_data['description'],
+                    contact_email=form.cleaned_data['contact_email'],
+                    status=CommunityStatus.PENDING,
+                    created_by=user,
+                    updated_by=user,
+                )
+                if form.cleaned_data['org_type'] == 'student':
+                    org = StudentAssociation.objects.create(
+                        university_name=form.cleaned_data['university_name'], **common)
+                    rep_kwargs = {'student_association': org}
+                else:
+                    org = CommunityGroup.objects.create(**common)
+                    rep_kwargs = {'community_group': org}
+
+                CommunityRepresentative.objects.create(
+                    user=user, title=form.cleaned_data['rep_title'],
+                    is_approved=True,  # creator manages their own submission
+                    **rep_kwargs,
+                )
+                CommunityVerificationRequest.objects.create(requested_by=user, **rep_kwargs)
+            log_audit_action(user, None, "Community Organization Registered",
+                             f"Submitted '{org}' for verification", request=request)
+            uidb64, token = _send_verification_email(request, user)
+            return render(request, 'missions/verify_pending.html', {
+                'email': user.email,
+                'uidb64': uidb64,
+                'token': token,
+                'is_debug': settings.DEBUG,
+            })
+    else:
+        form = CommunityOrganizationRegistrationForm()
+    return render(request, 'missions/community_register.html', {'form': form})
+
+
+@login_required
+def mission_events_manage_view(request):
+    """Embassy staff create and moderate consular events for their own
+    mission; Ministry users can do so for any mission."""
+    manageable = missions_for_user(request.user)
+    if not manageable.exists():
+        messages.error(request, _('You do not have permission to manage mission events.'))
+        return redirect('home')
+
+    form = None
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'create':
+            form = MissionEventForm(request.POST)
+            mission = manageable.filter(pk=request.POST.get('mission')).first()
+            if mission is None:
+                messages.error(request, _('Please choose a mission you are allowed to manage.'))
+            elif form.is_valid():
+                event = form.save(commit=False)
+                event.mission = mission
+                event.created_by = request.user
+                event.updated_by = request.user
+                # Staff of the mission are the publishing authority - their
+                # events go live immediately (still archivable/rejectable).
+                event.moderation_status = ModerationStatus.APPROVED
+                event.reviewed_by = request.user
+                event.reviewed_at = timezone.now()
+                event.save()
+                log_audit_action(request.user, None, "Mission Event Created",
+                                 f"{event.title} @ {mission.name}", request=request)
+                messages.success(request, _('The event has been published.'))
+                return redirect('mission_events_manage')
+            if form is not None and not form.is_valid():
+                messages.error(request, _('The event was not saved - please correct the highlighted fields.'))
+        elif action in ('approve', 'reject', 'archive'):
+            event = get_object_or_404(MissionEvent, pk=request.POST.get('event_id'))
+            if not user_can_manage_mission(request.user, event.mission):
+                messages.error(request, _('You can only moderate events of your own mission.'))
+                return redirect('mission_events_manage')
+            status = {
+                'approve': ModerationStatus.APPROVED,
+                'reject': ModerationStatus.REJECTED,
+                'archive': ModerationStatus.ARCHIVED,
+            }[action]
+            event.updated_by = request.user
+            event.apply_moderation(status, reviewer=request.user)
+            log_audit_action(request.user, None, "Mission Event Moderated",
+                             f"{event.title}: {status}", request=request)
+            messages.success(request, _('The event status has been updated.'))
+            return redirect('mission_events_manage')
+
+    if form is None:
+        form = MissionEventForm()
+    events = (
+        MissionEvent.objects.filter(mission__in=manageable)
+        .select_related('mission')
+        .order_by('-starts_at')[:100]
+    )
+    return render(request, 'missions/staff_events.html', {
+        'form': form,
+        'events': events,
+        'manageable_missions': manageable.order_by('name'),
+    })
+
+
+@login_required
+def community_moderation_view(request):
+    """Ministry review queues: organization verification, community
+    announcements/events awaiting moderation, and abuse reports."""
+    if not user_is_ministry_admin(request.user):
+        messages.error(request, _('Only Ministry users can review community submissions.'))
+        return redirect('home')
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'verify_org':
+            vr = get_object_or_404(CommunityVerificationRequest, pk=request.POST.get('request_id'),
+                                   decision=CommunityVerificationRequest.Decision.PENDING)
+            org = vr.community_group or vr.student_association
+            decision = request.POST.get('decision')
+            if org and decision in ('approve', 'reject'):
+                vr.decision = (CommunityVerificationRequest.Decision.APPROVED
+                               if decision == 'approve' else CommunityVerificationRequest.Decision.REJECTED)
+                vr.reviewed_by = request.user
+                vr.reviewed_at = timezone.now()
+                vr.save()
+                org.status = CommunityStatus.VERIFIED if decision == 'approve' else CommunityStatus.REJECTED
+                org.save()
+                log_audit_action(request.user, None, "Community Verification Decision",
+                                 f"{org}: {org.status}", request=request)
+                messages.success(request, _('The verification decision has been recorded.'))
+        elif action in ('moderate_announcement', 'moderate_event'):
+            model = CommunityAnnouncement if action == 'moderate_announcement' else CommunityEvent
+            item = get_object_or_404(model, pk=request.POST.get('item_id'))
+            decision = request.POST.get('decision')
+            status = {
+                'approve': ModerationStatus.APPROVED,
+                'reject': ModerationStatus.REJECTED,
+                'archive': ModerationStatus.ARCHIVED,
+            }.get(decision)
+            if status:
+                item.apply_moderation(status, reviewer=request.user)
+                log_audit_action(request.user, None, "Community Content Moderated",
+                                 f"{model.__name__} '{item.title}': {status}", request=request)
+                messages.success(request, _('The moderation decision has been recorded.'))
+        elif action == 'handle_abuse':
+            report = get_object_or_404(AbuseReport, pk=request.POST.get('report_id'))
+            resolution = request.POST.get('resolution')
+            if resolution in (AbuseReport.Status.REVIEWED, AbuseReport.Status.DISMISSED,
+                              AbuseReport.Status.ACTION_TAKEN):
+                report.status = resolution
+                report.handled_by = request.user
+                report.handled_at = timezone.now()
+                report.save()
+                log_audit_action(request.user, None, "Abuse Report Handled",
+                                 f"Report #{report.pk}: {resolution}", request=request)
+                messages.success(request, _('The abuse report has been updated.'))
+        return redirect('community_moderation')
+
+    return render(request, 'missions/community_moderation.html', {
+        'verification_requests': (
+            CommunityVerificationRequest.objects
+            .filter(decision=CommunityVerificationRequest.Decision.PENDING)
+            .select_related('community_group', 'student_association', 'requested_by')[:50]
+        ),
+        'pending_announcements': (
+            CommunityAnnouncement.objects.filter(moderation_status=ModerationStatus.PENDING)
+            .select_related('community_group', 'student_association', 'created_by')[:50]
+        ),
+        'pending_events': (
+            CommunityEvent.objects.filter(moderation_status=ModerationStatus.PENDING)
+            .select_related('community_group', 'student_association', 'created_by')[:50]
+        ),
+        'abuse_reports': (
+            AbuseReport.objects.filter(status=AbuseReport.Status.NEW)
+            .select_related('community_group', 'student_association', 'community_event', 'mission_event')[:50]
+        ),
+        'resolutions': [
+            (AbuseReport.Status.REVIEWED, _('Mark reviewed')),
+            (AbuseReport.Status.DISMISSED, _('Dismiss')),
+            (AbuseReport.Status.ACTION_TAKEN, _('Action taken')),
+        ],
+    })
+
+
+def events_view(request):
+    """Public listing of upcoming approved consular events, filterable by
+    country, city, mission, and event type."""
+    country = request.GET.get('country', '').strip()
+    city = request.GET.get('city', '').strip()
+    mission_id = request.GET.get('mission', '').strip()
+    event_type = request.GET.get('type', '').strip()
+
+    events = (
+        MissionEvent.objects.filter(
+            moderation_status=ModerationStatus.APPROVED,
+            starts_at__gte=timezone.now() - timedelta(hours=6),
+        )
+        .select_related('mission')
+        .order_by('starts_at')
+    )
+    if country:
+        events = events.filter(country__iexact=country)
+    if city:
+        events = events.filter(city__icontains=city)
+    if mission_id.isdigit():
+        events = events.filter(mission_id=mission_id)
+    if event_type in MissionEvent.EventType.values:
+        events = events.filter(event_type=event_type)
+
+    countries = (
+        MissionEvent.objects.filter(moderation_status=ModerationStatus.APPROVED)
+        .values_list('country', flat=True).distinct().order_by('country')
+    )
+    return render(request, 'missions/events_public.html', {
+        'events': events[:60],
+        'countries': countries,
+        'missions': Mission.objects.all().order_by('name'),
+        'event_types': MissionEvent.EventType.choices,
+        'selected_country': country,
+        'selected_city': city,
+        'selected_mission': mission_id,
+        'selected_type': event_type,
+    })
+
+
+def _abuse_report_target(kind, pk):
+    """Resolve a publicly-visible abuse-report target, or None."""
+    if kind == 'community':
+        obj = CommunityGroup.objects.filter(pk=pk, status=CommunityStatus.VERIFIED).first()
+        return obj, {'community_group': obj}, obj and ('community_group_detail', obj.pk)
+    if kind == 'student':
+        obj = StudentAssociation.objects.filter(pk=pk, status=CommunityStatus.VERIFIED).first()
+        return obj, {'student_association': obj}, obj and ('student_association_detail', obj.pk)
+    if kind == 'mission_event':
+        obj = MissionEvent.objects.filter(pk=pk, moderation_status=ModerationStatus.APPROVED).first()
+        return obj, {'mission_event': obj}, obj and ('events_public', None)
+    if kind == 'community_event':
+        obj = CommunityEvent.objects.filter(pk=pk, moderation_status=ModerationStatus.APPROVED).first()
+        if obj is None:
+            return None, {}, None
+        parent = obj.community_group or obj.student_association
+        back = ('community_group_detail', parent.pk) if obj.community_group else ('student_association_detail', parent.pk)
+        return obj, {'community_event': obj}, back
+    return None, {}, None
+
+
+def report_abuse_view(request):
+    """Public form to report a community profile or event for abuse."""
+    kind = request.GET.get('type', '')
+    pk = request.GET.get('id', '')
+    target, fk_kwargs, back = (None, {}, None)
+    if pk.isdigit():
+        target, fk_kwargs, back = _abuse_report_target(kind, int(pk))
+    if target is None:
+        return render(request, 'missions/report_abuse.html', {'not_found': True})
+
+    rate_limited = is_rate_limited(request, 'abuse_report', limit=5)
+    if request.method == 'POST':
+        if rate_limited:
+            messages.error(request, _('Too many reports from this network today. Please try again tomorrow.'))
+            return redirect(request.get_full_path())
+        form = AbuseReportForm(request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            for field, value in fk_kwargs.items():
+                setattr(report, field, value)
+            report.save()
+            increment_rate_limit(request, 'abuse_report')
+            messages.success(request, _('Thank you. Your report has been received and will be reviewed by the Ministry.'))
+            view_name, view_pk = back
+            return redirect(view_name, view_pk) if view_pk else redirect(view_name)
+    else:
+        form = AbuseReportForm()
+    return render(request, 'missions/report_abuse.html', {
+        'form': form,
+        'target': target,
+        'not_found': False,
     })
 
 

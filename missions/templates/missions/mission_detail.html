@@ -53,6 +53,26 @@
 		</div>
 
 		<div class="bg-white rounded-2xl border border-border p-6 shadow-sm">
+			<h2 class="text-xl font-bold mb-2">{% trans "Upcoming Events at this Mission" %}</h2>
+			<div class="space-y-3 mb-6">
+				{% for event in upcoming_events %}
+					<div class="border border-border rounded-xl p-4">
+						<div class="flex items-center justify-between gap-2">
+							<span class="bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold text-[10px] uppercase">{{ event.get_event_type_display }}</span>
+							<span class="text-[11px] font-bold text-textSecondary">{{ event.starts_at|date:"M d, Y H:i" }}</span>
+						</div>
+						<p class="font-bold text-sm text-secondary mt-2">{{ event.title }}</p>
+						<p class="text-xs text-textSecondary mt-0.5">{{ event.city }}, {{ event.country }}{% if event.location %} — {{ event.location }}{% endif %}</p>
+						{% if event.registration_link %}
+							<a href="{{ event.registration_link }}" rel="noopener noreferrer" target="_blank" class="inline-block mt-2 text-xs font-bold text-primary hover:text-secondary">{% trans "Register" %} →</a>
+						{% endif %}
+					</div>
+				{% empty %}
+					<p class="text-sm text-textSecondary italic">{% trans "No upcoming events published by this mission yet." %}</p>
+				{% endfor %}
+				<a href="{% url 'events_public' %}" class="inline-block text-xs font-bold text-primary hover:text-secondary">{% trans "See all consular events" %} →</a>
+			</div>
+
 			<h2 class="text-xl font-bold mb-2">{% trans "Citizen Support Nearby" %}</h2>
 			<p class="text-xs text-textSecondary mb-4">{% trans "Emergency contacts, community help, transport, and affordable accommodation guidance." %}</p>
 			<div class="space-y-3">
@@ -61,7 +81,7 @@
 						<p class="font-bold text-sm text-secondary">{{ assoc.name }}</p>
 						<p class="text-[10px] uppercase tracking-wider font-bold text-primary">{% trans "Student Association" %} • {{ assoc.university_name }}</p>
 						{% if assoc.phone_whatsapp %}<p class="text-xs text-textSecondary mt-1">{{ assoc.phone_whatsapp }}</p>{% endif %}
-						{% if assoc.emergency_support_available %}<p class="text-xs text-red-600 font-bold mt-1">{% trans "Emergency support available" %}</p>{% endif %}
+						{% if assoc.emergency_support_available %}<p class="text-xs text-red-700 font-bold mt-1">{% trans "Emergency support available" %}</p>{% endif %}
 					</a>
 				{% endfor %}
 				{% for group in nearby_community_groups %}
@@ -69,7 +89,7 @@
 						<p class="font-bold text-sm text-secondary">{{ group.name }}</p>
 						<p class="text-[10px] uppercase tracking-wider font-bold text-green-700">{% trans "Somali Community Group" %}</p>
 						{% if group.phone_whatsapp %}<p class="text-xs text-textSecondary mt-1">{{ group.phone_whatsapp }}</p>{% endif %}
-						{% if group.emergency_support_available %}<p class="text-xs text-red-600 font-bold mt-1">{% trans "Emergency support available" %}</p>{% endif %}
+						{% if group.emergency_support_available %}<p class="text-xs text-red-700 font-bold mt-1">{% trans "Emergency support available" %}</p>{% endif %}
 					</a>
 				{% endfor %}
 				{% for contact in support_contacts %}

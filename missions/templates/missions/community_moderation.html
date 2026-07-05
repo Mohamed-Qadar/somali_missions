@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Community Moderation" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-10 space-y-8">
+    <div class="border-b border-border pb-5">
+        <h1 class="text-3xl font-black text-secondary">{% trans "Community Review & Moderation" %}</h1>
+        <p class="text-sm text-textSecondary mt-1">{% trans "Verify organizations, approve community announcements and events, and handle abuse reports. Only approved content is ever shown to the public." %}</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+
+        <section class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+            <h2 class="text-xl font-bold text-secondary mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">verified</span>
+                {% trans "Organization Verification Requests" %}
+                <span class="bg-primary/10 text-primary text-xs font-bold px-2.5 py-0.5 rounded-full">{{ verification_requests|length }}</span>
+            </h2>
+            <div class="space-y-3">
+                {% for vr in verification_requests %}
+                    {% with org=vr.community_group|default:vr.student_association %}
+                    <div class="border border-border rounded-xl p-4 text-sm space-y-2">
+                        <p class="font-bold text-secondary">{{ org.name }}</p>
+                        <p class="text-xs text-textSecondary">{{ org.city }}, {{ org.country }}
+                            {% if vr.student_association %}· {{ vr.student_association.university_name }}{% endif %}
+                            · {% trans "Requested by" %} {{ vr.requested_by.username|default:"—" }} · {{ vr.created_at|date:"M d, Y" }}</p>
+                        {% if org.description %}<p class="text-xs text-textPrimary">{{ org.description|truncatechars:200 }}</p>{% endif %}
+                        <div class="flex gap-2 pt-1">
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="verify_org">
+                                <input type="hidden" name="request_id" value="{{ vr.pk }}">
+                                <input type="hidden" name="decision" value="approve">
+                                <button class="bg-green-50 hover:bg-green-100 text-green-800 border border-green-200 font-bold text-[11px] px-3 py-1.5 rounded-lg">{% trans "Verify organization" %}</button>
+                            </form>
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="verify_org">
+                                <input type="hidden" name="request_id" value="{{ vr.pk }}">
+                                <input type="hidden" name="decision" value="reject">
+                                <button class="bg-red-50 hover:bg-red-100 text-red-800 border border-red-200 font-bold text-[11px] px-3 py-1.5 rounded-lg">{% trans "Reject" %}</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endwith %}
+                {% empty %}
+                    <p class="text-sm text-textSecondary italic">{% trans "No pending verification requests." %}</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+            <h2 class="text-xl font-bold text-secondary mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-danger">report</span>
+                {% trans "Abuse Reports" %}
+                <span class="bg-red-100 text-red-700 text-xs font-bold px-2.5 py-0.5 rounded-full">{{ abuse_reports|length }}</span>
+            </h2>
+            <div class="space-y-3">
+                {% for report in abuse_reports %}
+                    <div class="border border-red-100 rounded-xl p-4 text-sm space-y-2">
+                        <p class="font-bold text-secondary">{{ report.get_reason_display }} — {{ report.target }}</p>
+                        <p class="text-xs text-textPrimary">{{ report.details|truncatechars:250 }}</p>
+                        <p class="text-[10px] text-textSecondary">{{ report.created_at|date:"M d, Y H:i" }}{% if report.reporter_email %} · {{ report.reporter_email }}{% endif %}</p>
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            {% for value, label in resolutions %}
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="handle_abuse">
+                                <input type="hidden" name="report_id" value="{{ report.pk }}">
+                                <input type="hidden" name="resolution" value="{{ value }}">
+                                <button class="bg-slate-50 hover:bg-slate-100 text-slate-700 border border-border font-bold text-[11px] px-3 py-1.5 rounded-lg">{{ label }}</button>
+                            </form>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-sm text-textSecondary italic">{% trans "No open abuse reports." %}</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+            <h2 class="text-xl font-bold text-secondary mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">campaign</span>
+                {% trans "Announcements Awaiting Moderation" %}
+                <span class="bg-primary/10 text-primary text-xs font-bold px-2.5 py-0.5 rounded-full">{{ pending_announcements|length }}</span>
+            </h2>
+            <div class="space-y-3">
+                {% for item in pending_announcements %}
+                    <div class="border border-border rounded-xl p-4 text-sm space-y-2">
+                        <p class="font-bold text-secondary">{{ item.title }}</p>
+                        <p class="text-xs text-textSecondary">{{ item.get_announcement_type_display }} · {{ item.community_group|default:item.student_association }} · {{ item.created_at|date:"M d, Y" }}</p>
+                        <p class="text-xs text-textPrimary">{{ item.body|truncatechars:250 }}</p>
+                        <div class="flex gap-2 pt-1">
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="moderate_announcement">
+                                <input type="hidden" name="item_id" value="{{ item.pk }}">
+                                <input type="hidden" name="decision" value="approve">
+                                <button class="bg-green-50 hover:bg-green-100 text-green-800 border border-green-200 font-bold text-[11px] px-3 py-1.5 rounded-lg">{% trans "Approve" %}</button>
+                            </form>
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="moderate_announcement">
+                                <input type="hidden" name="item_id" value="{{ item.pk }}">
+                                <input type="hidden" name="decision" value="reject">
+                                <button class="bg-red-50 hover:bg-red-100 text-red-800 border border-red-200 font-bold text-[11px] px-3 py-1.5 rounded-lg">{% trans "Reject" %}</button>
+                            </form>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-sm text-textSecondary italic">{% trans "No announcements waiting for review." %}</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="bg-card border border-border rounded-3xl p-6 shadow-sm">
+            <h2 class="text-xl font-bold text-secondary mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">event</span>
+                {% trans "Community Events Awaiting Moderation" %}
+                <span class="bg-primary/10 text-primary text-xs font-bold px-2.5 py-0.5 rounded-full">{{ pending_events|length }}</span>
+            </h2>
+            <div class="space-y-3">
+                {% for item in pending_events %}
+                    <div class="border border-border rounded-xl p-4 text-sm space-y-2">
+                        <p class="font-bold text-secondary">{{ item.title }}</p>
+                        <p class="text-xs text-textSecondary">{{ item.get_event_type_display }} · {{ item.community_group|default:item.student_association }} · {{ item.starts_at|date:"M d, Y H:i" }}</p>
+                        <p class="text-xs text-textPrimary">{{ item.description|truncatechars:250 }}</p>
+                        <div class="flex gap-2 pt-1">
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="moderate_event">
+                                <input type="hidden" name="item_id" value="{{ item.pk }}">
+                                <input type="hidden" name="decision" value="approve">
+                                <button class="bg-green-50 hover:bg-green-100 text-green-800 border border-green-200 font-bold text-[11px] px-3 py-1.5 rounded-lg">{% trans "Approve" %}</button>
+                            </form>
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="moderate_event">
+                                <input type="hidden" name="item_id" value="{{ item.pk }}">
+                                <input type="hidden" name="decision" value="reject">
+                                <button class="bg-red-50 hover:bg-red-100 text-red-800 border border-red-200 font-bold text-[11px] px-3 py-1.5 rounded-lg">{% trans "Reject" %}</button>
+                            </form>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-sm text-textSecondary italic">{% trans "No community events waiting for review." %}</p>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Mission Events" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-10 space-y-8">
+    <div class="border-b border-border pb-5">
+        <h1 class="text-3xl font-black text-secondary">{% trans "Mission Events & Service Campaigns" %}</h1>
+        <p class="text-sm text-textSecondary mt-1">{% trans "Publish consular events for your mission - Passport Days, mobile consular services, orientations, and awareness campaigns. Published events appear on the public Events page and on your mission page." %}</p>
+    </div>
+
+    <div class="grid lg:grid-cols-5 gap-8">
+        <section class="lg:col-span-2 bg-card border border-border rounded-3xl p-6 shadow-sm self-start">
+            <h2 class="text-xl font-bold text-secondary mb-4">{% trans "Publish an Event" %}</h2>
+            <form method="post" class="space-y-3" novalidate>
+                {% csrf_token %}
+                <input type="hidden" name="action" value="create">
+                <div>
+                    <label for="missionSelect" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Mission" %}</label>
+                    <select id="missionSelect" name="mission" required class="w-full rounded-lg border border-border px-3 py-3 text-sm">
+                        {% for m in manageable_missions %}
+                            <option value="{{ m.pk }}">{{ m.name }} ({{ m.city }}, {{ m.country }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="{{ form.title.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Event title" %}</label>
+                    {{ form.title }}
+                    {% for error in form.title.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                </div>
+                <div>
+                    <label for="{{ form.event_type.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Event type" %}</label>
+                    {{ form.event_type }}
+                    {% for error in form.event_type.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                </div>
+                <div>
+                    <label for="{{ form.description.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Event details" %}</label>
+                    {{ form.description }}
+                    {% for error in form.description.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                </div>
+                <div class="grid sm:grid-cols-2 gap-3">
+                    <div>
+                        <label for="{{ form.country.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Country" %}</label>
+                        {{ form.country }}
+                    </div>
+                    <div>
+                        <label for="{{ form.city.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "City" %}</label>
+                        {{ form.city }}
+                    </div>
+                </div>
+                <div>
+                    <label for="{{ form.location.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Venue / address" %}</label>
+                    {{ form.location }}
+                </div>
+                <div class="grid sm:grid-cols-2 gap-3">
+                    <div>
+                        <label for="{{ form.starts_at.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Starts" %}</label>
+                        {{ form.starts_at }}
+                        {% for error in form.starts_at.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                    </div>
+                    <div>
+                        <label for="{{ form.ends_at.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Ends (optional)" %}</label>
+                        {{ form.ends_at }}
+                        {% for error in form.ends_at.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                    </div>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-3">
+                    <div>
+                        <label for="{{ form.organizer.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Organizer" %}</label>
+                        {{ form.organizer }}
+                    </div>
+                    <div>
+                        <label for="{{ form.capacity.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Capacity (optional)" %}</label>
+                        {{ form.capacity }}
+                        {% for error in form.capacity.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <label for="{{ form.registration_link.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Registration link (optional)" %}</label>
+                    {{ form.registration_link }}
+                    {% for error in form.registration_link.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                </div>
+                <button class="w-full bg-primary text-white px-5 py-3 rounded-xl text-sm font-bold">{% trans "Publish Event" %}</button>
+            </form>
+        </section>
+
+        <section class="lg:col-span-3 space-y-4">
+            <h2 class="text-xl font-bold text-secondary">{% trans "Your Mission's Events" %}</h2>
+            {% for event in events %}
+                <div class="bg-card border border-border rounded-2xl p-5 space-y-3">
+                    <div class="flex flex-wrap justify-between items-start gap-2">
+                        <div class="min-w-0">
+                            <div class="flex flex-wrap items-center gap-2 text-xs">
+                                <span class="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full font-bold">{{ event.get_event_type_display }}</span>
+                                <span class="px-2.5 py-0.5 rounded-full font-bold uppercase text-[10px]
+                                    {% if event.moderation_status == 'APPROVED' %}bg-green-50 text-green-700
+                                    {% elif event.moderation_status == 'PENDING' %}bg-amber-50 text-amber-700
+                                    {% elif event.moderation_status == 'REJECTED' %}bg-red-50 text-red-700
+                                    {% else %}bg-slate-100 text-slate-600{% endif %}">
+                                    {{ event.get_moderation_status_display }}
+                                </span>
+                            </div>
+                            <h3 class="font-bold text-secondary text-base mt-2">{{ event.title }}</h3>
+                            <p class="text-xs text-textSecondary mt-0.5">
+                                {{ event.mission.name }} · {{ event.city }}, {{ event.country }} · {{ event.starts_at|date:"M d, Y H:i" }}
+                                {% if event.capacity %} · {% blocktrans with capacity=event.capacity %}Capacity {{ capacity }}{% endblocktrans %}{% endif %}
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            {% if event.moderation_status != 'APPROVED' %}
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="approve"><input type="hidden" name="event_id" value="{{ event.pk }}">
+                                <button class="bg-green-50 hover:bg-green-100 text-green-800 border border-green-200 font-bold text-[11px] px-3 py-1.5 rounded-lg">{% trans "Approve" %}</button>
+                            </form>
+                            {% endif %}
+                            {% if event.moderation_status != 'REJECTED' %}
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="reject"><input type="hidden" name="event_id" value="{{ event.pk }}">
+                                <button class="bg-red-50 hover:bg-red-100 text-red-800 border border-red-200 font-bold text-[11px] px-3 py-1.5 rounded-lg">{% trans "Reject" %}</button>
+                            </form>
+                            {% endif %}
+                            {% if event.moderation_status != 'ARCHIVED' %}
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="action" value="archive"><input type="hidden" name="event_id" value="{{ event.pk }}">
+                                <button class="bg-slate-50 hover:bg-slate-100 text-slate-700 border border-border font-bold text-[11px] px-3 py-1.5 rounded-lg">{% trans "Archive" %}</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="bg-card border border-border rounded-2xl p-8 text-center">
+                    <p class="text-sm text-textSecondary italic">{% trans "No events published yet. Use the form to publish your first event." %}</p>
+                </div>
+            {% endfor %}
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: somali-missions\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-04 00:00+0000\n"
-"PO-Revision-Date: 2026-07-06 12:00+0300\n"
+"PO-Revision-Date: 2026-07-06 14:00+0300\n"
 "Language: so\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2485,3 +2485,477 @@ msgid ""
 msgstr ""
 "Fadlan dukumentiyadan u keen ballantaada. Haddii ay maqan yihiin kuwa loo "
 "baahan yahay, waxaa laga yaabaa inaad mar kale ballan qabsato."
+
+msgid "Orientation & Arrival Help"
+msgstr "Hagitaan & Caawimaad Imaatin"
+
+msgid "Accommodation Guidance"
+msgstr "Tilmaan Hoy"
+
+msgid "Translation & Interpretation"
+msgstr "Turjumaad & Fasiraad"
+
+msgid "Legal Aid"
+msgstr "Caawimaad Sharci"
+
+msgid "Medical Guidance"
+msgstr "Tilmaan Caafimaad"
+
+msgid "Education & Student Support"
+msgstr "Waxbarasho & Taageero Arday"
+
+msgid "Transport Guidance"
+msgstr "Tilmaan Gaadiid"
+
+msgid "Volunteering"
+msgstr "Mutadawacnimo"
+
+msgid "Passport Day"
+msgstr "Maalinta Baasaboorka"
+
+msgid "Mobile Consular Service"
+msgstr "Adeeg Qunsuliyadeed oo Guuraya"
+
+msgid "Student Orientation"
+msgstr "Hagitaanka Ardayda"
+
+msgid "Medical Support"
+msgstr "Taageero Caafimaad"
+
+msgid "Legal Support"
+msgstr "Taageero Sharci"
+
+msgid "Community Meeting"
+msgstr "Kulan Bulsho"
+
+msgid "Emergency Awareness"
+msgstr "Wacyigelin Degdeg ah"
+
+msgid "Document Guidance"
+msgstr "Tilmaan Dukumenti"
+
+msgid "New"
+msgstr "Cusub"
+
+msgid "Reviewed"
+msgstr "Dib loo eegay"
+
+msgid "Dismissed"
+msgstr "La diiday"
+
+msgid "Action taken"
+msgstr "Tallaabo waa la qaaday"
+
+msgid "Impersonation / fake organization"
+msgstr "Is-yeelyeel / urur been ah"
+
+msgid "Scam or fraud"
+msgstr "Khiyaano ama musuq"
+
+msgid "False or misleading information"
+msgstr "Xog been ah ama marin-habaabin"
+
+msgid "Inappropriate content"
+msgstr "Waxyaabo aan habboonayn"
+
+msgid "Spam"
+msgstr "Fariimo qasab ah"
+
+msgid "Organization name"
+msgstr "Magaca ururka"
+
+msgid "University name"
+msgstr "Magaca jaamacadda"
+
+msgid "Required for student associations."
+msgstr "Waxaa looga baahan yahay ururrada ardayda."
+
+msgid "What does your organization do?"
+msgstr "Maxay qabataa ururkaagu?"
+
+msgid "Organization contact email"
+msgstr "Iimaylka xiriirka ururka"
+
+msgid "Representative full name"
+msgstr "Magaca oo buuxa ee wakiilka"
+
+msgid "Representative role/title"
+msgstr "Doorka/derajada wakiilka"
+
+msgid "Account email"
+msgstr "Iimaylka akoonka"
+
+msgid "Please give the university name for a student association."
+msgstr "Fadlan sheeg magaca jaamacadda ururka ardayda."
+
+msgid "Organization type"
+msgstr "Nooca ururka"
+
+msgid "Representative account"
+msgstr "Akoonka wakiilka"
+
+msgid "Submit for Ministry Verification"
+msgstr "U gudbi Xaqiijinta Wasaaradda"
+
+msgid ""
+"You will receive an email verification link. Your organization stays hidden "
+"from the public directory until the Ministry verifies it."
+msgstr ""
+"Waxaad heli doontaa link xaqiijin iimayl. Ururkaagu wuxuu ka qarsoonaan "
+"doonaa tusaha dadweynaha ilaa Wasaaraddu ka xaqiijiso."
+
+msgid ""
+"Somali community groups and student associations can register here. After "
+"Ministry verification, your organization appears in the public directory and"
+" can publish announcements and events."
+msgstr ""
+"Kooxaha bulshada Soomaaliyeed iyo ururrada ardaydu halkan ayay iska "
+"diiwaangelin karaan. Kadib xaqiijinta Wasaaradda, ururkaagu wuxuu ka muuqan "
+"doonaa tusaha dadweynaha, wuxuuna faafin karaa ogeysiisyo iyo dhacdooyin."
+
+#, python-format
+msgid "File too large - maximum %(size)s MB."
+msgstr "Faylku aad buu u weyn yahay - ugu badnaan %(size)s MB."
+
+msgid "Only PNG, JPG, or WEBP images are allowed."
+msgstr "Kaliya sawirrada PNG, JPG, ama WEBP ayaa la oggol yahay."
+
+msgid "Defaults to the mission country"
+msgstr "Hore ayaa looga qaataa waddanka xafiiska"
+
+msgid "Defaults to the mission city"
+msgstr "Hore ayaa looga qaataa magaalada xafiiska"
+
+msgid "Venue / address"
+msgstr "Goobta / cinwaanka"
+
+msgid "Defaults to the mission name"
+msgstr "Hore ayaa looga qaataa magaca xafiiska"
+
+msgid "The end time must be after the start time."
+msgstr "Waqtiga dhammaadku waa inuu ka dambeeyaa waqtiga bilowga."
+
+msgid "Please describe the problem (at least 10 characters)."
+msgstr "Fadlan sharax dhibaatada (ugu yaraan 10 xaraf)."
+
+msgid ""
+"You are already signed in. To register an organization, please log out "
+"first."
+msgstr ""
+"Horey ayaad u soo gashay. Si aad urur u diiwaangeliso, fadlan marka hore ka "
+"bax."
+
+msgid "Your organization profile has been saved."
+msgstr "Xogta ururkaaga waa la kaydiyay."
+
+msgid "The profile was not saved - please correct the highlighted fields."
+msgstr "Xogta lama kaydin - fadlan sax meelaha la calaamadeeyay."
+
+msgid "An announcement needs both a title and a message."
+msgstr "Ogeysiis wuxuu u baahan yahay cinwaan iyo fariin labadaba."
+
+msgid ""
+"Announcement submitted - it will appear publicly once the Ministry approves "
+"it."
+msgstr ""
+"Ogeysiiska waa la gudbiyay - wuxuu u muuqan doonaa dadweynaha marka "
+"Wasaaraddu ansixiso."
+
+msgid "An event needs a title, a description, and a start date/time."
+msgstr ""
+"Dhacdo waxay u baahan tahay cinwaan, sharaxaad, iyo taariikh/waqti bilow."
+
+msgid ""
+"Event submitted - it will appear publicly once the Ministry approves it."
+msgstr ""
+"Dhacdada waa la gudbiyay - waxay u muuqan doontaa dadweynaha marka "
+"Wasaaraddu ansixiso."
+
+msgid "Announcement deleted."
+msgstr "Ogeysiiska waa la tirtiray."
+
+msgid "You do not have permission to manage mission events."
+msgstr "Uma lihid fasax aad ku maamusho dhacdooyinka xafiiska."
+
+msgid "Please choose a mission you are allowed to manage."
+msgstr "Fadlan dooro xafiis aad maamuli karto."
+
+msgid "The event has been published."
+msgstr "Dhacdada waa la faafiyay."
+
+msgid "The event was not saved - please correct the highlighted fields."
+msgstr "Dhacdada lama kaydin - fadlan sax meelaha la calaamadeeyay."
+
+msgid "You can only moderate events of your own mission."
+msgstr "Waxaad kormeeri kartaa oo keliya dhacdooyinka xafiiskaaga."
+
+msgid "The event status has been updated."
+msgstr "Xaaladda dhacdada waa la cusboonaysiiyay."
+
+msgid "Only Ministry users can review community submissions."
+msgstr ""
+"Kaliya isticmaalayaasha Wasaaraddu ayaa dib u eegi kara gudbinta bulshada."
+
+msgid "The verification decision has been recorded."
+msgstr "Go'aanka xaqiijinta waa la diiwaangeliyay."
+
+msgid "The moderation decision has been recorded."
+msgstr "Go'aanka kormeerka waa la diiwaangeliyay."
+
+msgid "The abuse report has been updated."
+msgstr "Warbixinta xadgudubka waa la cusboonaysiiyay."
+
+msgid "Too many reports from this network today. Please try again tomorrow."
+msgstr ""
+"Maanta warbixinno aad u badan ayaa ka yimid shabakaddan. Fadlan berri isku "
+"day."
+
+msgid ""
+"Thank you. Your report has been received and will be reviewed by the "
+"Ministry."
+msgstr ""
+"Mahadsanid. Warbixintaada waa la helay, Wasaaraddu way dib u eegi doontaa."
+
+msgid "Mark reviewed"
+msgstr "Calaamadee dib-u-eegis"
+
+msgid "Dismiss"
+msgstr "Iska diid"
+
+msgid "Register a new organization"
+msgstr "Diiwaangeli urur cusub"
+
+msgid "Register Your Organization"
+msgstr "Diiwaangeli Ururkaaga"
+
+msgid "Organization status"
+msgstr "Xaaladda ururka"
+
+msgid ""
+"Your organization is not publicly visible until the Ministry verifies it."
+msgstr "Ururkaagu uma muuqdo dadweynaha ilaa Wasaaraddu ka xaqiijiso."
+
+msgid ""
+"Your organization is currently not publicly visible. Contact the Ministry "
+"for details."
+msgstr ""
+"Ururkaagu hadda uma muuqdo dadweynaha. Faahfaahin la xiriir Wasaaradda."
+
+msgid "Languages your team speaks"
+msgstr "Luqadaha kooxdaadu ku hadasho"
+
+msgid "e.g. Somali, English, Turkish"
+msgstr "tusaale: Soomaali, Ingiriisi, Turki"
+
+msgid "Services you offer"
+msgstr "Adeegyada aad bixiso"
+
+msgid "Logo (PNG/JPG/WEBP, max 2MB)"
+msgstr "Astaan (PNG/JPG/WEBP, ugu badnaan 2MB)"
+
+msgid "Banner (PNG/JPG/WEBP, max 4MB)"
+msgstr "Calan-sawir (PNG/JPG/WEBP, ugu badnaan 4MB)"
+
+msgid "Current"
+msgstr "Hadda jira"
+
+msgid "No announcements yet."
+msgstr "Weli ogeysiis ma jiro."
+
+msgid "No events yet."
+msgstr "Weli dhacdo ma jirto."
+
+msgid "Mission Events"
+msgstr "Dhacdooyinka Xafiiska"
+
+msgid "Mission Events & Service Campaigns"
+msgstr "Dhacdooyinka Xafiiska & Ololayaasha Adeegga"
+
+msgid ""
+"Publish consular events for your mission - Passport Days, mobile consular "
+"services, orientations, and awareness campaigns. Published events appear on "
+"the public Events page and on your mission page."
+msgstr ""
+"Faafi dhacdooyinka qunsuliyadeed ee xafiiskaaga - Maalmaha Baasaboorka, "
+"adeegyada guuraya, hagitaannada, iyo ololayaasha wacyigelinta. Dhacdooyinka "
+"la faafiyo waxay ka muuqdaan bogga Dhacdooyinka dadweynaha iyo bogga "
+"xafiiskaaga."
+
+msgid "Publish an Event"
+msgstr "Faafi Dhacdo"
+
+msgid "Event type"
+msgstr "Nooca dhacdada"
+
+msgid "Starts"
+msgstr "Bilow"
+
+msgid "Ends (optional)"
+msgstr "Dhammaad (ikhtiyaari)"
+
+msgid "Organizer"
+msgstr "Qabanqaabiye"
+
+msgid "Capacity (optional)"
+msgstr "Awoodda (ikhtiyaari)"
+
+msgid "Registration link (optional)"
+msgstr "Linkiga isdiiwaangelinta (ikhtiyaari)"
+
+msgid "Your Mission's Events"
+msgstr "Dhacdooyinka Xafiiskaaga"
+
+#, python-format
+msgid "Capacity %(capacity)s"
+msgstr "Awoodda %(capacity)s"
+
+msgid "Approve"
+msgstr "Ansixi"
+
+msgid "Reject"
+msgstr "Diid"
+
+msgid "Archive"
+msgstr "Kaydi"
+
+msgid "No events published yet. Use the form to publish your first event."
+msgstr ""
+"Weli dhacdo lama faafin. Isticmaal foomka si aad u faafiso dhacdadaada ugu "
+"horreysa."
+
+msgid "Community Moderation"
+msgstr "Kormeerka Bulshada"
+
+msgid "Community Review & Moderation"
+msgstr "Dib-u-eegista & Kormeerka Bulshada"
+
+msgid ""
+"Verify organizations, approve community announcements and events, and handle"
+" abuse reports. Only approved content is ever shown to the public."
+msgstr ""
+"Xaqiiji ururrada, ansixi ogeysiisyada iyo dhacdooyinka bulshada, oo maamul "
+"warbixinnada xadgudubka. Kaliya waxa la ansixiyay ayaa dadweynaha loo "
+"muujiyaa."
+
+msgid "Organization Verification Requests"
+msgstr "Codsiyada Xaqiijinta Ururrada"
+
+msgid "Requested by"
+msgstr "Waxaa codsaday"
+
+msgid "Verify organization"
+msgstr "Xaqiiji ururka"
+
+msgid "Abuse Reports"
+msgstr "Warbixinnada Xadgudubka"
+
+msgid "No pending verification requests."
+msgstr "Codsiyo xaqiijin oo sugaya ma jiraan."
+
+msgid "No open abuse reports."
+msgstr "Warbixinno xadgudub oo furan ma jiraan."
+
+msgid "Announcements Awaiting Moderation"
+msgstr "Ogeysiisyo Sugaya Kormeer"
+
+msgid "No announcements waiting for review."
+msgstr "Ogeysiisyo dib-u-eegis sugaya ma jiraan."
+
+msgid "Community Events Awaiting Moderation"
+msgstr "Dhacdooyin Bulsho oo Sugaya Kormeer"
+
+msgid "No community events waiting for review."
+msgstr "Dhacdooyin bulsho oo dib-u-eegis sugaya ma jiraan."
+
+msgid "Consular Events"
+msgstr "Dhacdooyinka Qunsuliyadda"
+
+msgid "Upcoming Consular Events"
+msgstr "Dhacdooyinka Qunsuliyadda ee Soo Socda"
+
+msgid ""
+"Passport Days, mobile consular services, student orientations, and awareness"
+" campaigns organized by Somali missions worldwide. Check what is coming to "
+"your city."
+msgstr ""
+"Maalmaha Baasaboorka, adeegyada qunsuliyadeed ee guuraya, hagitaannada "
+"ardayda, iyo ololayaasha wacyigelinta ee ay qabanqaabiyaan xafiisyada "
+"Soomaaliya adduunka. Eeg waxa imanaya magaaladaada."
+
+msgid "Any city"
+msgstr "Magaalo kasta"
+
+msgid "Filter Events"
+msgstr "Shaandhee Dhacdooyinka"
+
+msgid "No registration needed"
+msgstr "Isdiiwaangelin looma baahna"
+
+msgid "Report a problem"
+msgstr "Soo sheeg dhibaato"
+
+msgid "No upcoming events match your filters."
+msgstr "Dhacdo soo socota oo shaandhayntaada waafaqsan ma jirto."
+
+msgid ""
+"Try removing a filter, or check back soon - missions publish new events "
+"regularly."
+msgstr ""
+"Isku day inaad shaandho ka saarto, ama dib u soo eeg - xafiisyadu si joogto "
+"ah ayay dhacdooyin cusub u faafiyaan."
+
+msgid "Report a Problem"
+msgstr "Soo Sheeg Dhibaato"
+
+msgid "Nothing to report here"
+msgstr "Halkan waxba lagama sheegi karo"
+
+msgid ""
+"The profile or event you tried to report does not exist or is not public."
+msgstr ""
+"Xogta ama dhacdada aad isku dayday inaad ka warbixiso ma jirto ama "
+"dadweynaha uma muuqato."
+
+msgid ""
+"Reports go directly to the Ministry moderation team. False reports may lead "
+"to access restrictions."
+msgstr ""
+"Warbixinnadu si toos ah ayay ugu gudbaan kooxda kormeerka Wasaaradda. "
+"Warbixinno been ah waxay keeni karaan xannibaad."
+
+#, python-format
+msgid "You are reporting: %(target)s"
+msgstr "Waxaad ka warbixinaysaa: %(target)s"
+
+msgid "Reason"
+msgstr "Sababta"
+
+msgid "What is wrong?"
+msgstr "Maxaa qaldan?"
+
+msgid "Your name (optional)"
+msgstr "Magacaaga (ikhtiyaari)"
+
+msgid "Your email (optional)"
+msgstr "Iimaylkaaga (ikhtiyaari)"
+
+msgid "Send Report to the Ministry"
+msgstr "U dir Warbixinta Wasaaradda"
+
+msgid "Upcoming Events at this Mission"
+msgstr "Dhacdooyinka Soo Socda ee Xafiiskan"
+
+msgid "No upcoming events published by this mission yet."
+msgstr "Xafiiskan weli ma faafin dhacdooyin soo socda."
+
+msgid "See all consular events"
+msgstr "Eeg dhammaan dhacdooyinka qunsuliyadda"
+
+msgid "Languages"
+msgstr "Luqadaha"
+
+msgid "Report this organization"
+msgstr "Ka warbixi ururkan"
+
+msgid "Organization Panel"
+msgstr "Bogga Ururka"

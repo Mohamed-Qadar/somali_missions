@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Consular Events" %} - {% trans "Somali Missions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-10 space-y-8">
+    <div class="text-center space-y-3">
+        <p class="text-xs font-black tracking-[0.2em] text-primary uppercase">{% trans "Somali Missions Network" %}</p>
+        <h1 class="text-4xl font-black text-secondary">{% trans "Upcoming Consular Events" %}</h1>
+        <p class="text-sm text-textSecondary max-w-2xl mx-auto">
+            {% trans "Passport Days, mobile consular services, student orientations, and awareness campaigns organized by Somali missions worldwide. Check what is coming to your city." %}
+        </p>
+    </div>
+
+    <form method="get" class="bg-card border border-border rounded-2xl p-4 grid sm:grid-cols-2 lg:grid-cols-5 gap-3 items-end shadow-sm">
+        <div>
+            <label for="filterCountry" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Country" %}</label>
+            <select id="filterCountry" name="country" class="w-full rounded-lg border border-border px-3 py-2.5 text-sm">
+                <option value="">{% trans "All Countries" %}</option>
+                {% for c in countries %}
+                    <option value="{{ c }}" {% if selected_country == c %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="filterCity" class="block text-xs font-bold text-textSecondary mb-1">{% trans "City" %}</label>
+            <input id="filterCity" name="city" value="{{ selected_city }}" placeholder="{% trans 'Any city' %}" class="w-full rounded-lg border border-border px-3 py-2.5 text-sm">
+        </div>
+        <div>
+            <label for="filterMission" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Mission" %}</label>
+            <select id="filterMission" name="mission" class="w-full rounded-lg border border-border px-3 py-2.5 text-sm">
+                <option value="">{% trans "All Missions" %}</option>
+                {% for m in missions %}
+                    <option value="{{ m.pk }}" {% if selected_mission == m.pk|stringformat:"s" %}selected{% endif %}>{{ m.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="filterType" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Event type" %}</label>
+            <select id="filterType" name="type" class="w-full rounded-lg border border-border px-3 py-2.5 text-sm">
+                <option value="">{% trans "All Types" %}</option>
+                {% for value, label in event_types %}
+                    <option value="{{ value }}" {% if selected_type == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="bg-primary text-white rounded-lg px-4 py-2.5 text-sm font-bold h-fit">{% trans "Filter Events" %}</button>
+    </form>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for event in events %}
+            <article class="bg-card border border-border rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-primary/40 transition-all flex flex-col gap-3">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="bg-primary/10 text-primary px-2.5 py-1 rounded-full font-bold text-[11px] uppercase">{{ event.get_event_type_display }}</span>
+                    <span class="text-[11px] font-bold text-textSecondary">{{ event.starts_at|date:"M d, Y" }}</span>
+                </div>
+                <h2 class="font-bold text-secondary text-lg leading-snug">{{ event.title }}</h2>
+                <p class="text-sm text-textSecondary line-clamp-3">{{ event.description }}</p>
+                <div class="text-xs text-textSecondary space-y-1 mt-auto">
+                    <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm" aria-hidden="true">location_on</span>{{ event.city }}, {{ event.country }}{% if event.location %} — {{ event.location }}{% endif %}</p>
+                    <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm" aria-hidden="true">schedule</span>{{ event.starts_at|date:"H:i" }}{% if event.ends_at %} – {{ event.ends_at|date:"H:i" }}{% endif %}</p>
+                    <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm" aria-hidden="true">account_balance</span>{{ event.organizer }}</p>
+                    {% if event.capacity %}<p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm" aria-hidden="true">group</span>{% blocktrans with capacity=event.capacity %}Capacity {{ capacity }}{% endblocktrans %}</p>{% endif %}
+                </div>
+                <div class="flex items-center justify-between gap-2 pt-2 border-t border-border">
+                    {% if event.registration_link %}
+                        <a href="{{ event.registration_link }}" rel="noopener noreferrer" target="_blank" class="bg-primary hover:bg-sky-700 text-white font-bold text-xs px-4 py-2 rounded-lg">{% trans "Register" %}</a>
+                    {% else %}
+                        <span class="text-[11px] text-textSecondary italic">{% trans "No registration needed" %}</span>
+                    {% endif %}
+                    <a href="{% url 'report_abuse' %}?type=mission_event&id={{ event.pk }}" class="text-[11px] font-semibold text-textSecondary hover:text-danger">{% trans "Report a problem" %}</a>
+                </div>
+            </article>
+        {% empty %}
+            <div class="col-span-full bg-card border border-border rounded-2xl p-10 text-center">
+                <span class="material-symbols-outlined text-4xl text-slate-400" aria-hidden="true">event_busy</span>
+                <p class="font-bold text-secondary mt-2">{% trans "No upcoming events match your filters." %}</p>
+                <p class="text-sm text-textSecondary mt-1">{% trans "Try removing a filter, or check back soon - missions publish new events regularly." %}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

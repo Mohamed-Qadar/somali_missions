@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -153,7 +154,83 @@ class CommunityStatus(models.TextChoices):
     SUSPENDED = 'SUSPENDED', _('Suspended')
 
 
-class CommunityGroup(models.Model):
+class ModerationStatus(models.TextChoices):
+    PENDING = 'PENDING', _('Pending')
+    APPROVED = 'APPROVED', _('Approved')
+    REJECTED = 'REJECTED', _('Rejected')
+    ARCHIVED = 'ARCHIVED', _('Archived')
+
+
+class CommunityServiceCategory(models.TextChoices):
+    ORIENTATION = 'ORIENTATION', _('Orientation & Arrival Help')
+    ACCOMMODATION = 'ACCOMMODATION', _('Accommodation Guidance')
+    TRANSLATION = 'TRANSLATION', _('Translation & Interpretation')
+    LEGAL = 'LEGAL', _('Legal Aid')
+    MEDICAL = 'MEDICAL', _('Medical Guidance')
+    EDUCATION = 'EDUCATION', _('Education & Student Support')
+    TRANSPORT = 'TRANSPORT', _('Transport Guidance')
+    EMERGENCY = 'EMERGENCY', _('Emergency Support')
+    VOLUNTEERING = 'VOLUNTEERING', _('Volunteering')
+
+
+class ModeratedContent(models.Model):
+    """Abstract 4-state moderation (Pending/Approved/Rejected/Archived).
+
+    Concrete models may also carry legacy is_public/is_moderated booleans;
+    apply_moderation() keeps those in sync so older queries stay correct.
+    """
+
+    moderation_status = models.CharField(
+        max_length=10, choices=ModerationStatus.choices, default=ModerationStatus.PENDING,
+    )
+    reviewed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='moderated_%(class)s',
+    )
+    reviewed_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+    def apply_moderation(self, status, reviewer=None):
+        self.moderation_status = status
+        self.reviewed_by = reviewer
+        self.reviewed_at = timezone.now()
+        if hasattr(self, 'is_public'):
+            self.is_public = status == ModerationStatus.APPROVED
+        if hasattr(self, 'is_moderated'):
+            self.is_moderated = status in (ModerationStatus.APPROVED, ModerationStatus.REJECTED)
+        self.save()
+
+
+class OrganizationProfileMixin(models.Model):
+    """Shared self-service profile fields for community organizations."""
+
+    banner = models.ImageField(upload_to='community/banners/', null=True, blank=True)
+    service_categories = models.JSONField(default=list, blank=True)
+    languages_spoken = models.CharField(
+        max_length=200, blank=True, default='',
+        help_text="Comma-separated, e.g. 'Somali, English, Turkish'.",
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='created_%(class)s',
+    )
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='updated_%(class)s',
+    )
+
+    class Meta:
+        abstract = True
+
+    @property
+    def service_category_labels(self):
+        labels = dict(CommunityServiceCategory.choices)
+        return [labels[v] for v in (self.service_categories or []) if v in labels]
+
+
+class CommunityGroup(OrganizationProfileMixin, models.Model):
     name = models.CharField(max_length=180)
     country = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
@@ -183,7 +260,7 @@ class CommunityGroup(models.Model):
         return self.status == CommunityStatus.VERIFIED
 
 
-class StudentAssociation(models.Model):
+class StudentAssociation(OrganizationProfileMixin, models.Model):
     name = models.CharField(max_length=180)
     country = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
@@ -233,7 +310,7 @@ class CommunityRepresentative(models.Model):
         return f"{self.user.username} - {target}"
 
 
-class CommunityEvent(models.Model):
+class CommunityEvent(ModeratedContent, models.Model):
     class EventType(models.TextChoices):
         EVENT = 'EVENT', _('Event')
         MEETING = 'MEETING', _('Meeting')
@@ -260,7 +337,7 @@ class CommunityEvent(models.Model):
         return self.title
 
 
-class CommunityAnnouncement(models.Model):
+class CommunityAnnouncement(ModeratedContent, models.Model):
     class AnnouncementType(models.TextChoices):
         GENERAL = 'GENERAL', _('Community announcement')
         EMERGENCY = 'EMERGENCY', _('Emergency notice')
@@ -352,6 +429,109 @@ class EmergencySupportOffer(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class MissionEvent(ModeratedContent, models.Model):
+    """Consular events and service campaigns run by a mission (Passport Day,
+    mobile consular services, orientations, ...). Created by embassy staff of
+    that mission or by the Ministry; only APPROVED events appear publicly."""
+
+    class EventType(models.TextChoices):
+        PASSPORT_DAY = 'PASSPORT_DAY', _('Passport Day')
+        MOBILE_CONSULAR = 'MOBILE_CONSULAR', _('Mobile Consular Service')
+        STUDENT_ORIENTATION = 'STUDENT_ORIENTATION', _('Student Orientation')
+        MEDICAL_SUPPORT = 'MEDICAL_SUPPORT', _('Medical Support')
+        LEGAL_SUPPORT = 'LEGAL_SUPPORT', _('Legal Support')
+        COMMUNITY_MEETING = 'COMMUNITY_MEETING', _('Community Meeting')
+        EMERGENCY_AWARENESS = 'EMERGENCY_AWARENESS', _('Emergency Awareness')
+        DOCUMENT_GUIDANCE = 'DOCUMENT_GUIDANCE', _('Document Guidance')
+
+    mission = models.ForeignKey(Mission, on_delete=models.CASCADE, related_name='events')
+    title = models.CharField(max_length=180)
+    event_type = models.CharField(max_length=20, choices=EventType.choices)
+    description = models.TextField()
+    # Mobile consular services can run in a different city than the mission
+    # seat, so country/city are stored explicitly (defaulted from the mission).
+    country = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    location = models.CharField(max_length=255, blank=True)
+    starts_at = models.DateTimeField()
+    ends_at = models.DateTimeField(null=True, blank=True)
+    organizer = models.CharField(max_length=180, blank=True)
+    registration_link = models.URLField(blank=True)
+    capacity = models.PositiveIntegerField(null=True, blank=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='created_mission_events',
+    )
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='updated_mission_events',
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['starts_at']
+
+    def __str__(self):
+        return f"{self.title} ({self.mission.name})"
+
+    def save(self, *args, **kwargs):
+        if not self.country:
+            self.country = self.mission.country
+        if not self.city:
+            self.city = self.mission.city
+        if not self.organizer:
+            self.organizer = self.mission.name
+        super().save(*args, **kwargs)
+
+
+class AbuseReport(models.Model):
+    """Public reports of problematic community profiles or events."""
+
+    class Status(models.TextChoices):
+        NEW = 'NEW', _('New')
+        REVIEWED = 'REVIEWED', _('Reviewed')
+        DISMISSED = 'DISMISSED', _('Dismissed')
+        ACTION_TAKEN = 'ACTION_TAKEN', _('Action taken')
+
+    class Reason(models.TextChoices):
+        IMPERSONATION = 'IMPERSONATION', _('Impersonation / fake organization')
+        SCAM = 'SCAM', _('Scam or fraud')
+        FALSE_INFO = 'FALSE_INFO', _('False or misleading information')
+        INAPPROPRIATE = 'INAPPROPRIATE', _('Inappropriate content')
+        SPAM = 'SPAM', _('Spam')
+        OTHER = 'OTHER', _('Other')
+
+    community_group = models.ForeignKey(
+        CommunityGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='abuse_reports')
+    student_association = models.ForeignKey(
+        StudentAssociation, on_delete=models.CASCADE, null=True, blank=True, related_name='abuse_reports')
+    community_event = models.ForeignKey(
+        CommunityEvent, on_delete=models.CASCADE, null=True, blank=True, related_name='abuse_reports')
+    mission_event = models.ForeignKey(
+        MissionEvent, on_delete=models.CASCADE, null=True, blank=True, related_name='abuse_reports')
+    reason = models.CharField(max_length=15, choices=Reason.choices, default=Reason.OTHER)
+    details = models.TextField()
+    reporter_name = models.CharField(max_length=150, blank=True)
+    reporter_email = models.EmailField(blank=True)
+    status = models.CharField(max_length=15, choices=Status.choices, default=Status.NEW)
+    handled_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='handled_abuse_reports')
+    handled_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Abuse report #{self.pk} ({self.get_reason_display()})"
+
+    @property
+    def target(self):
+        return self.community_group or self.student_association or self.community_event or self.mission_event
 
 
 class Complaint(models.Model):

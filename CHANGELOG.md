@@ -2,7 +2,17 @@
 
 All notable changes to the Somali Missions platform. Newest first.
 
-## [Unreleased] — Emergency triage, booking checklist, full Somali coverage
+## [Unreleased] — Community self-service portal + Embassy Events
+
+- **Community self-registration** (`/communities/register/`): organizations create a representative account (COMMUNITY_REP) + their org record in Pending review, with the same email-verification flow as citizens; a verification request lands in the Ministry queue. Reps land on their portal after login.
+- **Portal upgrade** (`/communities/admin/`): status banner, full profile editing incl. validated logo/banner uploads (PNG/JPG/WEBP, 2/4 MB), service categories, languages, emergency-support availability, `created_by`/`updated_by` audit fields; announcements/events now show their moderation state; success/error toasts (fixed a context clash that silently disabled Django messages on this page).
+- **4-state moderation** (Pending/Approved/Rejected/Archived) for community announcements and events via a shared `ModeratedContent` base (with data migration from the old booleans); Ministry moderation queue at `/ministry/community-moderation/` for verification requests, pending content, and abuse reports — all actions audit-logged.
+- **Embassy Events** (`MissionEvent`): 8 consular event types (Passport Day, Mobile Consular Service, Student Orientation, Medical/Legal Support, Community Meeting, Emergency Awareness, Document Guidance) with country/city/venue, organizer, registration link, capacity; staff manage events for their own mission only (`/staff/events/`); public listing at `/events/` with country/city/mission/type filters; mission pages show upcoming events next to verified community partners.
+- **Abuse reporting**: public, rate-limited reports against verified profiles and approved events; handled from the moderation queue.
+- Somali translations for all 150 new strings; nav gains Consular Events + org registration under Community.
+- Tests: 72 → 95.
+
+## [Earlier] — Emergency triage, booking checklist, full Somali coverage
 
 - **Emergency intake**: crisis type (medical, detention, trafficking, lost passport, death case, family emergency, child protection, domestic violence, urgent travel, missing person, conflict zone) is now a validated `Complaint.emergency_type` field instead of being discarded; the whole emergency form is server-side validated (the old view accepted empty messages and an unvalidated category from POST) with inline field errors and preserved input.
 - **Emergency prioritization**: embassy dashboards order CRITICAL cases first and pin an "Active Emergency / Critical Cases" strip; case rows, the case workspace, ministry urgent alerts, and the Django admin show the crisis type.

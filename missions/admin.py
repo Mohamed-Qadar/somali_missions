@@ -7,6 +7,7 @@ from .models import (
     StudentAssociation, CommunityRepresentative, CommunityEvent,
     CommunityAnnouncement, CommunityVerificationRequest, CommunityMessage,
     EmergencySupportOffer, UserProfile, EmbassyInvitation, SecureMessage,
+    MissionEvent, AbuseReport,
 )
 
 
@@ -120,17 +121,32 @@ class CommunityRepresentativeAdmin(admin.ModelAdmin):
 
 @admin.register(CommunityEvent)
 class CommunityEventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'community_group', 'student_association', 'event_type', 'starts_at', 'is_public')
-    list_filter = ('event_type', 'is_public', 'starts_at')
+    list_display = ('title', 'community_group', 'student_association', 'event_type', 'starts_at', 'moderation_status', 'is_public')
+    list_filter = ('event_type', 'moderation_status', 'is_public', 'starts_at')
     search_fields = ('title', 'description', 'community_group__name', 'student_association__name')
 
 
 @admin.register(CommunityAnnouncement)
 class CommunityAnnouncementAdmin(admin.ModelAdmin):
-    list_display = ('title', 'community_group', 'student_association', 'announcement_type', 'is_public', 'is_moderated', 'created_at')
-    list_filter = ('announcement_type', 'is_public', 'is_moderated')
+    list_display = ('title', 'community_group', 'student_association', 'announcement_type', 'moderation_status', 'is_public', 'is_moderated', 'created_at')
+    list_filter = ('announcement_type', 'moderation_status', 'is_public', 'is_moderated')
     search_fields = ('title', 'body', 'community_group__name', 'student_association__name')
     actions = [mark_public_moderated]
+
+
+@admin.register(MissionEvent)
+class MissionEventAdmin(admin.ModelAdmin):
+    list_display = ('title', 'mission', 'event_type', 'country', 'city', 'starts_at', 'moderation_status', 'created_by')
+    list_filter = ('event_type', 'moderation_status', 'country', 'starts_at')
+    search_fields = ('title', 'description', 'mission__name', 'city', 'organizer')
+    date_hierarchy = 'starts_at'
+
+
+@admin.register(AbuseReport)
+class AbuseReportAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'community_group', 'student_association', 'community_event', 'mission_event', 'status', 'handled_by', 'created_at')
+    list_filter = ('status', 'reason', 'created_at')
+    search_fields = ('details', 'reporter_name', 'reporter_email')
 
 
 @admin.register(CommunityVerificationRequest)

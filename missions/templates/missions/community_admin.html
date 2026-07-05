@@ -14,6 +14,7 @@
         <div class="bg-card border border-border rounded-2xl p-8 text-center">
             <p class="font-bold text-secondary">{% trans "No approved community representation is attached to your account yet." %}</p>
             <p class="text-sm text-textSecondary mt-2">{% trans "A platform administrator must approve your group representative record before this panel opens." %}</p>
+            <a href="{% url 'community_register' %}" class="inline-block mt-4 bg-primary text-white px-5 py-3 rounded-xl text-sm font-bold">{% trans "Register a new organization" %}</a>
         </div>
     {% else %}
         <div class="flex flex-wrap gap-2">
@@ -25,24 +26,84 @@
         </div>
 
         {% if selected %}
+        <div class="rounded-2xl border p-4 flex flex-wrap items-center gap-3 text-sm font-bold
+            {% if selected.status == 'VERIFIED' %}bg-green-50 border-green-200 text-green-800
+            {% elif selected.status == 'PENDING' %}bg-amber-50 border-amber-200 text-amber-800
+            {% else %}bg-red-50 border-red-200 text-red-800{% endif %}">
+            <span class="material-symbols-outlined" aria-hidden="true">
+                {% if selected.status == 'VERIFIED' %}verified{% elif selected.status == 'PENDING' %}hourglass_top{% else %}block{% endif %}
+            </span>
+            {% trans "Organization status" %}: {{ selected.get_status_display }}
+            {% if selected.status == 'PENDING' %}
+                <span class="font-semibold">— {% trans "Your organization is not publicly visible until the Ministry verifies it." %}</span>
+            {% elif selected.status != 'VERIFIED' %}
+                <span class="font-semibold">— {% trans "Your organization is currently not publicly visible. Contact the Ministry for details." %}</span>
+            {% endif %}
+        </div>
+
         <div class="grid lg:grid-cols-3 gap-8">
             <section class="lg:col-span-2 bg-card border border-border rounded-3xl p-6 shadow-sm">
                 <h2 class="text-xl font-bold text-secondary mb-4">{% trans "Profile" %}</h2>
-                <form method="post" class="space-y-4">
+                <form method="post" enctype="multipart/form-data" class="space-y-4">
                     {% csrf_token %}
                     <input type="hidden" name="action" value="profile">
-                    <textarea name="description" rows="5" class="w-full rounded-xl border-border bg-slate-50 text-sm" placeholder="{% trans 'Group description' %}">{{ selected.description }}</textarea>
+                    <textarea name="description" rows="5" class="w-full rounded-xl border-border bg-slate-50 text-sm" placeholder="{% trans 'Group description' %}">{{ profile_form.description.value|default:'' }}</textarea>
                     <div class="grid md:grid-cols-2 gap-3">
-                        <input name="contact_email" value="{{ selected.contact_email }}" placeholder="{% trans 'Contact email' %}" class="rounded-xl border-border bg-slate-50 text-sm">
-                        <input name="phone_whatsapp" value="{{ selected.phone_whatsapp }}" placeholder="{% trans 'Phone/WhatsApp' %}" class="rounded-xl border-border bg-slate-50 text-sm">
-                        <input name="website_url" value="{{ selected.website_url }}" placeholder="{% trans 'Website URL' %}" class="rounded-xl border-border bg-slate-50 text-sm">
-                        <input name="facebook_url" value="{{ selected.facebook_url }}" placeholder="Facebook URL" class="rounded-xl border-border bg-slate-50 text-sm">
-                        <input name="instagram_url" value="{{ selected.instagram_url }}" placeholder="Instagram URL" class="rounded-xl border-border bg-slate-50 text-sm">
-                        <input name="x_url" value="{{ selected.x_url }}" placeholder="X URL" class="rounded-xl border-border bg-slate-50 text-sm">
+                        <div>
+                            <input name="contact_email" value="{{ profile_form.contact_email.value|default:'' }}" placeholder="{% trans 'Contact email' %}" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                            {% for error in profile_form.contact_email.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                        </div>
+                        <input name="phone_whatsapp" value="{{ profile_form.phone_whatsapp.value|default:'' }}" placeholder="{% trans 'Phone/WhatsApp' %}" class="rounded-xl border-border bg-slate-50 text-sm">
+                        <div>
+                            <input name="website_url" value="{{ profile_form.website_url.value|default:'' }}" placeholder="{% trans 'Website URL' %}" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                            {% for error in profile_form.website_url.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                        </div>
+                        <div>
+                            <input name="facebook_url" value="{{ profile_form.facebook_url.value|default:'' }}" placeholder="Facebook URL" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                            {% for error in profile_form.facebook_url.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                        </div>
+                        <div>
+                            <input name="instagram_url" value="{{ profile_form.instagram_url.value|default:'' }}" placeholder="Instagram URL" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                            {% for error in profile_form.instagram_url.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                        </div>
+                        <div>
+                            <input name="x_url" value="{{ profile_form.x_url.value|default:'' }}" placeholder="X URL" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                            {% for error in profile_form.x_url.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                        </div>
                     </div>
-                    <textarea name="office_location" rows="2" class="w-full rounded-xl border-border bg-slate-50 text-sm" placeholder="{% trans 'Office/location' %}">{{ selected.office_location }}</textarea>
+                    <textarea name="office_location" rows="2" class="w-full rounded-xl border-border bg-slate-50 text-sm" placeholder="{% trans 'Office/location' %}">{{ profile_form.office_location.value|default:'' }}</textarea>
+                    <div>
+                        <label for="languagesInput" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Languages your team speaks" %}</label>
+                        <input id="languagesInput" name="languages_spoken" value="{{ profile_form.languages_spoken.value|default:'' }}" placeholder="{% trans 'e.g. Somali, English, Turkish' %}" class="w-full rounded-xl border-border bg-slate-50 text-sm">
+                    </div>
+                    <fieldset>
+                        <legend class="text-xs font-bold text-textSecondary mb-2">{% trans "Services you offer" %}</legend>
+                        <div class="grid sm:grid-cols-2 gap-2 text-sm text-textPrimary">
+                            {% for value, label in profile_form.service_categories.field.choices %}
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" name="service_categories" value="{{ value }}" class="rounded border-border text-primary"
+                                        {% if value in profile_form.service_categories.value %}checked{% endif %}>
+                                    {{ label }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div>
+                            <label for="logoInput" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Logo (PNG/JPG/WEBP, max 2MB)" %}</label>
+                            <input id="logoInput" type="file" name="logo" accept=".png,.jpg,.jpeg,.webp" class="w-full border border-border bg-slate-50 rounded-xl px-3 py-2 text-xs">
+                            {% for error in profile_form.logo.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                            {% if selected.logo %}<p class="text-[10px] text-textSecondary mt-1">{% trans "Current" %}: {{ selected.logo.name }}</p>{% endif %}
+                        </div>
+                        <div>
+                            <label for="bannerInput" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Banner (PNG/JPG/WEBP, max 4MB)" %}</label>
+                            <input id="bannerInput" type="file" name="banner" accept=".png,.jpg,.jpeg,.webp" class="w-full border border-border bg-slate-50 rounded-xl px-3 py-2 text-xs">
+                            {% for error in profile_form.banner.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
+                            {% if selected.banner %}<p class="text-[10px] text-textSecondary mt-1">{% trans "Current" %}: {{ selected.banner.name }}</p>{% endif %}
+                        </div>
+                    </div>
                     <label class="flex items-center gap-2 text-sm font-bold text-textPrimary">
-                        <input type="checkbox" name="emergency_support_available" class="rounded border-border text-primary" {% if selected.emergency_support_available %}checked{% endif %}>
+                        <input type="checkbox" name="emergency_support_available" class="rounded border-border text-primary" {% if profile_form.emergency_support_available.value %}checked{% endif %}>
                         {% trans "Emergency support currently available" %}
                     </label>
                     <button class="bg-primary text-white px-5 py-3 rounded-xl text-sm font-bold">{% trans "Save Profile" %}</button>
@@ -51,8 +112,8 @@
 
             <aside class="bg-card border border-border rounded-3xl p-6 shadow-sm">
                 <h2 class="text-xl font-bold text-secondary mb-4">{% trans "Citizen Messages" %}</h2>
-                <div class="space-y-3 max-h-96 overflow-y-auto">
-                    {% for message in messages %}
+                <div class="space-y-3 max-h-96 overflow-y-auto" tabindex="0" role="region" aria-label="{% trans 'Citizen Messages' %}">
+                    {% for message in inbox_messages %}
                         <div class="border border-border rounded-xl p-3">
                             <p class="font-bold text-sm text-secondary">{{ message.sender_name }}</p>
                             <p class="text-[10px] text-textSecondary">{{ message.created_at|date:"M d, Y H:i" }}</p>
@@ -88,11 +149,17 @@
                         <div class="border border-border rounded-xl p-3 text-sm">
                             <div class="flex justify-between gap-3">
                                 <p class="font-bold text-secondary">{{ item.title }}</p>
-                                <span class="text-[10px] font-bold {% if item.is_public %}text-green-700{% else %}text-orange-600{% endif %}">
-                                    {% if item.is_public %}{% trans "Public" %}{% else %}{% trans "Pending" %}{% endif %}
+                                <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full
+                                    {% if item.moderation_status == 'APPROVED' %}bg-green-50 text-green-700
+                                    {% elif item.moderation_status == 'PENDING' %}bg-amber-50 text-amber-700
+                                    {% elif item.moderation_status == 'REJECTED' %}bg-red-50 text-red-700
+                                    {% else %}bg-slate-100 text-slate-600{% endif %}">
+                                    {{ item.get_moderation_status_display }}
                                 </span>
                             </div>
                         </div>
+                    {% empty %}
+                        <p class="text-sm text-textSecondary italic">{% trans "No announcements yet." %}</p>
                     {% endfor %}
                 </div>
             </section>
@@ -118,9 +185,20 @@
                 <div class="mt-6 space-y-3">
                     {% for event in events %}
                         <div class="border border-border rounded-xl p-3 text-sm">
-                            <p class="font-bold text-secondary">{{ event.title }}</p>
+                            <div class="flex justify-between gap-3">
+                                <p class="font-bold text-secondary">{{ event.title }}</p>
+                                <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full
+                                    {% if event.moderation_status == 'APPROVED' %}bg-green-50 text-green-700
+                                    {% elif event.moderation_status == 'PENDING' %}bg-amber-50 text-amber-700
+                                    {% elif event.moderation_status == 'REJECTED' %}bg-red-50 text-red-700
+                                    {% else %}bg-slate-100 text-slate-600{% endif %}">
+                                    {{ event.get_moderation_status_display }}
+                                </span>
+                            </div>
                             <p class="text-xs text-textSecondary">{{ event.starts_at|date:"M d, Y H:i" }}</p>
                         </div>
+                    {% empty %}
+                        <p class="text-sm text-textSecondary italic">{% trans "No events yet." %}</p>
                     {% endfor %}
                 </div>
             </section>

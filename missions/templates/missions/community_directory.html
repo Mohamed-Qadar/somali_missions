@@ -19,12 +19,16 @@
                 {% trans "Find verified Somali-led support networks for orientation, accommodation guidance, translation, transport help, and emergency community support." %}
             </p>
         </div>
-        <div class="flex gap-2 items-start">
+        <div class="flex flex-wrap gap-2 items-start">
             <a href="{% url 'student_association_directory' %}" class="px-4 py-2.5 rounded-xl border border-border text-sm font-bold {% if directory_type == 'student' %}bg-primary text-white border-primary{% else %}bg-card text-textSecondary{% endif %}">
                 {% trans "Student Associations" %}
             </a>
             <a href="{% url 'community_directory' %}" class="px-4 py-2.5 rounded-xl border border-border text-sm font-bold {% if directory_type != 'student' %}bg-primary text-white border-primary{% else %}bg-card text-textSecondary{% endif %}">
                 {% trans "Community Groups" %}
+            </a>
+            <a href="{% url 'community_register' %}" class="px-4 py-2.5 rounded-xl border border-primary/40 bg-primary/5 text-primary text-sm font-bold hover:bg-primary hover:text-white transition-colors inline-flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm" aria-hidden="true">add_business</span>
+                {% trans "Register Your Organization" %}
             </a>
         </div>
     </div>
