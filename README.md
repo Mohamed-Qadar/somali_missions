@@ -96,7 +96,20 @@ Roles are the single source of truth: Django Groups and mission staff lists are 
 python manage.py test
 ```
 
-72 tests covering models, views, permissions/IDOR scoping, the appointment/queue no-double-booking guarantees, emergency intake validation and dashboard prioritization, the assistant's matching logic, notification channels, the API, brute-force lockout, permission-sync, and query-count (N+1) regressions.
+104 tests covering models, views, permissions/IDOR scoping (anonymous-dashboard sweep, citizen isolation, cross-mission blocks, own-org-only community editing), the appointment no-double-booking and no-past-booking guarantees, emergency intake validation and dashboard prioritization, community registration/verification/moderation visibility, upload validation, abuse reporting, the assistant's matching logic, notification channels, the API, brute-force lockout, permission-sync, and query-count (N+1) regressions.
+
+## Pre-deployment checklist
+
+Development state is intentionally not production-hardened. Before pointing a real domain at this project:
+
+1. **Environment** — create `.env` from `.env.production.example`: strong `SECRET_KEY`, `DEBUG=False`, real `ALLOWED_HOSTS`, `DATABASE_URL` (Postgres), `REDIS_URL`. Run `python manage.py check --deploy` and clear every warning it reports.
+2. **TLS** — only after HTTPS actually terminates in front of the app, set `SECURE_SSL_ENABLED=True` (enables HSTS + SSL redirect + secure cookies).
+3. **Email** — configure real SMTP (`EMAIL_*` vars); registration/verification currently uses the console/simulated backend.
+4. **Demo accounts** — remove or re-password `staff_london` / `ministry_admin` (see below) and create real staff via the invitation flow.
+5. **Media** — serve `MEDIA_ROOT` from a persistent volume (or object storage) with private ACLs; citizen evidence and org logos/banners live there.
+6. **Translations** — have a native Somali speaker review `locale/so/LC_MESSAGES/django.po` (AI-assisted corpus).
+7. **Backups & jobs** — schedule `backup_db` and the Celery beat jobs per [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+8. **External validation** (recommended before public launch): penetration test, load test, manual assistive-technology audit, and Ministry legal/data-protection sign-off (see `docs/DATA_PROTECTION.md`).
 
 ## Documentation
 

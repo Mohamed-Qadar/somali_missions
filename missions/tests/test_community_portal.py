@@ -75,6 +75,15 @@ class CommunityRegistrationTests(TestCase):
         response = self.client.get(reverse('community_group_detail', args=[org.pk]))
         self.assertEqual(response.status_code, 404)
 
+    def test_rejected_and_suspended_orgs_are_not_public(self):
+        for status in (CommunityStatus.REJECTED, CommunityStatus.SUSPENDED):
+            org = CommunityGroup.objects.create(
+                name=f'{status} Org', country='Testland', city='Testville', status=status)
+            listing = self.client.get(reverse('community_directory'))
+            self.assertNotContains(listing, f'{status} Org')
+            detail = self.client.get(reverse('community_group_detail', args=[org.pk]))
+            self.assertEqual(detail.status_code, 404)
+
     def test_student_registration_requires_university(self):
         data = dict(REGISTRATION_DATA, org_type='student', university_name='')
         response = self.client.post(reverse('community_register'), data)
@@ -127,6 +136,20 @@ class CommunityPortalTests(TestCase):
         self.client.post(url, {'action': 'profile', 'description': 'HACKED'})
         self.other_org.refresh_from_db()
         self.assertEqual(self.other_org.description, 'untouched')
+
+    def test_community_event_hidden_until_approved(self):
+        from missions.models import CommunityEvent
+        from django.utils import timezone as tz
+        event = CommunityEvent.objects.create(
+            community_group=self.org, title='Community Iftar Night',
+            description='x', starts_at=tz.now(), created_by=self.rep)
+        for status in (ModerationStatus.PENDING, ModerationStatus.REJECTED, ModerationStatus.ARCHIVED):
+            event.apply_moderation(status)
+            public = self.client.get(reverse('community_group_detail', args=[self.org.pk]))
+            self.assertNotContains(public, 'Community Iftar Night')
+        event.apply_moderation(ModerationStatus.APPROVED)
+        public = self.client.get(reverse('community_group_detail', args=[self.org.pk]))
+        self.assertContains(public, 'Community Iftar Night')
 
     def test_announcement_needs_moderation_before_public(self):
         self.client.post(self._portal(), {

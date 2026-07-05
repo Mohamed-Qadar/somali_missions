@@ -51,6 +51,18 @@ ALLOWED_EVIDENCE_TYPES = {
 MAX_EVIDENCE_SIZE = 10 * 1024 * 1024
 
 
+def _json_for_script(data):
+    """json.dumps hardened for inline <script> interpolation: escape <, >, &
+    (same escapes as Django's json_script) so data can never terminate the
+    script block, even if a stored value ever contains '</script>'."""
+    return (
+        json.dumps(data)
+        .replace('<', '\\u003c')
+        .replace('>', '\\u003e')
+        .replace('&', '\\u0026')
+    )
+
+
 def _save_evidence_files(complaint, uploaded_files):
     saved = []
     for f in uploaded_files:
@@ -224,7 +236,7 @@ def mission_list(request):
         'selected_country': country,
         'selected_mission_type': mission_type,
         'selected_min_rating': min_rating,
-        'map_missions_json': json.dumps(map_missions),
+        'map_missions_json': _json_for_script(map_missions),
         'home_stats': {
             'total_missions': Mission.objects.count(),
             'monthly_complaints': monthly_complaints.count(),
@@ -420,10 +432,10 @@ def analysis_view(request):
         'category_stats': category_stats,
         'period': period,
         'period_label': period_label,
-        'daily_labels_json': json.dumps(daily_labels),
-        'daily_counts_json': json.dumps(daily_counts),
-        'mission_labels_json': json.dumps(mission_chart_labels),
-        'mission_counts_json': json.dumps(mission_chart_counts),
+        'daily_labels_json': _json_for_script(daily_labels),
+        'daily_counts_json': _json_for_script(daily_counts),
+        'mission_labels_json': _json_for_script(mission_chart_labels),
+        'mission_counts_json': _json_for_script(mission_chart_counts),
     })
 
 
@@ -1105,7 +1117,7 @@ def ministry_operations_view(request):
         'urgent_alerts': urgent_alerts,
         'sla_violations': sla_violations,
         'escalation_logs': EscalationLog.objects.select_related('complaint', 'complaint__mission').all()[:20],
-        'map_pins_json': json.dumps(map_pins),
+        'map_pins_json': _json_for_script(map_pins),
         'embassy_perf': embassy_perf,
         'system_audit_logs': system_audit_logs,
     })
@@ -1209,14 +1221,14 @@ def ministry_analytics_view(request):
         'period': period,
         'avg_resolution_days': avg_resolution_days,
         'satisfaction_rate': satisfaction_rate,
-        'embassy_labels_json': json.dumps(embassy_labels),
-        'embassy_counts_json': json.dumps(embassy_counts),
-        'country_labels_json': json.dumps(country_labels),
-        'country_counts_json': json.dumps(country_counts),
-        'category_labels_json': json.dumps(category_labels),
-        'category_counts_json': json.dumps(category_counts),
-        'monthly_labels_json': json.dumps(monthly_labels),
-        'monthly_counts_json': json.dumps(monthly_counts),
+        'embassy_labels_json': _json_for_script(embassy_labels),
+        'embassy_counts_json': _json_for_script(embassy_counts),
+        'country_labels_json': _json_for_script(country_labels),
+        'country_counts_json': _json_for_script(country_counts),
+        'category_labels_json': _json_for_script(category_labels),
+        'category_counts_json': _json_for_script(category_counts),
+        'monthly_labels_json': _json_for_script(monthly_labels),
+        'monthly_counts_json': _json_for_script(monthly_counts),
         'officer_stats': officer_stats,
         'heatmap_months': heatmap_months,
         'heatmap_rows': heatmap_rows,
@@ -1378,7 +1390,7 @@ def directory_view(request):
         'missions': missions,
         'search_query': q,
         'selected_type': mission_type,
-        'map_pins_json': json.dumps(map_pins),
+        'map_pins_json': _json_for_script(map_pins),
     })
 
 

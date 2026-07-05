@@ -2959,3 +2959,12 @@ msgstr "Ka warbixi ururkan"
 
 msgid "Organization Panel"
 msgstr "Bogga Ururka"
+
+msgid "Selected time slot is no longer available."
+msgstr "Waqtigii la doortay hadda lama heli karo."
+
+msgid "This group has not added a full description yet."
+msgstr "Kooxdani weli kuma darin sharaxaad buuxda."
+
+msgid "Profile description pending."
+msgstr "Sharaxaadda xogta ayaa sugaya."

@@ -64,7 +64,7 @@
                         {% if group.university_name %}<p class="text-xs text-primary font-bold mt-1">{{ group.university_name }}</p>{% endif %}
                     </div>
                 </div>
-                <p class="text-sm text-textSecondary line-clamp-3">{{ group.description|default:"Profile description pending." }}</p>
+                <p class="text-sm text-textSecondary line-clamp-3">{% if group.description %}{{ group.description }}{% else %}{% trans "Profile description pending." %}{% endif %}</p>
                 <div class="flex flex-wrap gap-2 text-[10px] font-bold uppercase">
                     <span class="px-2 py-1 rounded bg-green-50 text-green-700 border border-green-100">{% trans "Verified" %}</span>
                     {% if group.emergency_support_available %}

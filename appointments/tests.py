@@ -55,6 +55,31 @@ class AppointmentBookingTests(TestCase):
         self.assertEqual(appointment.status, Appointment.Status.PENDING)
         self.assertEqual(len(appointment.qr_token), 10)
 
+    def test_past_slot_cannot_be_booked_via_direct_post(self):
+        # The visible slot list is date-filtered, but the POSTed pk must be
+        # guarded too - a stale/forged form must not create a past booking.
+        # timezone.localdate() matches the view's own definition of "past"
+        # (machine-local date.today() can differ around midnight).
+        from django.utils import timezone as tz
+        past_slot = AppointmentSlot.objects.create(
+            mission=self.mission, service=self.service,
+            date=tz.localdate() - timedelta(days=1),
+            start_time=time(9, 0), end_time=time(9, 30), capacity=1,
+        )
+        response = self.client.post(
+            f"{reverse('book_appointment')}?mission={self.mission.pk}&service={self.service.pk}",
+            {'slot': past_slot.pk, 'full_name': 'Time Traveller', 'email': 'x@example.com', 'phone': ''},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Appointment.objects.count(), 0)
+        self.assertTrue(response.context['form'].non_field_errors())
+
+    def test_inactive_slot_cannot_be_booked(self):
+        self.slot.is_active = False
+        self.slot.save()
+        self._book('Blocked Citizen')
+        self.assertEqual(Appointment.objects.count(), 0)
+
     def test_no_double_booking_second_request_is_waitlisted(self):
         self._book('First Citizen')
         self._book('Second Citizen')

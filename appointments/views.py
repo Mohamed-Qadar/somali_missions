@@ -71,7 +71,7 @@ def book_appointment_view(request):
             mission_id=selected_mission_id,
             service_id=selected_service_id,
             is_active=True,
-            date__gte=timezone.now().date(),
+            date__gte=timezone.localdate(),
         ).order_by('date', 'start_time')
 
     if request.method == 'POST':
@@ -82,14 +82,18 @@ def book_appointment_view(request):
         if selected_mission_id and selected_service_id:
             slots = AppointmentSlot.objects.filter(
                 mission_id=selected_mission_id, service_id=selected_service_id,
-                is_active=True, date__gte=timezone.now().date(),
+                is_active=True, date__gte=timezone.localdate(),
             ).order_by('date', 'start_time')
 
         if form.is_valid() and slot_id:
             with transaction.atomic():
-                slot = AppointmentSlot.objects.select_for_update().filter(pk=slot_id).first()
+                # Guard against direct POSTs of past/inactive slot ids - the
+                # visible list is filtered, but the submitted pk must be too.
+                slot = AppointmentSlot.objects.select_for_update().filter(
+                    pk=slot_id, is_active=True, date__gte=timezone.localdate(),
+                ).first()
                 if not slot:
-                    form.add_error(None, _('Selected time slot no longer exists.'))
+                    form.add_error(None, _('Selected time slot is no longer available.'))
                 else:
                     status = Appointment.Status.WAITLISTED if slot.is_full else Appointment.Status.PENDING
                     appointment = Appointment.objects.create(
@@ -155,7 +159,7 @@ def staff_appointments_view(request):
     missions = _staff_missions(request)
     appointments = Appointment.objects.filter(mission__in=missions).select_related('mission', 'service', 'slot')
 
-    today = timezone.now().date()
+    today = timezone.localdate()
     if view_mode == 'weekly':
         start = today - timedelta(days=today.weekday())
         end = start + timedelta(days=6)
@@ -253,7 +257,7 @@ def manage_slots_view(request, mission_pk):
     else:
         form = AppointmentSlotForm(mission=mission)
 
-    slots = mission.appointment_slots.filter(date__gte=timezone.now().date()).order_by('date', 'start_time')
+    slots = mission.appointment_slots.filter(date__gte=timezone.localdate()).order_by('date', 'start_time')
     return render(request, 'appointments/manage_slots.html', {
         'mission': mission, 'form': form, 'slots': slots,
     })
