@@ -32,6 +32,22 @@ class AppointmentBookingTests(TestCase):
         response = self.client.get(reverse('book_appointment'))
         self.assertEqual(response.status_code, 200)
 
+    def test_required_documents_shown_before_booking(self):
+        from missions.models import RequiredDocument
+
+        RequiredDocument.objects.create(
+            service=self.service, name='Original passport', is_required=True,
+        )
+        RequiredDocument.objects.create(
+            service=self.service, name='Old photo', is_required=False,
+        )
+        response = self.client.get(
+            f"{reverse('book_appointment')}?mission={self.mission.pk}&service={self.service.pk}"
+        )
+        self.assertContains(response, 'Original passport')
+        self.assertContains(response, 'Old photo')
+        self.assertContains(response, 'Documents to bring for')
+
     def test_first_booking_is_pending(self):
         response = self._book('First Citizen')
         self.assertEqual(response.status_code, 302)

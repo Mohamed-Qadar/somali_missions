@@ -39,6 +39,16 @@
         </div>
         {% endif %}
 
+        {% if form.errors and not rate_limit_error %}
+        <div class="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex gap-2.5 mb-6" role="alert">
+            <span class="material-symbols-outlined shrink-0 text-sm mt-0.5">error</span>
+            <div>
+                <p class="font-bold">{% trans "Your report was not sent yet" %}</p>
+                <p class="mt-0.5">{% trans "Please correct the highlighted fields below and press the button again. If you cannot complete the form, call the mission directly." %}</p>
+            </div>
+        </div>
+        {% endif %}
+
         <form method="post" enctype="multipart/form-data" class="space-y-5" novalidate>
             {% csrf_token %}
 
@@ -50,36 +60,34 @@
                         <option value="{{ m.id }}" {% if selected_mission_id == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }} ({{ m.city }}, {{ m.country }})</option>
                     {% endfor %}
                 </select>
+                {% for error in form.mission.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
             </div>
 
             <div>
-                <label for="categorySelect" class="block text-sm font-semibold text-secondary mb-1">{% trans "Nature of Crisis" %}</label>
-                <select name="category" id="categorySelect" required class="w-full rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card focus:border-red-500">
-                    <option value="EMERGENCY">{% trans "Other Urgent Assist" %}</option>
-                    <option value="LOST_DOCS">{% trans "Lost Passport / Stranded Abroad" %}</option>
-                    <option value="EMERGENCY">{% trans "Arrest or Detention" %}</option>
-                    <option value="EMERGENCY">{% trans "Human Trafficking / Smuggling Case" %}</option>
-                    <option value="EMERGENCY">{% trans "Domestic Violence or Abuse" %}</option>
-                    <option value="EMERGENCY">{% trans "Medical Crisis or Health Emergency" %}</option>
-                    <option value="EMERGENCY">{% trans "Stranded Citizen" %}</option>
-                    <option value="EMERGENCY">{% trans "Missing Person Abroad" %}</option>
-                    <option value="EMERGENCY">{% trans "War / Conflict Zone Extraction" %}</option>
+                <label for="emergencyTypeSelect" class="block text-sm font-semibold text-secondary mb-1">{% trans "Nature of Crisis" %}</label>
+                <select name="emergency_type" id="emergencyTypeSelect" required class="w-full rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card focus:border-red-500">
+                    <option value="">{% trans "-- Select Crisis Type --" %}</option>
+                    {% for value, label in form.emergency_type.field.choices %}
+                        <option value="{{ value }}" {% if form.emergency_type.value == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
                 </select>
+                {% for error in form.emergency_type.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
             </div>
 
             <div>
                 <label for="msgInput" class="block text-sm font-semibold text-secondary mb-1">{% trans "Explain what happened & details of help needed" %}</label>
-                <textarea name="message" id="msgInput" rows="5" required placeholder="{% trans 'Include name of local authorities involved, hospitals, locations, and any immediate threats.' %}" class="w-full rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card focus:border-red-500"></textarea>
+                <textarea name="message" id="msgInput" rows="5" required placeholder="{% trans 'Include name of local authorities involved, hospitals, locations, and any immediate threats.' %}" class="w-full rounded-xl border border-border px-4 py-3 bg-slate-50 focus:bg-card focus:border-red-500">{{ form.message.value|default:'' }}</textarea>
+                {% for error in form.message.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
             </div>
 
             <div class="p-4 bg-red-50 border border-red-100 rounded-xl space-y-3">
                 <h3 class="font-bold text-sm text-red-800">{% trans "Immediate hardship factors" %}</h3>
                 <div class="grid md:grid-cols-2 gap-3 text-xs font-semibold text-textPrimary">
-                    <label class="flex items-start gap-2"><input type="checkbox" name="currently_at_mission" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I am at the consulate now" %}</label>
-                    <label class="flex items-start gap-2"><input type="checkbox" name="travelled_from_another_city" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I travelled a long distance" %}</label>
-                    <label class="flex items-start gap-2"><input type="checkbox" name="no_accommodation" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I do not have accommodation" %}</label>
-                    <label class="flex items-start gap-2"><input type="checkbox" name="has_return_ticket" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I may miss a return ticket" %}</label>
-                    <label class="flex items-start gap-2"><input type="checkbox" name="waiting_more_than_two_hours" value="true" class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I have waited more than 2 hours" %}</label>
+                    <label class="flex items-start gap-2"><input type="checkbox" name="currently_at_mission" value="true" {% if form.currently_at_mission.value %}checked{% endif %} class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I am at the consulate now" %}</label>
+                    <label class="flex items-start gap-2"><input type="checkbox" name="travelled_from_another_city" value="true" {% if form.travelled_from_another_city.value %}checked{% endif %} class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I travelled a long distance" %}</label>
+                    <label class="flex items-start gap-2"><input type="checkbox" name="no_accommodation" value="true" {% if form.no_accommodation.value %}checked{% endif %} class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I do not have accommodation" %}</label>
+                    <label class="flex items-start gap-2"><input type="checkbox" name="has_return_ticket" value="true" {% if form.has_return_ticket.value %}checked{% endif %} class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I may miss a return ticket" %}</label>
+                    <label class="flex items-start gap-2"><input type="checkbox" name="waiting_more_than_two_hours" value="true" {% if form.waiting_more_than_two_hours.value %}checked{% endif %} class="mt-0.5 rounded border-red-200 text-red-600"> {% trans "I have waited more than 2 hours" %}</label>
                 </div>
             </div>
 
@@ -88,15 +96,18 @@
             <div class="grid md:grid-cols-3 gap-4">
                 <div>
                     <label for="nameInput" class="block text-xs font-semibold text-textSecondary mb-1">{% trans "Full Name" %}</label>
-                    <input type="text" name="full_name" id="nameInput" value="{{ user.profile.full_name|default:'' }}" required class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                    <input type="text" name="full_name" id="nameInput" value="{{ form.full_name.value|default:'' }}" required class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                    {% for error in form.full_name.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
                 </div>
                 <div>
                     <label for="phoneInput" class="block text-xs font-semibold text-textSecondary mb-1">{% trans "Callback Phone" %}</label>
-                    <input type="text" name="phone" id="phoneInput" value="{{ user.profile.phone_number|default:'' }}" required placeholder="+123..." class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                    <input type="text" name="phone" id="phoneInput" value="{{ form.phone.value|default:'' }}" required placeholder="+123..." class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                    {% for error in form.phone.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
                 </div>
                 <div>
                     <label for="emailInput" class="block text-xs font-semibold text-textSecondary mb-1">{% trans "Email" %}</label>
-                    <input type="email" name="email" id="emailInput" value="{{ user.email|default:'' }}" class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                    <input type="email" name="email" id="emailInput" value="{{ form.email.value|default:'' }}" class="w-full rounded-xl border border-border px-3 py-2 bg-slate-50">
+                    {% for error in form.email.errors %}<p class="mt-1 text-xs font-semibold text-red-700">{{ error }}</p>{% endfor %}
                 </div>
             </div>
 

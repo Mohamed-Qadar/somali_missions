@@ -40,11 +40,16 @@
             <div class="space-y-3 max-h-48 overflow-y-auto">
                 {% for alert in urgent_alerts %}
                     <div class="bg-card border border-red-100 rounded-xl p-3.5 flex justify-between items-center text-xs shadow-sm hover:border-red-300 transition-colors">
-                        <div>
-                            <p class="font-bold text-secondary">{{ alert.tracking_code }} • {{ alert.mission.name }}</p>
+                        <div class="min-w-0">
+                            <p class="font-bold text-secondary flex flex-wrap items-center gap-1.5">
+                                {{ alert.tracking_code }} • {{ alert.mission.name }}
+                                {% if alert.emergency_type %}
+                                    <span class="bg-red-700 text-white px-2 py-0.5 rounded-full font-bold uppercase text-[9px]">{{ alert.get_emergency_type_display }}</span>
+                                {% endif %}
+                            </p>
                             <p class="text-textSecondary mt-0.5 truncate max-w-md">{{ alert.subject }}</p>
                         </div>
-                        <a href="/staff/mission/{{ alert.mission.id }}/?complaint={{ alert.id }}" class="bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg">
+                        <a href="/staff/mission/{{ alert.mission.id }}/?complaint={{ alert.id }}" class="bg-red-700 hover:bg-red-800 text-white font-bold px-3 py-1.5 rounded-lg shrink-0">
                             {% trans "Respond" %}
                         </a>
                     </div>
@@ -146,7 +151,7 @@
                         <tr class="hover:bg-slate-50/50 transition-colors {% if perf.is_flagged %}bg-red-50/20{% endif %}">
                             <td class="py-4 px-4 text-center">
                                 {% if perf.is_flagged %}
-                                    <span class="inline-flex items-center gap-1.5 bg-red-100 text-red-650 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-red-200 animate-pulse" title="CRITICAL SLA WARNING: Satisfaction < 60% and unresolved cases > 5">
+                                    <span class="inline-flex items-center gap-1.5 bg-red-100 text-red-700 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-red-200 animate-pulse" title="CRITICAL SLA WARNING: Satisfaction < 60% and unresolved cases > 5">
                                         <span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span>
                                         {% trans "RED ALERT" %}
                                     </span>
@@ -180,7 +185,7 @@
                             </td>
                             <td class="py-4 px-4 text-center">
                                 {% if perf.satisfaction_rate is not None %}
-                                    <span class="font-black text-sm {% if perf.satisfaction_rate < 60 %}text-red-650{% else %}text-emerald-650{% endif %}">
+                                    <span class="font-black text-sm {% if perf.satisfaction_rate < 60 %}text-red-700{% else %}text-emerald-700{% endif %}">
                                         {{ perf.satisfaction_rate }}%
                                     </span>
                                 {% else %}

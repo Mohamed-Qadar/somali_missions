@@ -396,6 +396,22 @@ class Complaint(models.Model):
         HIGH = 'HIGH', _('High')
         CRITICAL = 'CRITICAL', _('Critical')
 
+    class EmergencyType(models.TextChoices):
+        # Set only on emergency submissions so staff can triage by crisis
+        # type without reading the full message. Blank for normal complaints.
+        MEDICAL = 'MEDICAL', _('Medical Emergency')
+        LOST_PASSPORT = 'LOST_PASSPORT', _('Lost Passport / Stranded Abroad')
+        DETENTION = 'DETENTION', _('Arrest or Detention')
+        DEATH_CASE = 'DEATH_CASE', _('Death of a Citizen Abroad')
+        FAMILY_EMERGENCY = 'FAMILY_EMERGENCY', _('Family Emergency')
+        CHILD_PROTECTION = 'CHILD_PROTECTION', _('Child Protection')
+        DOMESTIC_VIOLENCE = 'DOMESTIC_VIOLENCE', _('Domestic Violence or Abuse')
+        HUMAN_TRAFFICKING = 'HUMAN_TRAFFICKING', _('Human Trafficking / Smuggling')
+        URGENT_TRAVEL = 'URGENT_TRAVEL', _('Urgent Travel')
+        MISSING_PERSON = 'MISSING_PERSON', _('Missing Person Abroad')
+        CONFLICT_ZONE = 'CONFLICT_ZONE', _('War / Conflict Zone Assistance')
+        OTHER = 'OTHER', _('Other Urgent Assistance')
+
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE, related_name='complaints')
     tracking_code = models.CharField(max_length=8, unique=True, editable=False, blank=True)
     full_name = models.CharField(max_length=150, blank=True)
@@ -407,6 +423,13 @@ class Complaint(models.Model):
         max_length=20,
         choices=Category.choices,
         default=Category.OTHER,
+    )
+    emergency_type = models.CharField(
+        max_length=20,
+        choices=EmergencyType.choices,
+        blank=True,
+        default='',
+        help_text="Crisis type - only set for emergency submissions.",
     )
     rating = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)],

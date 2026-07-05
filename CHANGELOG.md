@@ -2,7 +2,16 @@
 
 All notable changes to the Somali Missions platform. Newest first.
 
-## [Unreleased] — Government production hardening
+## [Unreleased] — Emergency triage, booking checklist, full Somali coverage
+
+- **Emergency intake**: crisis type (medical, detention, trafficking, lost passport, death case, family emergency, child protection, domestic violence, urgent travel, missing person, conflict zone) is now a validated `Complaint.emergency_type` field instead of being discarded; the whole emergency form is server-side validated (the old view accepted empty messages and an unvalidated category from POST) with inline field errors and preserved input.
+- **Emergency prioritization**: embassy dashboards order CRITICAL cases first and pin an "Active Emergency / Critical Cases" strip; case rows, the case workspace, ministry urgent alerts, and the Django admin show the crisis type.
+- **Appointments**: the booking page shows the selected service's required-documents checklist before the citizen books.
+- **Somali translations**: fixed 532 of 720 `.po` entries that had English copied into `msgstr` (silently masking missing translations) — every extracted string now has a real Somali translation (AI-assisted, professional native review recommended); added entries for all new strings and recompiled `django.mo`.
+- **Fixed**: staff dashboards used non-existent Tailwind classes (`text-red-650`/`orange-655`/`blue-650`/`emerald-650`), leaving priority/SLA badges unstyled; navbar crowding at ~1280px (community directories grouped under an accessible dropdown).
+- Tests: 64 → 72 (emergency validation/typing, dashboard prioritization, booking checklist).
+
+## [Earlier unreleased] — Government production hardening
 
 - **Frontend**: replaced the Tailwind CDN with a compiled, purged, minified CSS build (Node/Tailwind CLI; rebuilt in the Docker image and CI).
 - **Security**: nonce-based Content-Security-Policy (no `script-src 'unsafe-inline'`); `django-axes` brute-force login lockout; CORS scoped to the API; explicit cookie/HSTS/referrer hardening. Fixed a latent multi-backend `login()` bug in the embassy activation flow.

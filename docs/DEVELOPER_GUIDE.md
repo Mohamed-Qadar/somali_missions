@@ -8,7 +8,7 @@ See the main [README.md](../README.md) for install steps. For contributing, also
 pip install -r requirements-dev.txt
 python -m ruff check .          # lint
 python -m bandit -r . -x ./locale,./staticfiles,./venv -ll   # security scan (medium+ only)
-python manage.py test           # 53 tests
+python manage.py test           # 72 tests
 ```
 
 ## Frontend CSS (Tailwind)
@@ -34,7 +34,7 @@ The Docker image rebuilds the CSS from scratch in a Node stage (see `Dockerfile`
 
 **Notifications**: call `notifications.channels.notify(recipient, title, body, category=..., channels=['email'])` rather than sending mail directly - this both creates the in-app notification and logs delivery per channel. Don't call `django.core.mail.send_mail` directly outside of `notifications/channels.py` unless there's a specific reason not to go through `notify()` (e.g. the email verification link, which isn't tied to a `Notification`).
 
-**Translations**: wrap every user-facing string in `{% trans %}`/`{% blocktrans %}` (templates) or `gettext`/`gettext_lazy as _` (Python). Only English and Somali are supported - do not add other languages without a product decision, and never mix languages within a single string/record. After adding new strings, regenerate `locale/so/LC_MESSAGES/django.po` with `django-admin makemessages -l so` and compile with `compilemessages` (requires GNU gettext tools - not installed by default on Windows, see below).
+**Translations**: wrap every user-facing string in `{% trans %}`/`{% blocktrans %}` (templates) or `gettext`/`gettext_lazy as _` (Python). Only English and Somali are supported - do not add other languages without a product decision, and never mix languages within a single string/record. After adding new strings, regenerate `locale/so/LC_MESSAGES/django.po` with `django-admin makemessages -l so` and compile with `compilemessages` (requires GNU gettext tools - not installed by default on Windows, see below). Without gettext you can still append the entry to `django.po` by hand and compile with `pip install polib` then `python -c "import polib; polib.pofile('locale/so/LC_MESSAGES/django.po').save_as_mofile('locale/so/LC_MESSAGES/django.mo')"`. Never copy the English text into `msgstr` as filler - an empty `msgstr` correctly falls back to English, while an English copy silently hides the missing translation (532 of 720 entries had this problem; all are now genuinely translated, AI-assisted, pending professional native review before launch).
 
 **No half-finished features**: if something can't be fully implemented (e.g. an external provider isn't configured), build the real interface/architecture and make it honestly report that it didn't do the thing (see `notifications/channels.py`'s `SMSChannel`/`WhatsAppChannel` - they return `delivered=False` and log the intent, they don't pretend to send a text).
 

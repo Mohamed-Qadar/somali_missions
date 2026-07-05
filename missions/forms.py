@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from .models import Complaint, EmbassyResponse, ContactMessage, UserProfile
+from .models import Complaint, EmbassyResponse, ContactMessage, Mission, UserProfile
 
 
 class ComplaintForm(forms.ModelForm):
@@ -64,6 +64,59 @@ class ComplaintForm(forms.ModelForm):
         if commit:
             complaint.save()
         return complaint
+
+
+class EmergencyReportForm(forms.Form):
+    """Server-side validation for the emergency submission page.
+
+    The template renders the fields by hand (custom emergency styling), so
+    widgets here only need sensible types - see submit_emergency.html.
+    """
+
+    mission = forms.ModelChoiceField(
+        queryset=Mission.objects.all(),
+        error_messages={
+            'required': _('Please choose the embassy or consulate nearest to you.'),
+            'invalid_choice': _('Please choose a valid embassy or consulate.'),
+        },
+    )
+    emergency_type = forms.ChoiceField(
+        choices=Complaint.EmergencyType.choices,
+        error_messages={
+            'required': _('Please tell us the nature of the crisis.'),
+            'invalid_choice': _('Please choose a valid crisis type.'),
+        },
+    )
+    message = forms.CharField(
+        min_length=10,
+        error_messages={
+            'required': _('Please describe what happened so officers can act.'),
+            'min_length': _('Please give a few more details (at least 10 characters).'),
+        },
+    )
+    full_name = forms.CharField(
+        max_length=150,
+        error_messages={'required': _('Please give a name officers can ask for.')},
+    )
+    phone = forms.CharField(
+        max_length=50,
+        error_messages={'required': _('A callback phone number is required for emergencies.')},
+    )
+    email = forms.EmailField(
+        required=False,
+        error_messages={'invalid': _('Please enter a valid email address, or leave it empty.')},
+    )
+    currently_at_mission = forms.BooleanField(required=False)
+    travelled_from_another_city = forms.BooleanField(required=False)
+    no_accommodation = forms.BooleanField(required=False)
+    has_return_ticket = forms.BooleanField(required=False)
+    waiting_more_than_two_hours = forms.BooleanField(required=False)
+
+    def derived_category(self):
+        """Map the crisis type to a complaint category (never trusted from POST)."""
+        if self.cleaned_data.get('emergency_type') == Complaint.EmergencyType.LOST_PASSPORT:
+            return Complaint.Category.LOST_DOCS
+        return Complaint.Category.EMERGENCY
 
 
 class ReportForm(forms.Form):

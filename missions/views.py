@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.cache import cache
 from django.core.mail import send_mail
-from django.db.models import Avg, Count, Q
+from django.db.models import Avg, Case, Count, IntegerField, Q, Value, When
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -22,7 +22,7 @@ from django.utils.translation import gettext as _
 from .forms import (
     ComplaintForm, ReportForm, TrackComplaintForm,
     ComplaintStatusForm, EmbassyResponseForm, ContactForm,
-    LoginForm, CitizenRegistrationForm,
+    LoginForm, CitizenRegistrationForm, EmergencyReportForm,
 )
 from .models import (
     Mission, Complaint, UserProfile, ComplaintEvidence,
@@ -917,40 +917,41 @@ def submit_emergency_view(request):
             return render(request, 'missions/submit_emergency.html', {
                 'missions': missions,
                 'selected_mission_id': selected_mission_id,
+                'form': EmergencyReportForm(request.POST),
                 'rate_limit_error': _('This network has reached the daily emergency submission limit. If this is a genuine emergency, please call the mission or your local police directly.'),
             })
-        mission_id = request.POST.get('mission')
-        category = request.POST.get('category', 'EMERGENCY')
-        message = request.POST.get('message', '').strip()
-        phone = request.POST.get('phone', '').strip()
-        email = request.POST.get('email', '').strip()
-        full_name = request.POST.get('full_name', '').strip()
-        currently_at_mission = request.POST.get('currently_at_mission') == 'true'
-        travelled_from_another_city = request.POST.get('travelled_from_another_city') == 'true'
-        no_accommodation = request.POST.get('no_accommodation') == 'true'
-        has_return_ticket = request.POST.get('has_return_ticket') == 'true'
-        waiting_more_than_two_hours = request.POST.get('waiting_more_than_two_hours') == 'true'
-        
-        mission = get_object_or_404(Mission, id=mission_id)
-        
+
+        form = EmergencyReportForm(request.POST)
+        if not form.is_valid():
+            return render(request, 'missions/submit_emergency.html', {
+                'missions': missions,
+                'selected_mission_id': request.POST.get('mission', selected_mission_id),
+                'form': form,
+            })
+
+        mission = form.cleaned_data['mission']
+        emergency_type = form.cleaned_data['emergency_type']
+        type_label = str(Complaint.EmergencyType(emergency_type).label)
+
         # Emergency complaints bypass rating and are automatically CRITICAL
         complaint = Complaint(
             mission=mission,
-            category=category,
+            category=form.derived_category(),
+            emergency_type=emergency_type,
             rating=5,  # Auto-top priority indicators
-            subject=f"EMERGENCY REPORT - {dict(Complaint.Category.choices).get(category, category)}",
-            message=message,
+            subject=f"EMERGENCY REPORT - {type_label}",
+            message=form.cleaned_data['message'],
             is_anonymous=False,
-            full_name=full_name or "Emergency Reporter",
-            email=email,
-            phone=phone,
+            full_name=form.cleaned_data['full_name'],
+            email=form.cleaned_data['email'],
+            phone=form.cleaned_data['phone'],
             priority=Complaint.Priority.CRITICAL,
             status=Complaint.Status.SUBMITTED,
-            currently_at_mission=currently_at_mission,
-            travelled_from_another_city=travelled_from_another_city,
-            no_accommodation=no_accommodation,
-            has_return_ticket=has_return_ticket,
-            waiting_more_than_two_hours=waiting_more_than_two_hours,
+            currently_at_mission=form.cleaned_data['currently_at_mission'],
+            travelled_from_another_city=form.cleaned_data['travelled_from_another_city'],
+            no_accommodation=form.cleaned_data['no_accommodation'],
+            has_return_ticket=form.cleaned_data['has_return_ticket'],
+            waiting_more_than_two_hours=form.cleaned_data['waiting_more_than_two_hours'],
         )
         if request.user.is_authenticated:
             complaint.citizen_user = request.user
@@ -962,10 +963,10 @@ def submit_emergency_view(request):
         _burst_alert_for_mission(mission)
             
         # Create SMS notification log (Critical)
-        if phone:
+        if complaint.phone:
             NotificationLog.objects.create(
                 complaint=complaint,
-                recipient=phone,
+                recipient=complaint.phone,
                 notification_type=NotificationLog.Type.SMS,
                 message=f"CRITICAL ALERT: Your emergency report is received. Case Code: {complaint.tracking_code}. A review officer is dispatched."
             )
@@ -974,16 +975,25 @@ def submit_emergency_view(request):
             recipient='ministry-alerts@mfa.gov.so',
             notification_type=NotificationLog.Type.WHATSAPP,
             subject=f"Emergency mission alert - {complaint.tracking_code}",
-            message=f"Emergency case for {mission.name}. Critical factors: {complaint.critical_reason}",
+            message=f"Emergency case for {mission.name} ({type_label}). Critical factors: {complaint.critical_reason}",
         )
 
         increment_rate_limit(request, 'emergency_submit')
         request.session['last_tracking_code'] = complaint.tracking_code
         return redirect('complaint_success')
-        
+
+    initial = {}
+    if request.user.is_authenticated:
+        profile = getattr(request.user, 'profile', None)
+        initial = {
+            'full_name': (profile.full_name if profile else '') or '',
+            'phone': (profile.phone_number if profile else '') or '',
+            'email': request.user.email or '',
+        }
     return render(request, 'missions/submit_emergency.html', {
         'missions': missions,
         'selected_mission_id': selected_mission_id,
+        'form': EmergencyReportForm(initial=initial),
     })
 
 
@@ -1646,7 +1656,21 @@ def embassy_dashboard_view(request):
     if not mission:
         return render(request, 'missions/embassy_dashboard.html', {'denied': True})
 
-    complaints = Complaint.objects.filter(mission=mission).select_related('assigned_officer').order_by('-created_at')
+    # Critical/emergency cases must outrank everything else in the work
+    # queue, so order by priority rank first, then recency.
+    priority_rank = Case(
+        When(priority=Complaint.Priority.CRITICAL, then=Value(0)),
+        When(priority=Complaint.Priority.HIGH, then=Value(1)),
+        When(priority=Complaint.Priority.MEDIUM, then=Value(2)),
+        default=Value(3),
+        output_field=IntegerField(),
+    )
+    complaints = (
+        Complaint.objects.filter(mission=mission)
+        .select_related('assigned_officer')
+        .annotate(priority_rank=priority_rank)
+        .order_by('priority_rank', '-created_at')
+    )
 
     # Performance Monitoring Metrics (Requirement 30)
     total_complaints = complaints.count()
@@ -1680,6 +1704,17 @@ def embassy_dashboard_view(request):
     deadline_cases = complaints.filter(
         created_at__lt=deadline_threshold,
         status__in=[Complaint.Status.SUBMITTED, Complaint.Status.ASSIGNED, Complaint.Status.NEW]
+    )
+
+    # Open critical/emergency cases get their own strip at the top of the
+    # dashboard so they can never be missed in the general queue.
+    critical_cases = complaints.filter(
+        priority=Complaint.Priority.CRITICAL,
+        status__in=[
+            Complaint.Status.SUBMITTED, Complaint.Status.ASSIGNED, Complaint.Status.UNDER_REVIEW,
+            Complaint.Status.INVESTIGATION, Complaint.Status.AWAITING_RESPONSE,
+            Complaint.Status.NEW, Complaint.Status.PRO,
+        ],
     )
 
     # Embassy Staff list for case allocation (Requirement 27 Embassy Manager Features)
@@ -1716,6 +1751,7 @@ def embassy_dashboard_view(request):
         'avg_response_time': avg_response_time,
         'satisfaction_rate': satisfaction_rate,
         'deadline_cases': deadline_cases,
+        'critical_cases': critical_cases,
         'embassy_staff': embassy_staff
     })
 

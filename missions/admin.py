@@ -12,8 +12,8 @@ from .models import (
 
 @admin.register(Complaint)
 class ComplaintAdmin(admin.ModelAdmin):
-    list_display = ('tracking_code', 'mission', 'subject', 'is_anonymous', 'category', 'rating', 'sentiment', 'status', 'created_at')
-    list_filter = ('status', 'mission', 'sentiment', 'rating', 'category', 'is_anonymous')
+    list_display = ('tracking_code', 'mission', 'subject', 'is_anonymous', 'category', 'emergency_type', 'priority', 'rating', 'sentiment', 'status', 'created_at')
+    list_filter = ('status', 'priority', 'emergency_type', 'mission', 'sentiment', 'rating', 'category', 'is_anonymous')
     search_fields = ('tracking_code', 'subject', 'message', 'full_name', 'email')
     readonly_fields = ('tracking_code', 'created_at', 'updated_at')
     date_hierarchy = 'created_at'

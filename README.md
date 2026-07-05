@@ -59,18 +59,33 @@ Demo accounts created by `seed_missions`:
 
 Change or remove these before a real production launch - see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
+## Roles
+
+| Role (`UserProfile.Role`) | Scope |
+|---|---|
+| `CITIZEN` | Submit/track complaints, book appointments, message verified community groups |
+| `EMBASSY_OFFICER` | Cases assigned to them at their own mission |
+| `EMBASSY_MANAGER` | All cases + staff assignment at their own mission |
+| `MINISTRY_REVIEWER` | National oversight, escalations, analytics (read/act, no user admin) |
+| `MINISTRY_ADMIN` | Everything above + user/embassy management |
+| `COMMUNITY_REP` | Reserved for community organizations (records managed via Django admin today; no self-service portal yet) |
+| Super Admin | A Django superuser (`createsuperuser`) — bypasses role checks and owns `/admin/` |
+
+Roles are the single source of truth: Django Groups and mission staff lists are auto-projected from `UserProfile.role` by a signal (see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)).
+
 ## Main features
 
 - Mission directory with country/type/rating filters and a map
 - Complaint submission with tracking code, anonymity, CAPTCHA, rate limiting; public track page with optional official response
-- **Appointments**: book a time slot per mission/service, QR-coded confirmation, no-double-booking (auto-waitlist), staff approve/reject/reschedule/cancel, daily/weekly/monthly views, reminders
+- **Emergency reporting**: prominent emergency button, typed crisis categories (medical, detention, human trafficking, lost passport, domestic violence, …) stored on the case, server-side validated intake, automatic CRITICAL priority, and a pinned red strip on staff dashboards so emergencies are always worked first
+- **Appointments**: book a time slot per mission/service, required-documents checklist shown before booking, QR-coded confirmation, no-double-booking (auto-waitlist), staff approve/reject/reschedule/cancel, daily/weekly/monthly views, reminders
 - **Digital queue**: walk-in ticket numbers, live "now serving" display screen, staff call-next/skip/recall/complete, wait-time analytics
 - **Smart Citizen Assistant**: rule-based Q&A over 12 topics (passport, visa, documents, appointments, etc.) with a pluggable architecture for a future AI backend
 - **Notifications**: in-app + email (SMS/WhatsApp interfaces ready, no provider wired), unread badge, ministry emergency broadcast
 - **REST API** at `/api/v1/` (JWT auth, Swagger docs at `/api/v1/docs/`) for future mobile apps
 - Ministry KPI dashboard: complaints by mission/country/category, monthly trends, complaints-per-officer, a country×month heatmap, real appointment/queue wait times, CSV + Excel + PDF export
 - Full audit log (login/logout/failed-login with IP+user-agent, complaint/appointment/queue/role-change actions, exports)
-- English + Somali language switcher
+- English + Somali language switcher — every extracted string now has a Somali translation (AI-assisted; professional native review recommended before launch)
 - `/health/` and `/metrics/` (Prometheus) endpoints; Sentry error tracking (opt-in via `SENTRY_DSN`)
 
 ## Tests
@@ -79,7 +94,7 @@ Change or remove these before a real production launch - see [docs/DEPLOYMENT.md
 python manage.py test
 ```
 
-64 tests covering models, views, permissions/IDOR scoping, the appointment/queue no-double-booking guarantees, the assistant's matching logic, notification channels, the API, brute-force lockout, permission-sync, and query-count (N+1) regressions.
+72 tests covering models, views, permissions/IDOR scoping, the appointment/queue no-double-booking guarantees, emergency intake validation and dashboard prioritization, the assistant's matching logic, notification channels, the API, brute-force lockout, permission-sync, and query-count (N+1) regressions.
 
 ## Documentation
 

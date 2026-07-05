@@ -110,12 +110,23 @@ def book_appointment_view(request):
     else:
         form = BookAppointmentForm()
 
+    # Show the service's required documents before the citizen books, so
+    # nobody travels to an appointment without the right paperwork.
+    selected_service = None
+    if selected_service_id:
+        selected_service = (
+            MissionService.objects.filter(pk=selected_service_id, is_active=True)
+            .prefetch_related('required_documents')
+            .first()
+        )
+
     return render(request, 'appointments/book_appointment.html', {
         'missions': missions,
         'services': services,
         'slots': slots,
         'selected_mission_id': selected_mission_id,
         'selected_service_id': selected_service_id,
+        'selected_service': selected_service,
         'form': form,
     })
 

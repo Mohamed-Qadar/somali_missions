@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: somali-missions\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-04 00:00+0000\n"
-"PO-Revision-Date: 2026-07-04 00:00+0000\n"
+"PO-Revision-Date: 2026-07-06 12:00+0300\n"
 "Language: so\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,29 +19,46 @@ msgstr "-- Dooro Xafiiska --"
 msgid "-- Select Mission involved --"
 msgstr "-- Dooro Xafiiska ay khusayso --"
 
-msgid "1. All staff responses to citizens must remain respectful, formal, and written in clear language (Somali or English)."
-msgstr "1. All staff responses to citizens must remain respectful, formal, and written in clear language (Somali or English)."
+msgid ""
+"1. All staff responses to citizens must remain respectful, formal, and "
+"written in clear language (Somali or English)."
+msgstr ""
+"1. Dhammaan jawaabaha shaqaaluhu u qoraan muwaadiniintu waa inay ahaadaan "
+"kuwo ixtiraam leh, rasmi ah, oo ku qoran luqad cad (Soomaali ama Ingiriisi)."
 
 msgid "100% Secure & Private"
 msgstr "100% Ammaan & Qarsoodi"
 
-msgid "2. Use the 'Request Info' action to send clarifying requests instead of making assumptions. This notifies the citizen automatically."
-msgstr "2. Use the 'Request Info' action to send clarifying requests instead of making assumptions. This notifies the citizen automatically."
+msgid ""
+"2. Use the 'Request Info' action to send clarifying requests instead of "
+"making assumptions. This notifies the citizen automatically."
+msgstr ""
+"2. Isticmaal tallaabada 'Codso Xog' si aad u dirto codsiyo caddayn ah halkii"
+" aad wax mala-awaali lahayd. Tani si toos ah ayay muwaadinka u ogeysiisaa."
 
 msgid "24/7 Diplomatic Rescue Service"
-msgstr "24/7 Diplomatic Rescue Service"
+msgstr "Adeegga Gurmadka Diblomaasiyadeed 24/7"
 
-msgid "3. Every single status modification, assignment action, and internal note is securely stored on a read-only audit log database for transparency reviews."
-msgstr "3. Every single status modification, assignment action, and internal note is securely stored on a read-only audit log database for transparency reviews."
+msgid ""
+"3. Every single status modification, assignment action, and internal note is"
+" securely stored on a read-only audit log database for transparency reviews."
+msgstr ""
+"3. Isbeddel kasta oo xaalad, tallaabo qoondayn, iyo qoraal gudaha ah waxaa "
+"si ammaan ah loogu kaydiyaa diiwaan hubin oo akhris-keliya ah si loo sameeyo"
+" dib-u-eegisyo daahfurnaan."
 
-msgid "A platform administrator must approve your group representative record before this panel opens."
-msgstr "A platform administrator must approve your group representative record before this panel opens."
+msgid ""
+"A platform administrator must approve your group representative record "
+"before this panel opens."
+msgstr ""
+"Maamulaha boggu waa inuu ansixiyaa diiwaanka wakiilnimadaada kooxda ka hor "
+"inta uusan boggan furmin."
 
 msgid "A user with that email already exists."
-msgstr "A user with that email already exists."
+msgstr "Isticmaale wata iimaylkaas ayaa horey u jiray."
 
 msgid "A user with that username already exists."
-msgstr "A user with that username already exists."
+msgstr "Isticmaale wata magacaas ayaa horey u jiray."
 
 msgid "About Portal"
 msgstr "Ku saabsan Bogga"
@@ -53,19 +70,27 @@ msgid "About Us"
 msgstr "Nagu saabsan"
 
 msgid "Access citizen dashboard or diplomatic oversight."
-msgstr "Access citizen dashboard or diplomatic oversight."
+msgstr "Gal bogga muwaadinka ama kormeerka diblomaasiyadeed."
 
-msgid "Access phone numbers, working hours, email, and locations for all Somali diplomatic missions worldwide."
-msgstr "Access phone numbers, working hours, email, and locations for all Somali diplomatic missions worldwide."
+msgid ""
+"Access phone numbers, working hours, email, and locations for all Somali "
+"diplomatic missions worldwide."
+msgstr ""
+"Hel lambarada taleefanka, saacadaha shaqada, iimaylka, iyo goobaha dhammaan "
+"xafiisyada diblomaasiyadeed ee Soomaaliya adduunka."
 
-msgid "Access real-time ministry statistics, evaluate diplomatic mission rankings, and read case resolution outcomes."
-msgstr "Access real-time ministry statistics, evaluate diplomatic mission rankings, and read case resolution outcomes."
+msgid ""
+"Access real-time ministry statistics, evaluate diplomatic mission rankings, "
+"and read case resolution outcomes."
+msgstr ""
+"Hel tirokoobka tooska ah ee wasaaradda, qiimee darajooyinka xafiisyada "
+"diblomaasiyadeed, oo akhri natiijooyinka xallinta kiisaska."
 
 msgid "Accommodation"
-msgstr "Accommodation"
+msgstr "Hoy"
 
 msgid "Accommodation support"
-msgstr "Accommodation support"
+msgstr "Taageero hoy"
 
 msgid "Account Settings"
 msgstr "Dejinta Akoonka"
@@ -74,19 +99,19 @@ msgid "Action"
 msgstr "Tallaabo"
 
 msgid "Action Performed"
-msgstr "Action Performed"
+msgstr "Falka la qaaday"
 
 msgid "Activate Account & Login"
 msgstr "Kici Akoonka oo Gal"
 
 msgid "Activate Embassy Account"
-msgstr "Activate Embassy Account"
+msgstr "Fur Akoonka Safaaradda"
 
 msgid "Activate Staff Portal"
-msgstr "Activate Staff Portal"
+msgstr "Fur Bogga Shaqaalaha"
 
 msgid "Activation Link (Simulation)"
-msgstr "Activation Link (Simulation)"
+msgstr "Linkiga Furitaanka (Tijaabo)"
 
 msgid "Active"
 msgstr "Firfircoon"
@@ -95,28 +120,32 @@ msgid "Active Cases"
 msgstr "Kiisaska Firfircoon"
 
 msgid "Active Pending Invitations"
-msgstr "Active Pending Invitations"
+msgstr "Casuumaadaha Sugaya"
 
 msgid "Active oversight required"
-msgstr "Active oversight required"
+msgstr "Kormeer firfircoon ayaa loo baahan yahay"
 
 msgid "Add Attachment"
 msgstr "Ku dar Lifaaq"
 
 msgid "Add Attachment File"
-msgstr "Add Attachment File"
+msgstr "Ku dar Fayl"
 
 msgid "Add response"
-msgstr "Add response"
+msgstr "Ku dar jawaab"
 
 msgid "Admin"
 msgstr "Maamul"
 
 msgid "Affordable accommodation"
-msgstr "Affordable accommodation"
+msgstr "Hoy jaban"
 
-msgid "After submission you receive an 8-character tracking code. Use the Track page to check status and any public response."
-msgstr "After submission you receive an 8-character tracking code. Use the Track page to check status and any public response."
+msgid ""
+"After submission you receive an 8-character tracking code. Use the Track "
+"page to check status and any public response."
+msgstr ""
+"Gudbinta kadib waxaad helaysaa koodh raadraac oo 8-xaraf ah. Isticmaal bogga"
+" Raadraaca si aad u eegto xaaladda iyo jawaab kasta oo dadweyne."
 
 msgid "All Consulates"
 msgstr "Dhammaan Qunsuliyadaha"
@@ -140,19 +169,19 @@ msgid "All countries"
 msgstr "Dhammaan dalalka"
 
 msgid "All embassies meeting service compliance targets."
-msgstr "All embassies meeting service compliance targets."
+msgstr "Dhammaan safaaraduhu waxay buuxinayaan yoolalka adeegga."
 
 msgid "All time"
-msgstr "All time"
+msgstr "Waqti kasta"
 
 msgid "Allocate"
-msgstr "Allocate"
+msgstr "U qoondee"
 
 msgid "Already have an account?"
 msgstr "Akoon hore ma leedahay?"
 
 msgid "An email verification link has been sent to"
-msgstr "An email verification link has been sent to"
+msgstr "Link xaqiijin iimayl ayaa loo diray"
 
 msgid "Analysis"
 msgstr "Falanqayn"
@@ -164,13 +193,13 @@ msgid "Analytics"
 msgstr "Falanqaynta Xogta"
 
 msgid "Announcement details"
-msgstr "Announcement details"
+msgstr "Faahfaahinta ogeysiiska"
 
 msgid "Announcements"
 msgstr "Ogeysiisyo"
 
 msgid "Anonymized Resolution Outcomes"
-msgstr "Anonymized Resolution Outcomes"
+msgstr "Natiijooyinka Xallinta oo Qarsoodi ah"
 
 msgid "Anonymous Citizen"
 msgstr "Muwaadin aan magac sheegin"
@@ -193,11 +222,17 @@ msgstr "La ansixiyay"
 msgid "Archived"
 msgstr "La kaydiyay"
 
-msgid "Are you a Somali citizen experiencing a severe crisis abroad? (e.g., Arrest, Detention, Human Trafficking, Domestic Abuse, Medical Emergencies, or Lost Passport in a vulnerable area)."
-msgstr "Are you a Somali citizen experiencing a severe crisis abroad? (e.g., Arrest, Detention, Human Trafficking, Domestic Abuse, Medical Emergencies, or Lost Passport in a vulnerable area)."
+msgid ""
+"Are you a Somali citizen experiencing a severe crisis abroad? (e.g., Arrest,"
+" Detention, Human Trafficking, Domestic Abuse, Medical Emergencies, or Lost "
+"Passport in a vulnerable area)."
+msgstr ""
+"Ma tahay muwaadin Soomaaliyeed oo dibadda kula kulmay xaalad daran? "
+"(tusaale: Xarig, Xabsi, Ka-ganacsi Dad, Tacaddi Guri, Xaalado Caafimaad oo "
+"Degdeg ah, ama Baasaboor ku Lumay meel khatar ah)."
 
 msgid "Are you a citizen experience problems?"
-msgstr "Are you a citizen experience problems?"
+msgstr "Ma tahay muwaadin la kulmay dhibaato?"
 
 msgid "Arrest or Detention"
 msgstr "Xarig ama Hayn"
@@ -217,14 +252,22 @@ msgstr "Xafiiska la qoondeeyay"
 msgid "Assigned Officer"
 msgstr "Sarkaalka la qoondeeyay"
 
-msgid "Attach official documents, passport copies, visa rejections, audio/video statements, or screenshots. Max 10MB per file."
-msgstr "Attach official documents, passport copies, visa rejections, audio/video statements, or screenshots. Max 10MB per file."
+msgid ""
+"Attach official documents, passport copies, visa rejections, audio/video "
+"statements, or screenshots. Max 10MB per file."
+msgstr ""
+"Lifaaq dukumentiyo rasmi ah, nuqullo baasaboor, diidmo fiiso, bayaanno "
+"cod/muuqaal, ama sawirro shaashadeed. Ugu badnaan 10MB fayl kasta."
 
 msgid "Audit Logs"
 msgstr "Diiwaannada Hantidhawrka"
 
-msgid "Automatic and manual SLA escalations are recorded here for ministry accountability."
-msgstr "Automatic and manual SLA escalations are recorded here for ministry accountability."
+msgid ""
+"Automatic and manual SLA escalations are recorded here for ministry "
+"accountability."
+msgstr ""
+"Kor-u-qaadista SLA ee tooska ah iyo tan gacanta lagu sameeyo halkan ayaa "
+"lagu diiwaangeliyaa si loo xisaabtamo wasaaradda."
 
 msgid "Average Rating"
 msgstr "Celceliska Qiimeynta"
@@ -236,13 +279,13 @@ msgid "Average Resolution Time"
 msgstr "Celceliska Waqtiga Xallinta"
 
 msgid "Average post-close satisfaction"
-msgstr "Average post-close satisfaction"
+msgstr "Celceliska qanacsanaanta kadib xallinta"
 
 msgid "Avg Solve Speed"
-msgstr "Avg Solve Speed"
+msgstr "Celceliska Xawaaraha Xallinta"
 
 msgid "Avg. Solve Time"
-msgstr "Avg. Solve Time"
+msgstr "Celceliska Waqtiga Xallinta"
 
 msgid "Avg. Star Rating"
 msgstr "Celceliska Xiddigaha"
@@ -254,7 +297,7 @@ msgid "Back"
 msgstr "Dib u noqo"
 
 msgid "Back to Command Center"
-msgstr "Back to Command Center"
+msgstr "Ku noqo Xarunta Taliska"
 
 msgid "Back to Embassy Dashboard"
 msgstr "Ku noqo Dashboard-ka Safaaradda"
@@ -269,13 +312,13 @@ msgid "Before You Travel"
 msgstr "Kahor Safarka"
 
 msgid "Best arrival:"
-msgstr "Best arrival:"
+msgstr "Waqtiga imaatinka ugu fiican:"
 
 msgid "By"
 msgstr "Waxaa qoray"
 
 msgid "Callback Phone"
-msgstr "Callback Phone"
+msgstr "Taleefan dib laguugu soo waco"
 
 msgid "Campaign"
 msgstr "Ololaha"
@@ -284,7 +327,7 @@ msgid "Can I submit anonymously?"
 msgstr "Ma gudbin karaa anigoon magacayga sheegin?"
 
 msgid "Case Audit Trail"
-msgstr "Case Audit Trail"
+msgstr "Raadraaca Hubinta Kiiska"
 
 msgid "Case Reference"
 msgstr "Tixraaca Kiiska"
@@ -293,10 +336,10 @@ msgid "Case Status Control"
 msgstr "Xakamaynta Xaaladda Kiiska"
 
 msgid "Case Workspace"
-msgstr "Case Workspace"
+msgstr "Goobta Kiiska"
 
 msgid "Case detail status update."
-msgstr "Case detail status update."
+msgstr "Cusboonaysiinta xaaladda kiiska."
 
 msgid "Cases"
 msgstr "Kiisas"
@@ -305,7 +348,7 @@ msgid "Category"
 msgstr "Qayb"
 
 msgid "Category breakdown"
-msgstr "Category breakdown"
+msgstr "Kala-qaybinta noocyada"
 
 msgid "Change Password"
 msgstr "Beddel Furaha"
@@ -320,7 +363,7 @@ msgid "Citizen"
 msgstr "Muwaadin"
 
 msgid "Citizen Issue"
-msgstr "Citizen Issue"
+msgstr "Arrin Muwaadin"
 
 msgid "Citizen Messages"
 msgstr "Farriimaha Muwaadiniinta"
@@ -332,22 +375,22 @@ msgid "Citizen Registration"
 msgstr "Diiwaangelinta Muwaadinka"
 
 msgid "Citizen Score"
-msgstr "Citizen Score"
+msgstr "Qiimaynta Muwaadiniinta"
 
 msgid "Citizen Service Portal"
-msgstr "Citizen Service Portal"
+msgstr "Bogga Adeegga Muwaadiniinta"
 
 msgid "Citizen Support Nearby"
-msgstr "Citizen Support Nearby"
+msgstr "Taageerada Muwaadiniinta ee kuu dhow"
 
 msgid "Citizen submitted complaint."
-msgstr "Citizen submitted complaint."
+msgstr "Muwaadin ayaa gudbiyay cabasho."
 
 msgid "City"
 msgstr "Magaalo"
 
 msgid "Civil registration"
-msgstr "Civil registration"
+msgstr "Diiwaangelinta madaniga"
 
 msgid "Closed"
 msgstr "Xiran"
@@ -356,10 +399,10 @@ msgid "Code"
 msgstr "Koodh"
 
 msgid "Comments or notes regarding the resolution..."
-msgstr "Comments or notes regarding the resolution..."
+msgstr "Faallooyin ama qoraallo ku saabsan xallinta..."
 
 msgid "Communication Log"
-msgstr "Communication Log"
+msgstr "Diiwaanka Isgaarsiinta"
 
 msgid "Communities"
 msgstr "Bulshooyinka"
@@ -377,13 +420,13 @@ msgid "Community Representative"
 msgstr "Wakiilka Bulshada"
 
 msgid "Community Representative Panel"
-msgstr "Community Representative Panel"
+msgstr "Bogga Wakiilka Bulshada"
 
 msgid "Community Support Network"
 msgstr "Shabakadda Taageerada Bulshada"
 
 msgid "Community announcement"
-msgstr "Community announcement"
+msgstr "Ogeysiis bulsho"
 
 msgid "Complaint"
 msgstr "Cabasho"
@@ -404,7 +447,7 @@ msgid "Complaint Volume"
 msgstr "Tirada Cabashooyinka"
 
 msgid "Complaint subject, message, category, and star rating"
-msgstr "Complaint subject, message, category, and star rating"
+msgstr "Cinwaanka cabashada, fariinta, nooca, iyo qiimaynta xiddigaha"
 
 msgid "Complaints"
 msgstr "Cabashooyin"
@@ -415,8 +458,12 @@ msgstr "Cabashooyinka & Ilaalinta Muwaadinka"
 msgid "Complaints Assigned to You"
 msgstr "Cabashooyinka laguu qoondeeyay"
 
-msgid "Complaints are retained for service quality analysis. You can track status using your unique tracking code without creating an account."
-msgstr "Complaints are retained for service quality analysis. You can track status using your unique tracking code without creating an account."
+msgid ""
+"Complaints are retained for service quality analysis. You can track status "
+"using your unique tracking code without creating an account."
+msgstr ""
+"Cabashooyinka waxaa loo kaydiyaa falanqaynta tayada adeegga. Waxaad xaaladda"
+" ku raadraaci kartaa koodhkaaga gaarka ah adigoon akoon samaysan."
 
 msgid "Complaints by Country"
 msgstr "Cabashooyinka Dalka"
@@ -428,13 +475,13 @@ msgid "Complaints by Service Category"
 msgstr "Cabashooyinka Qaybta Adeegga"
 
 msgid "Complaints by mission"
-msgstr "Complaints by mission"
+msgstr "Cabashooyinka xafiis kasta"
 
 msgid "Configure Your Report"
 msgstr "Habee Warbixintaada"
 
 msgid "Configure username and password for your security credentials."
-msgstr "Configure username and password for your security credentials."
+msgstr "Deji magac-isticmaale iyo fure ammaankaaga."
 
 msgid "Confirm Password"
 msgstr "Xaqiiji Furaha"
@@ -484,38 +531,46 @@ msgstr "Dalka Deganaanshaha"
 msgid "Create Citizen Account"
 msgstr "Samee Akoon Muwaadin"
 
-msgid "Create an account to submit, track, and manage your diplomatic complaints."
-msgstr "Create an account to submit, track, and manage your diplomatic complaints."
+msgid ""
+"Create an account to submit, track, and manage your diplomatic complaints."
+msgstr ""
+"Samee akoon si aad u gudbiso, u raadraacdo, uguna maamusho cabashooyinkaaga."
 
 msgid "Critical"
 msgstr "Halis"
 
 msgid "Critical Crisis Queue"
-msgstr "Critical Crisis Queue"
+msgstr "Safka Xaaladaha Halista ah"
 
 msgid "Critical Response Deadlines Breached"
-msgstr "Critical Response Deadlines Breached"
+msgstr "Waqtiyadii Jawaabta ee Halista ahaa waa la Dhaafay"
 
-msgid "Critical case %(code)s has exceeded %(hours)s hour SLA for %(mission)s."
-msgstr "Critical case %(code)s has exceeded %(hours)s hour SLA for %(mission)s."
+msgid ""
+"Critical case %(code)s has exceeded %(hours)s hour SLA for %(mission)s."
+msgstr ""
+"Kiiska halista ah %(code)s wuxuu dhaafay SLA-da %(hours)s saac ee "
+"%(mission)s."
 
 msgid "Current Active Phase"
-msgstr "Current Active Phase"
+msgstr "Marxaladda Hadda Socota"
 
 msgid "Current Status:"
 msgstr "Xaaladda Hadda:"
 
 msgid "Daily complaints"
-msgstr "Daily complaints"
+msgstr "Cabashooyinka maalinlaha ah"
 
-msgid "Daily submission limit reached for this mission. Please try again tomorrow."
-msgstr "Daily submission limit reached for this mission. Please try again tomorrow."
+msgid ""
+"Daily submission limit reached for this mission. Please try again tomorrow."
+msgstr ""
+"Xadka gudbinta maalinlaha ah ee xafiiskan waa la gaaray. Fadlan berri isku "
+"day."
 
 msgid "Daily submission limit reached. Please try again tomorrow."
-msgstr "Daily submission limit reached. Please try again tomorrow."
+msgstr "Xadka gudbinta maalinlaha ah waa la gaaray. Fadlan berri isku day."
 
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Bogga Maamulka"
 
 msgid "Date from"
 msgstr "Taariikhda laga bilaabo"
@@ -536,7 +591,7 @@ msgid "Details of the Incident"
 msgstr "Faahfaahinta Dhacdada"
 
 msgid "Developer / Simulator Tooling:"
-msgstr "Developer / Simulator Tooling:"
+msgstr "Qalabka Horumariyaha / Tijaabada:"
 
 msgid "Diplomatic Directory"
 msgstr "Hagaha Dibloomaasiga"
@@ -545,10 +600,10 @@ msgid "Diplomatic Mission"
 msgstr "Xafiis Dibloomaasi"
 
 msgid "Diplomatic Mission Performance Oversight"
-msgstr "Diplomatic Mission Performance Oversight"
+msgstr "Kormeerka Waxqabadka Xafiisyada Diblomaasiyadeed"
 
 msgid "Diplomatic Mission:"
-msgstr "Diplomatic Mission:"
+msgstr "Xafiiska Diblomaasiyadeed:"
 
 msgid "Directory"
 msgstr "Hagaha"
@@ -563,10 +618,10 @@ msgid "Document Pre-check"
 msgstr "Hubinta Hore ee Dukumentiga"
 
 msgid "Document authentication"
-msgstr "Document authentication"
+msgstr "Xaqiijinta dukumentiyada"
 
 msgid "Domestic Violence or Abuse"
-msgstr "Domestic Violence or Abuse"
+msgstr "Rabshad Guri ama Tacaddi"
 
 msgid "Download Attachment"
 msgstr "Soo dejiso Lifaaqa"
@@ -575,19 +630,19 @@ msgid "Download File"
 msgstr "Soo dejiso Faylka"
 
 msgid "Drag & Drop files here or click to browse"
-msgstr "Drag & Drop files here or click to browse"
+msgstr "Halkan ku soo tuur faylasha ama guji si aad u doorato"
 
 msgid "EMERGENCY PORTAL"
-msgstr "EMERGENCY PORTAL"
+msgstr "BOGGA GURMADKA DEGDEGGA AH"
 
 msgid "Email"
 msgstr "Iimayl"
 
 msgid "Email (Optional)"
-msgstr "Email (Optional)"
+msgstr "Iimayl (Ikhtiyaari)"
 
 msgid "Email (optional)"
-msgstr "Email (optional)"
+msgstr "Iimayl (ikhtiyaari)"
 
 msgid "Email Address"
 msgstr "Cinwaanka Iimaylka"
@@ -599,13 +654,13 @@ msgid "Email Verified"
 msgstr "Iimaylka waa la xaqiijiyay"
 
 msgid "Email Verified Successfully!"
-msgstr "Email Verified Successfully!"
+msgstr "Iimaylka si guul leh ayaa loo xaqiijiyay!"
 
 msgid "Email and Mission are required."
-msgstr "Email and Mission are required."
+msgstr "Iimayl iyo Xafiis waa lagama maarmaan."
 
 msgid "Email:"
-msgstr "Email:"
+msgstr "Iimayl:"
 
 msgid "Embassies"
 msgstr "Safaarado"
@@ -632,25 +687,25 @@ msgid "Embassy Manager"
 msgstr "Maamulaha Safaaradda"
 
 msgid "Embassy Manager (SLA & staff manager)"
-msgstr "Embassy Manager (SLA & staff manager)"
+msgstr "Maamulaha Safaaradda (SLA & maamulka shaqaalaha)"
 
 msgid "Embassy Officer"
 msgstr "Sarkaalka Safaaradda"
 
 msgid "Embassy Officer (Case handler)"
-msgstr "Embassy Officer (Case handler)"
+msgstr "Sarkaal Safaarad (Maareeye kiis)"
 
 msgid "Embassy Portal Management"
-msgstr "Embassy Portal Management"
+msgstr "Maamulka Bogga Safaaradda"
 
 msgid "Embassy Resolution Action"
-msgstr "Embassy Resolution Action"
+msgstr "Tallaabada Xallinta Safaaradda"
 
 msgid "Embassy Staff (Legacy)"
-msgstr "Embassy Staff (Legacy)"
+msgstr "Shaqaale Safaarad (Hore)"
 
 msgid "Embassy/consulate visit guidance"
-msgstr "Embassy/consulate visit guidance"
+msgstr "Hagitaanka booqashada safaaradda/qunsuliyadda"
 
 msgid "Emergency"
 msgstr "Gurmad"
@@ -659,10 +714,10 @@ msgid "Emergency & Citizen Protection"
 msgstr "Gurmad & Ilaalinta Muwaadinka"
 
 msgid "Emergency Active"
-msgstr "Emergency Active"
+msgstr "Gurmad Firfircoon"
 
 msgid "Emergency Ask"
-msgstr "Emergency Ask"
+msgstr "Codsi Degdeg ah"
 
 msgid "Emergency Assistance"
 msgstr "Caawimaad Gurmad"
@@ -674,844 +729,935 @@ msgid "Emergency Support Available"
 msgstr "Taageero Gurmad ayaa jirta"
 
 msgid "Emergency assistance"
-msgstr "Emergency assistance"
+msgstr "Caawimaad degdeg ah"
 
 msgid "Emergency complaint submitted."
-msgstr "Emergency complaint submitted."
+msgstr "Cabasho degdeg ah waa la gudbiyay."
 
 msgid "Emergency contact"
-msgstr "Emergency contact"
+msgstr "Xiriir degdeg ah"
 
-msgid "Emergency contacts, community help, transport, and affordable accommodation guidance."
-msgstr "Emergency contacts, community help, transport, and affordable accommodation guidance."
+msgid ""
+"Emergency contacts, community help, transport, and affordable accommodation "
+"guidance."
+msgstr "Xiriiro degdeg ah, caawimaad bulsho, gaadiid, iyo hagitaan hoy jaban."
 
 msgid "Emergency notice"
-msgstr "Emergency notice"
+msgstr "Ogeysiis degdeg ah"
 
 msgid "Emergency support available"
-msgstr "Emergency support available"
+msgstr "Taageero degdeg ah ayaa diyaar ah"
 
 msgid "Emergency support currently available"
-msgstr "Emergency support currently available"
+msgstr "Taageero degdeg ah ayaa hadda diyaar ah"
 
 msgid "Enter 8-Character Case Code"
-msgstr "Enter 8-Character Case Code"
+msgstr "Geli Koodhka Kiiska ee 8-Xaraf"
 
-msgid "Enter your email address below, and we will email you instructions for setting a new password."
-msgstr "Enter your email address below, and we will email you instructions for setting a new password."
+msgid ""
+"Enter your email address below, and we will email you instructions for "
+"setting a new password."
+msgstr ""
+"Hoos ku qor iimaylkaaga, waxaan kuu soo diri doonnaa tilmaamaha dejinta fure"
+" cusub."
 
 msgid "Escalate"
-msgstr "Escalate"
+msgstr "Kor u qaad"
 
 msgid "Escalate to Ministry"
-msgstr "Escalate to Ministry"
+msgstr "U gudbi Wasaaradda"
 
 msgid "Escalation Action Log"
-msgstr "Escalation Action Log"
+msgstr "Diiwaanka Kor-u-qaadista"
 
 msgid "Escalations"
-msgstr "Escalations"
+msgstr "Kiisas kor loo qaaday"
 
 msgid "Event"
 msgstr "Dhacdo"
 
 msgid "Event details"
-msgstr "Event details"
+msgstr "Faahfaahinta dhacdada"
 
 msgid "Event title"
-msgstr "Event title"
+msgstr "Cinwaanka dhacdada"
 
 msgid "Events and Support Campaigns"
-msgstr "Events and Support Campaigns"
+msgstr "Dhacdooyin iyo Ololayaal Taageero"
 
 msgid "Every complaint helps improve services."
-msgstr "Every complaint helps improve services."
+msgstr "Cabasho kastaa waxay caawisaa horumarinta adeegyada."
 
 msgid "Evidence"
-msgstr "Evidence"
+msgstr "Caddayn"
 
 msgid "Evidence / Pictures / Proof"
-msgstr "Evidence / Pictures / Proof"
+msgstr "Caddayn / Sawirro / Xujo"
 
 msgid "Evidence Review Gallery"
-msgstr "Evidence Review Gallery"
+msgstr "Meesha Dib-u-eegista Caddaynta"
 
 msgid "Explain what happened & details of help needed"
-msgstr "Explain what happened & details of help needed"
+msgstr "Sharax waxa dhacay & faahfaahinta caawimaadda loo baahan yahay"
 
 msgid "Export CSV"
-msgstr "Export CSV"
+msgstr "Soo saar CSV"
 
 msgid "Export CSV Report"
-msgstr "Export CSV Report"
+msgstr "Soo saar Warbixin CSV"
 
 msgid "FAQ"
-msgstr "FAQ"
+msgstr "Su'aalaha Badan"
 
 msgid "FAQ Assistance"
-msgstr "FAQ Assistance"
+msgstr "Caawimaad Su'aalo"
 
 msgid "Faster Response"
 msgstr "Jawaab Degdeg ah"
 
 msgid "Federal Government of Somalia"
-msgstr "Federal Government of Somalia"
+msgstr "Dowladda Federaalka Soomaaliya"
 
 msgid "Federal Republic of Somalia"
 msgstr "Jamhuuriyadda Federaalka Soomaaliya"
 
 msgid "Feedback Submitted"
-msgstr "Feedback Submitted"
+msgstr "Jawaab-celin waa la gudbiyay"
 
-msgid "Feedback is collected independently. Mission ratings reflect citizen experiences and support internal quality review — not political endorsement."
-msgstr "Feedback is collected independently. Mission ratings reflect citizen experiences and support internal quality review — not political endorsement."
+msgid ""
+"Feedback is collected independently. Mission ratings reflect citizen "
+"experiences and support internal quality review — not political endorsement."
+msgstr ""
+"Jawaab-celinta si madaxbannaan ayaa loo ururiyaa. Qiimaynta xafiisyadu waxay"
+" ka tarjumaysaa waaya-aragnimada muwaadiniinta, waxayna taageertaa dib-u-"
+"eegista tayada gudaha — ma aha taageero siyaasadeed."
 
 msgid "File Instant Emergency Report"
-msgstr "File Instant Emergency Report"
+msgstr "Gudbi Warbixin Degdeg ah Hadda"
 
 msgid "File New Complaint"
-msgstr "File New Complaint"
+msgstr "Gudbi Cabasho Cusub"
 
 msgid "File preview unavailable"
-msgstr "File preview unavailable"
+msgstr "Faylka lama daawan karo"
 
 msgid "File too large (Max 10MB)"
-msgstr "File too large (Max 10MB)"
+msgstr "Faylku aad buu u weyn yahay (Ugu badnaan 10MB)"
 
-msgid "Filing intentionally false reports on the emergency hotline is a criminal offense under Somali national law. Please use this ONLY for true crisis assistance."
-msgstr "Filing intentionally false reports on the emergency hotline is a criminal offense under Somali national law. Please use this ONLY for true crisis assistance."
+msgid ""
+"Filing intentionally false reports on the emergency hotline is a criminal "
+"offense under Somali national law. Please use this ONLY for true crisis "
+"assistance."
+msgstr ""
+"Gudbinta warbixinno been ah oo ula kac ah khadka degdegga ah waa dembi sida "
+"uu dhigayo sharciga qaranka Soomaaliya. Fadlan tan u isticmaal KALIYA "
+"caawimaad xaalad degdeg ah oo run ah."
 
 msgid "Filter"
-msgstr "Filter"
+msgstr "Shaandhee"
 
 msgid "Find"
-msgstr "Find"
+msgstr "Raadi"
 
 msgid "Find Somali Mission"
 msgstr "Raadi Xafiis Soomaaliyeed"
 
-msgid "Find Somali missions worldwide, submit complaints, track progress, and help improve services for every Somali citizen."
-msgstr "Raadi xafiisyada Soomaaliya ee dunida, gudbi cabashooyin, la soco horumarka, kana qayb qaado hagaajinta adeegyada muwaadin kasta oo Soomaaliyeed."
+msgid ""
+"Find Somali missions worldwide, submit complaints, track progress, and help "
+"improve services for every Somali citizen."
+msgstr ""
+"Raadi xafiisyada Soomaaliya ee dunida, gudbi cabashooyin, la soco horumarka,"
+" kana qayb qaado hagaajinta adeegyada muwaadin kasta oo Soomaaliyeed."
 
-msgid "Find contact details and hotlines for the nearest Somali Diplomatic Mission."
-msgstr "Find contact details and hotlines for the nearest Somali Diplomatic Mission."
+msgid ""
+"Find contact details and hotlines for the nearest Somali Diplomatic Mission."
+msgstr ""
+"Hel xogta xiriirka iyo khadadka degdegga ah ee Xafiiska Diblomaasiyadeed ee "
+"kuugu dhow."
 
 msgid "Find local Somali community support."
-msgstr "Find local Somali community support."
+msgstr "Hel taageerada bulshada Soomaaliyeed ee deegaankaaga."
 
-msgid "Find verified Somali-led support networks for orientation, accommodation guidance, translation, transport help, and emergency community support."
-msgstr "Find verified Somali-led support networks for orientation, accommodation guidance, translation, transport help, and emergency community support."
+msgid ""
+"Find verified Somali-led support networks for orientation, accommodation "
+"guidance, translation, transport help, and emergency community support."
+msgstr ""
+"Hel shabakado taageero oo Soomaali hoggaamiso oo la xaqiijiyay: hagitaan, "
+"tilmaan hoy, turjumaad, caawimaad gaadiid, iyo taageero bulsho oo degdeg ah."
 
-msgid "Follow the steps below to report a problem. Your draft is saved automatically."
-msgstr "Follow the steps below to report a problem. Your draft is saved automatically."
+msgid ""
+"Follow the steps below to report a problem. Your draft is saved "
+"automatically."
+msgstr ""
+"Raac tallaabooyinka hoose si aad u soo sheegto dhibaato. Qoraalkaagu si toos"
+" ah ayuu u kaydsamayaa."
 
 msgid "Food/basic needs"
-msgstr "Food/basic needs"
+msgstr "Cunto/baahiyaha aasaasiga ah"
 
 msgid "For Every Somali"
 msgstr "Muwaadin kasta oo Soomaaliyeed"
 
 msgid "Forgot password?"
-msgstr "Forgot password?"
+msgstr "Furaha ma ilowday?"
 
 msgid "Frequently Asked Questions"
-msgstr "Frequently Asked Questions"
+msgstr "Su'aalaha Inta Badan La Isweydiiyo"
 
 msgid "Full Complaint Log (Per Consulate)"
-msgstr "Full Complaint Log (Per Consulate)"
+msgstr "Diiwaanka Cabashooyinka oo Dhammaystiran (Qunsuliyad kasta)"
 
 msgid "Full Name"
-msgstr "Full Name"
+msgstr "Magaca oo Buuxa"
 
 msgid "Full Name (Optional)"
-msgstr "Full Name (Optional)"
+msgstr "Magaca oo Buuxa (Ikhtiyaari)"
 
 msgid "Generate PDF"
-msgstr "Generate PDF"
+msgstr "Soo saar PDF"
 
 msgid "Generate and Export Reports"
-msgstr "Generate and Export Reports"
+msgstr "Samee oo Soo saar Warbixinno"
 
 msgid "Generate and Send Invitation"
-msgstr "Generate and Send Invitation"
+msgstr "Samee oo Dir Casuumaad"
 
 msgid "Geographic Directory Map"
-msgstr "Geographic Directory Map"
+msgstr "Khariidadda Juqraafiyeed"
 
 msgid "Get urgent help and emergency contacts."
 msgstr "Hel caawimaad degdeg ah iyo xiriirrada gurmadka."
 
 msgid "Global Diplomatic Directory"
-msgstr "Global Diplomatic Directory"
+msgstr "Tusaha Diblomaasiyadeed ee Caalamka"
 
 msgid "Global Distribution & Performance Map"
-msgstr "Global Distribution & Performance Map"
+msgstr "Khariidadda Qaybinta & Waxqabadka Caalamka"
 
 msgid "Go to Login"
-msgstr "Go to Login"
+msgstr "Aad bogga gelitaanka"
 
 msgid "Government Logo"
-msgstr "Government Logo"
+msgstr "Astaanta Dowladda"
 
 msgid "Government Transparency Initiative"
-msgstr "Government Transparency Initiative"
+msgstr "Hindisaha Daahfurnaanta Dowladda"
 
 msgid "Group description"
-msgstr "Group description"
+msgstr "Sharaxaadda kooxda"
 
 msgid "Hardship and urgency factors"
-msgstr "Hardship and urgency factors"
+msgstr "Duruufaha adag iyo degdegga ah"
 
 msgid "Head Office"
-msgstr "Head Office"
+msgstr "Xafiiska Dhexe"
 
 msgid "Help Center"
 msgstr "Xarunta Caawinta"
 
 msgid "High"
-msgstr "High"
+msgstr "Sare"
 
 msgid "Highest rated"
-msgstr "Highest rated"
+msgstr "Qiimaynta ugu sareysa"
 
 msgid "Home"
 msgstr "Bogga Hore"
 
 msgid "How can they help?"
-msgstr "How can they help?"
+msgstr "Sidee bay kuu caawin karaan?"
 
 msgid "How do I track my complaint?"
-msgstr "How do I track my complaint?"
+msgstr "Sidee ayaan u raadraacaa cabashadayda?"
 
 msgid "How long until I get a response?"
-msgstr "How long until I get a response?"
+msgstr "Ilaa goorma ayaan jawaab helayaa?"
 
 msgid "Human Trafficking / Smuggling Case"
-msgstr "Human Trafficking / Smuggling Case"
+msgstr "Kiis Ka-ganacsi Dad / Tahriib"
 
 msgid "I already bought a return bus/flight ticket"
-msgstr "I already bought a return bus/flight ticket"
+msgstr "Horey ayaan u iibsaday tigidh bas/diyaaradeed oo dib-u-noqosho"
 
 msgid "I am at the consulate now"
-msgstr "I am at the consulate now"
+msgstr "Hadda waxaan joogaa qunsuliyadda"
 
 msgid "I am physically at the mission now"
-msgstr "I am physically at the mission now"
+msgstr "Hadda jidh ahaan waxaan joogaa xafiiska"
 
 msgid "I do not have accommodation"
-msgstr "I do not have accommodation"
+msgstr "Hoy ma haysto"
 
 msgid "I have no accommodation tonight"
-msgstr "I have no accommodation tonight"
+msgstr "Caawa hoy ma haysto"
 
 msgid "I have waited more than 2 hours"
-msgstr "I have waited more than 2 hours"
+msgstr "Waxaan sugayay in ka badan 2 saacadood"
 
 msgid "I may miss a return ticket"
-msgstr "I may miss a return ticket"
+msgstr "Waxaa iga dhici karta tigidhka dib-u-noqoshada"
 
 msgid "I travelled a long distance"
-msgstr "I travelled a long distance"
+msgstr "Masaafo dheer ayaan soo maray"
 
 msgid "I travelled from another city or country"
-msgstr "I travelled from another city or country"
+msgstr "Waxaan ka imid magaalo ama waddan kale"
 
-msgid "If checked, your personal information (name, email, phone) will be completely hidden from government reviewers. You will track your complaint using a unique generated code."
-msgstr "If checked, your personal information (name, email, phone) will be completely hidden from government reviewers. You will track your complaint using a unique generated code."
+msgid ""
+"If checked, your personal information (name, email, phone) will be "
+"completely hidden from government reviewers. You will track your complaint "
+"using a unique generated code."
+msgstr ""
+"Haddii la calaamadeeyo, xogtaada shakhsiga ah (magac, iimayl, taleefan) gebi"
+" ahaanba waa laga qarin doonaa dib-u-eegayaasha dowladda. Cabashadaada "
+"waxaad ku raadraaci doontaa koodh gaar ah oo laguu sameeyay."
 
-msgid "If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder."
-msgstr "If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder."
+msgid ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+"Haddii aadan helin iimayl, fadlan hubi inaad gelisay cinwaanka aad isku "
+"diiwaangelisay, eegna galka spam-ka."
 
 msgid "Immediate hardship factors"
-msgstr "Immediate hardship factors"
+msgstr "Duruufaha adag ee degdegga ah"
 
 msgid "Important Legal Notice"
-msgstr "Important Legal Notice"
+msgstr "Ogeysiis Sharci oo Muhiim ah"
 
 msgid "In-app"
-msgstr "In-app"
+msgstr "Gudaha bogga"
 
 msgid "Include average score"
-msgstr "Include average score"
+msgstr "Ku dar celceliska qiimaynta"
 
 msgid "Include complaint details"
-msgstr "Include complaint details"
+msgstr "Ku dar faahfaahinta cabashada"
 
-msgid "Include name of local authorities involved, hospitals, locations, and any immediate threats."
-msgstr "Include name of local authorities involved, hospitals, locations, and any immediate threats."
+msgid ""
+"Include name of local authorities involved, hospitals, locations, and any "
+"immediate threats."
+msgstr ""
+"Ku dar magacyada maamulka deegaanka ee ku lugta leh, isbitaallada, goobaha, "
+"iyo khatar kasta oo degdeg ah."
 
 msgid "Include sentiment ratio"
-msgstr "Include sentiment ratio"
+msgstr "Ku dar saamiga dareenka"
 
 msgid "Incorrect answer. Please try again."
-msgstr "Incorrect answer. Please try again."
+msgstr "Jawaab khalad ah. Fadlan mar kale isku day."
 
 msgid "Incorrect security check answer."
-msgstr "Incorrect security check answer."
+msgstr "Jawaabta hubinta ammaanku waa khalad."
 
 msgid "Independence note"
-msgstr "Independence note"
+msgstr "Qoraal madaxbannaani"
 
-msgid "Input your unique 8-character case tracking code to check status and read official responses."
-msgstr "Input your unique 8-character case tracking code to check status and read official responses."
+msgid ""
+"Input your unique 8-character case tracking code to check status and read "
+"official responses."
+msgstr ""
+"Geli koodhkaaga raadraaca ee 8-xaraf si aad u eegto xaaladda oo aad u "
+"akhrido jawaabaha rasmiga ah."
 
 msgid "Instructions Sent"
-msgstr "Instructions Sent"
+msgstr "Tilmaamaha waa la diray"
 
 msgid "Internal Chat"
-msgstr "Internal Chat"
+msgstr "Wada-sheekaysi Gudaha ah"
 
 msgid "Internal Portal Guidelines"
-msgstr "Internal Portal Guidelines"
+msgstr "Tilmaamaha Gudaha ee Bogga"
 
 msgid "Internal Staff Notes"
-msgstr "Internal Staff Notes"
+msgstr "Qoraallada Shaqaalaha Gudaha"
 
 msgid "Invalid / Expired Link"
-msgstr "Invalid / Expired Link"
+msgstr "Link aan shaqaynayn / dhacay"
 
 msgid "Invalid submission."
-msgstr "Invalid submission."
+msgstr "Gudbin aan sax ahayn."
 
 msgid "Invalid username or password."
-msgstr "Invalid username or password."
+msgstr "Magac-isticmaale ama fure khaldan."
 
 msgid "Investigation"
-msgstr "Investigation"
+msgstr "Baaritaan"
 
-msgid "Invitation email sent successfully (simulated link printed to notification logs)."
-msgstr "Invitation email sent successfully (simulated link printed to notification logs)."
+msgid ""
+"Invitation email sent successfully (simulated link printed to notification "
+"logs)."
+msgstr ""
+"Iimaylka casuumaadda si guul leh ayaa loo diray (link tijaabo ah ayaa lagu "
+"daabacay diiwaanka ogeysiisyada)."
 
 msgid "Invite Embassy Staff"
-msgstr "Invite Embassy Staff"
+msgstr "Casuun Shaqaale Safaarad"
 
 msgid "Invite New Embassy User"
-msgstr "Invite New Embassy User"
+msgstr "Casuun Isticmaale Safaarad oo Cusub"
 
 msgid "Invited Email"
-msgstr "Invited Email"
+msgstr "Iimaylka la casuumay"
 
 msgid "Invitee Details"
-msgstr "Invitee Details"
+msgstr "Faahfaahinta qofka la casuumayo"
 
 msgid "Invitee Email Address"
-msgstr "Invitee Email Address"
+msgstr "Iimaylka qofka la casuumayo"
 
 msgid "Language"
 msgstr "Luqad"
 
 msgid "Last 30 days"
-msgstr "Last 30 days"
+msgstr "30-kii maalmood ee u dambeeyay"
 
 msgid "Last 365 days"
-msgstr "Last 365 days"
+msgstr "365-tii maalmood ee u dambeeyay"
 
 msgid "Live Connection Active"
-msgstr "Live Connection Active"
+msgstr "Xiriir Toos ah oo Firfircoon"
 
 msgid "Live Progress Timeline"
-msgstr "Live Progress Timeline"
+msgstr "Jadwalka Horumarka Tooska ah"
 
 msgid "Location"
-msgstr "Location"
+msgstr "Goob"
 
 msgid "Location:"
-msgstr "Location:"
+msgstr "Goobta:"
 
 msgid "Logout"
 msgstr "Ka bax"
 
 msgid "Look Up"
-msgstr "Look Up"
+msgstr "Raadi"
 
 msgid "Lost Documents"
-msgstr "Lost Documents"
+msgstr "Dukumentiyo Lumay"
 
 msgid "Lost Passport / Stranded Abroad"
-msgstr "Lost Passport / Stranded Abroad"
+msgstr "Baasaboor Lumay / Ku Xayiran Dibadda"
 
 msgid "Lost passport"
-msgstr "Lost passport"
+msgstr "Baasaboor lumay"
 
 msgid "Low"
-msgstr "Low"
+msgstr "Hooseeya"
 
 msgid "Lowest rated"
-msgstr "Lowest rated"
+msgstr "Qiimaynta ugu hooseysa"
 
 msgid "Malware Check Passed"
-msgstr "Malware Check Passed"
+msgstr "Baaritaanka fayraska waa la gudbay"
 
 msgid "Manage"
-msgstr "Manage"
+msgstr "Maamul"
 
 msgid "Manage Case"
-msgstr "Manage Case"
+msgstr "Maamul Kiiska"
 
 msgid "Medical Crisis or Health Emergency"
-msgstr "Medical Crisis or Health Emergency"
+msgstr "Xaalad Caafimaad oo Degdeg ah"
 
 msgid "Medium"
-msgstr "Medium"
+msgstr "Dhexdhexaad"
 
 msgid "Meeting"
-msgstr "Meeting"
+msgstr "Kulan"
 
 msgid "Message This Group"
-msgstr "Message This Group"
+msgstr "U dir fariin Kooxdan"
 
 msgid "Messages"
-msgstr "Messages"
+msgstr "Fariimo"
 
 msgid "Metrics compiled for the Somali Ministry of Foreign Affairs."
-msgstr "Metrics compiled for the Somali Ministry of Foreign Affairs."
+msgstr "Tirokoob loo diyaariyay Wasaaradda Arrimaha Dibadda ee Soomaaliya."
 
 msgid "Min. Rating 1-5"
 msgstr "Qiimeyn ugu yar 1-5"
 
 msgid "Ministry"
-msgstr "Ministry"
+msgstr "Wasaaradda"
 
 msgid "Ministry Administrator"
-msgstr "Ministry Administrator"
+msgstr "Maamulaha Wasaaradda"
 
-msgid "Ministry Administrators can invite embassy officers and managers to join the portal securely."
-msgstr "Ministry Administrators can invite embassy officers and managers to join the portal securely."
+msgid ""
+"Ministry Administrators can invite embassy officers and managers to join the"
+" portal securely."
+msgstr ""
+"Maamulayaasha Wasaaraddu waxay si ammaan ah ugu casuumi karaan bogga "
+"saraakiisha iyo maamulayaasha safaaradaha."
 
 msgid "Ministry Command Center"
-msgstr "Ministry Command Center"
+msgstr "Xarunta Taliska Wasaaradda"
 
 msgid "Ministry Hotline: 800-555 (Mock)"
-msgstr "Ministry Hotline: 800-555 (Mock)"
+msgstr "Khadka Wasaaradda: 800-555 (Tijaabo)"
 
 msgid "Ministry Reviewer"
-msgstr "Ministry Reviewer"
+msgstr "Dib-u-eegaha Wasaaradda"
 
 msgid "Ministry of Foreign Affairs"
 msgstr "Wasaaradda Arrimaha Dibadda"
 
 msgid "Missing Person Abroad"
-msgstr "Missing Person Abroad"
+msgstr "Qof ku Maqan Dibadda"
 
 msgid "Mission"
 msgstr "Xafiis"
 
 msgid "Mission & Role"
-msgstr "Mission & Role"
+msgstr "Xafiiska & Doorka"
 
 msgid "Mission Details"
 msgstr "Faahfaahinta Xafiiska"
 
 msgid "Mission Map"
-msgstr "Mission Map"
+msgstr "Khariidadda Xafiisyada"
 
 msgid "Mission Type"
 msgstr "Nooca Xafiiska"
 
-msgid "Mission staff aim to review complaints within 14 working days. Urgent cases may be prioritized."
-msgstr "Mission staff aim to review complaints within 14 working days. Urgent cases may be prioritized."
+msgid ""
+"Mission staff aim to review complaints within 14 working days. Urgent cases "
+"may be prioritized."
+msgstr ""
+"Shaqaalaha xafiisku waxay ku dadaalaan inay cabashooyinka dib u eegaan 14 "
+"maalmood oo shaqo gudahood. Kiisaska degdegga ah waa la hormarin karaa."
 
 msgid "Missions Overview"
-msgstr "Missions Overview"
+msgstr "Guudmarka Xafiisyada"
 
-msgid "Modern, transparent, citizen-centric consular services that meet global standards and foster public trust."
-msgstr "Modern, transparent, citizen-centric consular services that meet global standards and foster public trust."
+msgid ""
+"Modern, transparent, citizen-centric consular services that meet global "
+"standards and foster public trust."
+msgstr ""
+"Adeegyo qunsuliyadeed oo casri ah, daahfuran, muwaadinka xudun u ah, oo "
+"buuxiya heerarka caalamiga ah, kalsoonida dadweynahana kordhiya."
 
 msgid "Modify Case Status"
-msgstr "Modify Case Status"
+msgstr "Beddel Xaaladda Kiiska"
 
 msgid "Monthly Complaints"
-msgstr "Monthly Complaints"
+msgstr "Cabashooyinka Bilaha ah"
 
 msgid "Monthly Performance Summary"
-msgstr "Monthly Performance Summary"
+msgstr "Soo-koobidda Waxqabadka Bisha"
 
 msgid "Most complained"
-msgstr "Most complained"
+msgstr "Ugu cabasho badan"
 
 msgid "My Complaints"
-msgstr "My Complaints"
+msgstr "Cabashooyinkayga"
 
 msgid "My Dashboard"
-msgstr "My Dashboard"
+msgstr "Boggayga"
 
 msgid "National Analytics"
-msgstr "National Analytics"
+msgstr "Falanqaynta Qaranka"
 
 msgid "National Complaints"
-msgstr "National Complaints"
+msgstr "Cabashooyinka Qaranka"
 
 msgid "National ID (Optional)"
-msgstr "National ID (Optional)"
+msgstr "Aqoonsiga Qaranka (Ikhtiyaari)"
 
 msgid "National System Audit Logs"
-msgstr "National System Audit Logs"
+msgstr "Diiwaanka Hubinta Nidaamka Qaranka"
 
 msgid "Nature of Crisis"
-msgstr "Nature of Crisis"
+msgstr "Nooca Xaaladda Degdegga ah"
 
 msgid "Needs Improvement"
-msgstr "Needs Improvement"
+msgstr "U baahan Horumarin"
 
 msgid "Negative"
-msgstr "Negative"
+msgstr "Taban"
 
 msgid "Negative Ratio"
-msgstr "Negative Ratio"
+msgstr "Saamiga Taban"
 
 msgid "Neutral"
-msgstr "Neutral"
+msgstr "Dhexdhexaad"
 
 msgid "New Complaint"
-msgstr "New Complaint"
+msgstr "Cabasho Cusub"
 
 msgid "No active SLA violations detected."
-msgstr "No active SLA violations detected."
+msgstr "Xadgudub SLA oo firfircoon lama helin."
 
 msgid "No active cases registered on database."
-msgstr "No active cases registered on database."
+msgstr "Kiisas firfircoon kuma jiraan xogta."
 
 msgid "No active critical alerts."
-msgstr "No active critical alerts."
+msgstr "Digniino halis ah oo firfircoon ma jiraan."
 
 msgid "No approved community representation is attached to your account yet."
-msgstr "No approved community representation is attached to your account yet."
+msgstr "Weli akoonkaaga laguma xirin wakiilnimo bulsho oo la ansixiyay."
 
 msgid "No audit logs registered."
-msgstr "No audit logs registered."
+msgstr "Diiwaan hubin lama helin."
 
 msgid "No complaint found with this tracking code."
-msgstr "No complaint found with this tracking code."
+msgstr "Koodhkan raadraaca cabasho laguma helin."
 
 msgid "No complaints submitted yet."
-msgstr "No complaints submitted yet."
+msgstr "Weli cabasho lama gudbin."
 
 msgid "No complaints."
-msgstr "No complaints."
+msgstr "Cabasho ma jirto."
 
 msgid "No data."
-msgstr "No data."
+msgstr "Xog ma jirto."
 
 msgid "No diplomatic missions found matching your search parameters."
-msgstr "No diplomatic missions found matching your search parameters."
+msgstr "Xafiis diblomaasiyadeed oo raadintaada waafaqsan lama helin."
 
 msgid "No directory data available."
-msgstr "No directory data available."
+msgstr "Xog tusaha ah ma jirto."
 
 msgid "No document checklist published yet."
-msgstr "No document checklist published yet."
+msgstr "Weli liis dukumenti lama faafin."
 
 msgid "No embassies registered."
-msgstr "No embassies registered."
+msgstr "Safaarado lama diiwaangelin."
 
 msgid "No escalation actions logged yet."
-msgstr "No escalation actions logged yet."
+msgstr "Weli tallaabo kor-u-qaadis lama diiwaangelin."
 
 msgid "No evidence files uploaded for this case."
-msgstr "No evidence files uploaded for this case."
+msgstr "Kiiskan caddayn looma soo gelin."
 
 msgid "No local support contacts are published yet."
-msgstr "No local support contacts are published yet."
+msgstr "Weli xiriiro taageero deegaan lama faafin."
 
 msgid "No messages in the portal chat yet."
-msgstr "No messages in the portal chat yet."
+msgstr "Weli fariimo kuma jiraan wada-sheekaysiga."
 
 msgid "No messages yet."
-msgstr "No messages yet."
+msgstr "Weli fariimo ma jiraan."
 
 msgid "No missions assigned."
-msgstr "No missions assigned."
+msgstr "Xafiis laguuma qoondayn."
 
 msgid "No missions found."
-msgstr "No missions found."
+msgstr "Xafiis lama helin."
 
 msgid "No pending invitations exist. Send one using the panel on the left."
-msgstr "No pending invitations exist. Send one using the panel on the left."
+msgstr "Casuumaado sugaya ma jiraan. Mid ku dir qaybta bidix."
 
 msgid "No public announcements yet."
-msgstr "No public announcements yet."
+msgstr "Weli ogeysiis dadweyne ma jiro."
 
 msgid "No public communications logged yet by diplomatic staff."
-msgstr "No public communications logged yet by diplomatic staff."
+msgstr "Weli shaqaalaha diblomaasiyadeed ma diiwaangelin isgaarsiin dadweyne."
 
 msgid "No public events listed yet."
-msgstr "No public events listed yet."
+msgstr "Weli dhacdo dadweyne lama shaacin."
 
 msgid "No rank statistics computed."
-msgstr "No rank statistics computed."
+msgstr "Tirokoob darajo lama xisaabin."
 
 msgid "No ratings"
-msgstr "No ratings"
+msgstr "Qiimayn ma jirto"
 
 msgid "No registered staff officers. Invite staff using ministry tools."
-msgstr "No registered staff officers. Invite staff using ministry tools."
+msgstr ""
+"Saraakiil shaqaale lama diiwaangelin. Ku casuun shaqaale qalabka wasaaradda."
 
 msgid "No reports generated yet."
-msgstr "No reports generated yet."
+msgstr "Weli warbixin lama samayn."
 
 msgid "No secure messages posted yet."
-msgstr "No secure messages posted yet."
+msgstr "Weli fariimo ammaan ah lama dirin."
 
 msgid "No submissions registered."
-msgstr "No submissions registered."
+msgstr "Gudbin lama diiwaangelin."
 
 msgid "No success stories logged yet."
-msgstr "No success stories logged yet."
+msgstr "Weli sheeko guul lama diiwaangelin."
 
 msgid "No system audit logs recorded."
-msgstr "No system audit logs recorded."
+msgstr "Diiwaan hubin nidaam lama kaydin."
 
 msgid "No verified emergency offers are currently listed."
-msgstr "No verified emergency offers are currently listed."
+msgstr "Hadda ma jiraan caawimaado degdeg ah oo la xaqiijiyay."
 
 msgid "No verified groups found for this search."
-msgstr "No verified groups found for this search."
+msgstr "Raadintan lama helin kooxo la xaqiijiyay."
 
 msgid "OPERATIONAL"
-msgstr "OPERATIONAL"
+msgstr "SHAQAYNAYA"
 
 msgid "Office/location"
 msgstr "Xafiis/goob"
 
 msgid "Official Consular Communications"
-msgstr "Official Consular Communications"
+msgstr "Isgaarsiinta Qunsuliyadeed ee Rasmiga ah"
 
 msgid "Official Response"
-msgstr "Official Response"
+msgstr "Jawaabta Rasmiga ah"
 
 msgid "One network across global missions."
-msgstr "One network across global missions."
+msgstr "Hal shabakad oo isku xirta xafiisyada caalamka."
 
 msgid "Open Queue"
-msgstr "Open Queue"
+msgstr "Saf furan"
 
 msgid "Open Workload"
-msgstr "Open Workload"
+msgstr "Kiisaska Furan"
 
 msgid "Operations Command Center"
-msgstr "Operations Command Center"
+msgstr "Xarunta Taliska Hawlgallada"
 
 msgid "Optional"
-msgstr "Optional"
+msgstr "Ikhtiyaari"
 
-msgid "Optional name, email, and phone (only if you choose not to submit anonymously)"
-msgstr "Optional name, email, and phone (only if you choose not to submit anonymously)"
+msgid ""
+"Optional name, email, and phone (only if you choose not to submit "
+"anonymously)"
+msgstr ""
+"Magac, iimayl, iyo taleefan ikhtiyaari ah (kaliya haddii aadan dooran "
+"qarsoodi)"
 
 msgid "Other"
-msgstr "Other"
+msgstr "Kale"
 
 msgid "Other Urgent Assist"
-msgstr "Other Urgent Assist"
+msgstr "Caawimaad kale oo Degdeg ah"
 
 msgid "Overall Platform Analytics"
-msgstr "Overall Platform Analytics"
+msgstr "Falanqaynta Guud ee Bogga"
 
 msgid "Oversight & Performance Analytics"
-msgstr "Oversight & Performance Analytics"
+msgstr "Falanqaynta Kormeerka & Waxqabadka"
 
 msgid "Oversight Analytics"
-msgstr "Oversight Analytics"
+msgstr "Falanqaynta Kormeerka"
 
 msgid "PDF Evidence Document"
-msgstr "PDF Evidence Document"
+msgstr "Dukumenti Caddayn PDF"
 
 msgid "PDF, JPG, PNG, WEBP, MP3, WAV, MP4, MOV, AVI up to 10MB"
-msgstr "PDF, JPG, PNG, WEBP, MP3, WAV, MP4, MOV, AVI up to 10MB"
+msgstr "PDF, JPG, PNG, WEBP, MP3, WAV, MP4, MOV, AVI ilaa 10MB"
 
 msgid "Passport Delays"
-msgstr "Passport Delays"
+msgstr "Dib-u-dhac Baasaboor"
 
 msgid "Passport renewal"
-msgstr "Passport renewal"
+msgstr "Cusboonaysiinta baasaboorka"
 
 msgid "Password"
 msgstr "Fure"
 
 msgid "Password Reset"
-msgstr "Password Reset"
+msgstr "Dib-u-dejinta Furaha"
 
 msgid "Password Reset Complete"
-msgstr "Password Reset Complete"
+msgstr "Dib-u-dejinta Furaha waa Dhammaatay"
 
 msgid "Password must be at least 6 characters."
-msgstr "Password must be at least 6 characters."
+msgstr "Furuhu waa inuu ugu yaraan 6 xaraf ka koobnaadaa."
 
 msgid "Passwords do not match."
-msgstr "Passwords do not match."
+msgstr "Furayaashu isma laha."
 
 msgid "Pending"
 msgstr "Sugaya"
 
 msgid "Pending review"
-msgstr "Pending review"
+msgstr "Dib-u-eegis sugaya"
 
 msgid "Performance Reports"
-msgstr "Performance Reports"
+msgstr "Warbixinnada Waxqabadka"
 
 msgid "Personal details and full messages are hidden for privacy."
-msgstr "Personal details and full messages are hidden for privacy."
+msgstr ""
+"Xogta shakhsiga iyo fariimaha oo dhammaystiran waa la qariyay arrimo gaar ah"
+" dartood."
 
 msgid "Phone"
 msgstr "Telefoon"
 
 msgid "Phone Number"
-msgstr "Phone Number"
+msgstr "Lambarka Taleefanka"
 
 msgid "Phone/WhatsApp"
-msgstr "Phone/WhatsApp"
+msgstr "Taleefan/WhatsApp"
 
 msgid "Phone/WhatsApp (optional)"
-msgstr "Phone/WhatsApp (optional)"
+msgstr "Taleefan/WhatsApp (ikhtiyaari)"
 
 msgid "Phone/WhatsApp:"
-msgstr "Phone/WhatsApp:"
+msgstr "Taleefan/WhatsApp:"
 
 msgid "Please click the link in the email to activate your account."
-msgstr "Please click the link in the email to activate your account."
+msgstr "Fadlan guji linkiga iimaylka ku jira si aad u furto akoonkaaga."
 
 msgid "Please enter your new password twice below."
-msgstr "Please enter your new password twice below."
+msgstr "Fadlan furahaaga cusub laba jeer hoos ku qor."
 
 msgid "Please explain the details of the problem."
-msgstr "Please explain the details of the problem."
+msgstr "Fadlan sharax faahfaahinta dhibaatada."
 
 msgid "Please provide a subject for your complaint."
-msgstr "Please provide a subject for your complaint."
+msgstr "Fadlan cabashadaada cinwaan u yeel."
 
 msgid "Please select a diplomatic mission or consulate."
-msgstr "Please select a diplomatic mission or consulate."
+msgstr "Fadlan dooro xafiis diblomaasiyadeed ama qunsuliyad."
 
-msgid "Please take a moment to evaluate the response resolution. Your rating affects the embassy score."
-msgstr "Please take a moment to evaluate the response resolution. Your rating affects the embassy score."
+msgid ""
+"Please take a moment to evaluate the response resolution. Your rating "
+"affects the embassy score."
+msgstr ""
+"Fadlan waqti yar geli qiimaynta xallinta jawaabta. Qiimayntaadu waxay "
+"saamaysaa dhibcaha safaaradda."
 
 msgid "Popular searches:"
 msgstr "Raadinta caanka ah:"
 
 msgid "Portal Role"
-msgstr "Portal Role"
+msgstr "Doorka Bogga"
 
 msgid "Portal Role Assigned"
-msgstr "Portal Role Assigned"
+msgstr "Doorka Bogga waa la qoondeeyay"
 
 msgid "Positive"
-msgstr "Positive"
+msgstr "Togan"
 
 msgid "Priority Level"
-msgstr "Priority Level"
+msgstr "Heerka Mudnaanta"
 
 msgid "Privacy Policy"
-msgstr "Privacy Policy"
+msgstr "Siyaasadda Arrimaha Gaarka ah"
 
 msgid "Profile"
 msgstr "Astaanta"
 
-msgid "Provide a trusted channel for citizens to report issues and highlight service quality across all Somali diplomatic missions."
-msgstr "Provide a trusted channel for citizens to report issues and highlight service quality across all Somali diplomatic missions."
+msgid ""
+"Provide a trusted channel for citizens to report issues and highlight "
+"service quality across all Somali diplomatic missions."
+msgstr ""
+"Bixi kanaal la aamini karo oo muwaadiniintu ku soo sheegaan dhibaatooyinka, "
+"kuna muujiyaan tayada adeegga dhammaan xafiisyada diblomaasiyadeed ee "
+"Soomaaliya."
 
 msgid "Public"
-msgstr "Public"
+msgstr "Dadweyne"
 
 msgid "Public Identity"
-msgstr "Public Identity"
+msgstr "Aqoonsiga Dadweynaha"
 
 msgid "Public Transparency Portal"
-msgstr "Public Transparency Portal"
+msgstr "Bogga Daahfurnaanta Dadweynaha"
 
 msgid "Publicly verified identity"
-msgstr "Publicly verified identity"
+msgstr "Aqoonsi si cad loo xaqiijiyay"
 
 msgid "Publish Announcement"
-msgstr "Publish Announcement"
+msgstr "Faafi Ogeysiiska"
 
 msgid "Publish Event"
-msgstr "Publish Event"
+msgstr "Faafi Dhacdada"
 
 msgid "Quality Monitor"
-msgstr "Quality Monitor"
+msgstr "Kormeerka Tayada"
 
 msgid "RED ALERT"
-msgstr "RED ALERT"
+msgstr "DIGNIIN CAS"
 
 msgid "Rate service quality"
-msgstr "Rate service quality"
+msgstr "Qiimee tayada adeegga"
 
 msgid "Rating"
 msgstr "Qiimeyn"
 
 msgid "Real-time Citizen Submission Stream"
-msgstr "Real-time Citizen Submission Stream"
+msgstr "Socodka Tooska ah ee Gudbinta Muwaadiniinta"
 
-msgid "Real-time global oversight of citizen protection and consular response metrics."
-msgstr "Real-time global oversight of citizen protection and consular response metrics."
+msgid ""
+"Real-time global oversight of citizen protection and consular response "
+"metrics."
+msgstr ""
+"Kormeer caalami ah oo toos ah oo ku saabsan ilaalinta muwaadiniinta iyo "
+"jawaabaha qunsuliyadeed."
 
-msgid "Real-time metrics for embassy resolution times, customer satisfaction, and queue size."
-msgstr "Real-time metrics for embassy resolution times, customer satisfaction, and queue size."
+msgid ""
+"Real-time metrics for embassy resolution times, customer satisfaction, and "
+"queue size."
+msgstr ""
+"Tirokoob toos ah oo ku saabsan waqtiga xallinta safaaradaha, qanacsanaanta, "
+"iyo dhererka safka."
 
 msgid "Received"
-msgstr "Received"
+msgstr "La helay"
 
 msgid "Recent Feedback"
-msgstr "Recent Feedback"
+msgstr "Jawaab-celin Dhawaan"
 
 msgid "Recent Submissions"
-msgstr "Recent Submissions"
+msgstr "Gudbinnadii u Dambeeyay"
 
 msgid "Recent complaints summary"
-msgstr "Recent complaints summary"
+msgstr "Soo-koobidda cabashooyinkii u dambeeyay"
 
 msgid "Register"
 msgstr "Isdiiwaangeli"
 
 msgid "Register Account"
-msgstr "Register Account"
+msgstr "Isdiiwaangeli"
 
 msgid "Rejected"
 msgstr "La diiday"
 
 msgid "Remember me"
-msgstr "Remember me"
+msgstr "I xasuuso"
 
 msgid "Report Diplomatic Crisis"
-msgstr "Report Diplomatic Crisis"
+msgstr "Soo Sheeg Xaalad Degdeg ah"
 
 msgid "Report Problem"
-msgstr "Report Problem"
+msgstr "Soo Sheeg Dhibaato"
 
 msgid "Report issues and help improve services."
-msgstr "Report issues and help improve services."
+msgstr "Soo sheeg dhibaatooyinka, kana caawi horumarinta adeegyada."
 
 msgid "Reports"
-msgstr "Reports"
+msgstr "Warbixinno"
 
 msgid "Request Citizen Info"
-msgstr "Request Citizen Info"
+msgstr "Codso Xog Muwaadin"
 
 msgid "Request Crisis Rescue from this Mission"
-msgstr "Request Crisis Rescue from this Mission"
+msgstr "Ka codso Gurmad Degdeg ah Xafiiskan"
 
 msgid "Request New Link"
-msgstr "Request New Link"
+msgstr "Codso Link Cusub"
 
 msgid "Requested more information from citizen."
-msgstr "Requested more information from citizen."
+msgstr "Waxaa muwaadinka laga codsaday xog dheeraad ah."
 
 msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+"Lagama maarmaan. 150 xaraf ama ka yar. Xarfo, tiro iyo @/./+/-/_ oo keliya."
 
 msgid "Reset Complete"
-msgstr "Reset Complete"
+msgstr "Dib-u-dejin Dhammaystiran"
 
 msgid "Reset Password"
-msgstr "Reset Password"
+msgstr "Dib u deji Furaha"
 
 msgid "Reset Sent"
-msgstr "Reset Sent"
+msgstr "Dib-u-dejin waa la diray"
 
 msgid "Resolution Rate"
-msgstr "Resolution Rate"
+msgstr "Heerka Xallinta"
 
 msgid "Resolution Rating"
-msgstr "Resolution Rating"
+msgstr "Qiimaynta Xallinta"
 
 msgid "Resolved"
 msgstr "La xalliyay"
@@ -1520,235 +1666,252 @@ msgid "Resolved Complaints"
 msgstr "Cabashooyinka la xalliyay"
 
 msgid "Resolved vs total complaints"
-msgstr "Resolved vs total complaints"
+msgstr "La xalliyay marka loo eego wadarta"
 
 msgid "Respond"
-msgstr "Respond"
+msgstr "Ka jawaab"
 
 msgid "Respond to Citizens"
-msgstr "Respond to Citizens"
+msgstr "Ka jawaab Muwaadiniinta"
 
 msgid "Responded"
-msgstr "Responded"
+msgstr "Waa laga jawaabay"
 
 msgid "Retention"
-msgstr "Retention"
+msgstr "Kaydinta xogta"
 
 msgid "Return Home"
-msgstr "Return Home"
+msgstr "Ku noqo Bogga Hore"
 
 msgid "Review"
-msgstr "Review"
+msgstr "Dib u eeg"
 
-msgid "Review live status, communication threads, and complete feedback evaluations."
-msgstr "Review live status, communication threads, and complete feedback evaluations."
+msgid ""
+"Review live status, communication threads, and complete feedback "
+"evaluations."
+msgstr ""
+"Eeg xaaladda tooska ah, fariimaha, oo dhammaystir qiimaynta jawaab-celinta."
 
-msgid "Review requirements before travelling to avoid repeat visits and extra costs."
-msgstr "Review requirements before travelling to avoid repeat visits and extra costs."
+msgid ""
+"Review requirements before travelling to avoid repeat visits and extra "
+"costs."
+msgstr ""
+"Eeg shuruudaha ka hor safarka si aad uga fogaato booqasho celcelis ah iyo "
+"kharash dheeraad ah."
 
 msgid "Reviewer"
-msgstr "Reviewer"
+msgstr "Dib-u-eege"
 
 msgid "SLA Compliance"
-msgstr "SLA Compliance"
+msgstr "U hoggaansanaanta SLA"
 
 msgid "SLA Compliance Level"
-msgstr "SLA Compliance Level"
+msgstr "Heerka U hoggaansanaanta SLA"
 
 msgid "SLA Escalation Alerts"
-msgstr "SLA Escalation Alerts"
+msgstr "Digniinaha Kor-u-qaadista SLA"
 
 msgid "SLA Resolution"
-msgstr "SLA Resolution"
+msgstr "Xallinta SLA"
 
 msgid "SLA Resolution Deadlines"
-msgstr "SLA Resolution Deadlines"
+msgstr "Waqtiyada Kama-dambaysta ee SLA"
 
 msgid "SLA escalation alert"
-msgstr "SLA escalation alert"
+msgstr "Digniin kor-u-qaadis SLA"
 
 msgid "SMS"
 msgstr "SMS"
 
 msgid "Save Event"
-msgstr "Save Event"
+msgstr "Kaydi Dhacdada"
 
 msgid "Save Internal Notes"
-msgstr "Save Internal Notes"
+msgstr "Kaydi Qoraallada Gudaha"
 
 msgid "Save Profile"
-msgstr "Save Profile"
+msgstr "Kaydi Xogta"
 
 msgid "Save response"
-msgstr "Save response"
+msgstr "Kaydi jawaabta"
 
 msgid "Save status"
-msgstr "Save status"
+msgstr "Kaydi xaaladda"
 
 msgid "Save this code to check your complaint status later."
-msgstr "Save this code to check your complaint status later."
+msgstr "Kaydso koodhkan si aad hadhow u eegto xaaladda cabashadaada."
 
 msgid "Search"
 msgstr "Raadi"
 
 msgid "Search by Country, City or Name..."
-msgstr "Search by Country, City or Name..."
+msgstr "Ku raadi Waddan, Magaalo ama Magac..."
 
 msgid "Search country, city, group..."
-msgstr "Search country, city, group..."
+msgstr "Raadi waddan, magaalo, koox..."
 
 msgid "Search embassies and consulates worldwide."
-msgstr "Search embassies and consulates worldwide."
+msgstr "Raadi safaaradaha iyo qunsuliyadaha adduunka."
 
 msgid "Search missions"
-msgstr "Search missions"
+msgstr "Raadi xafiisyada"
 
 msgid "Search missions, city, country..."
 msgstr "Raadi xafiis, magaalo, dal..."
 
 msgid "Secure Messaging Portal"
-msgstr "Secure Messaging Portal"
+msgstr "Bogga Fariimaha Ammaanka ah"
 
 msgid "Secure Password"
-msgstr "Secure Password"
+msgstr "Furaha Ammaanka ah"
 
 msgid "Secure Portal Chat"
-msgstr "Secure Portal Chat"
+msgstr "Wada-sheekaysi Ammaan ah"
 
 msgid "Security Verification"
-msgstr "Security Verification"
+msgstr "Xaqiijinta Ammaanka"
 
 msgid "Security check"
-msgstr "Security check"
+msgstr "Hubin ammaan"
 
-msgid "See how the Ministry is taking direct action to solve complaints and improve services worldwide."
-msgstr "See how the Ministry is taking direct action to solve complaints and improve services worldwide."
+msgid ""
+"See how the Ministry is taking direct action to solve complaints and improve"
+" services worldwide."
+msgstr ""
+"Arag sida Wasaaraddu si toos ah u xallinayso cabashooyinka una horumarinayso"
+" adeegyada adduunka."
 
 msgid "Select Complaint Category"
-msgstr "Select Complaint Category"
+msgstr "Dooro Nooca Cabashada"
 
 msgid "Select Embassy or Consulate"
-msgstr "Select Embassy or Consulate"
+msgstr "Dooro Safaarad ama Qunsuliyad"
 
 msgid "Select a complaint from the list."
-msgstr "Select a complaint from the list."
+msgstr "Liiska ka dooro cabasho."
 
 msgid "Send"
 msgstr "Dir"
 
 msgid "Send Message"
-msgstr "Send Message"
+msgstr "Dir Fariin"
 
 msgid "Send Portal Invitation"
-msgstr "Send Portal Invitation"
+msgstr "Dir Casuumaad Bog"
 
 msgid "Send Reset Link"
-msgstr "Send Reset Link"
+msgstr "Dir Linkiga Dib-u-dejinta"
 
 msgid "Send message"
-msgstr "Send message"
+msgstr "Dir fariin"
 
 msgid "Sent Date"
-msgstr "Sent Date"
+msgstr "Taariikhda dirista"
 
 msgid "Service Transparency at a Glance"
-msgstr "Service Transparency at a Glance"
+msgstr "Daahfurnaanta Adeegga oo Kooban"
 
 msgid "Service checklist data is being prepared for this mission."
-msgstr "Service checklist data is being prepared for this mission."
+msgstr "Xogta liiska adeegga ayaa loo diyaarinayaa xafiiskan."
 
 msgid "Services for citizens everywhere."
-msgstr "Services for citizens everywhere."
+msgstr "Adeegyo loogu talagalay muwaadiniinta meel kasta."
 
 msgid "Set New Password"
-msgstr "Set New Password"
+msgstr "Deji Fure Cusub"
 
 msgid "Shelter"
-msgstr "Shelter"
+msgstr "Hoy"
 
 msgid "Show summary response on public tracking page"
-msgstr "Show summary response on public tracking page"
+msgstr "Ku muuji jawaab kooban bogga raadraaca dadweynaha"
 
 msgid "Sign In"
 msgstr "Gal"
 
 msgid "Sign In Now"
-msgstr "Sign In Now"
+msgstr "Hadda Soo Gal"
 
-msgid "Sign in to use the secure messaging portal to exchange files and message the embassy staff directly."
-msgstr "Sign in to use the secure messaging portal to exchange files and message the embassy staff directly."
+msgid ""
+"Sign in to use the secure messaging portal to exchange files and message the"
+" embassy staff directly."
+msgstr ""
+"Soo gal si aad u isticmaasho bogga fariimaha ammaanka ah, aadna faylal ula "
+"wadaagto oo aad si toos ah fariin ugu dirto shaqaalaha safaaradda."
 
 msgid "Signed by:"
-msgstr "Signed by:"
+msgstr "Waxaa saxiixay:"
 
 msgid "Simulate Email Link Click"
-msgstr "Simulate Email Link Click"
+msgstr "Tijaabi Linkiga Iimaylka"
 
 msgid "Somali Citizen Portal"
-msgstr "Somali Citizen Portal"
+msgstr "Bogga Muwaadiniinta Soomaaliyeed"
 
 msgid "Somali Coat of Arms"
-msgstr "Somali Coat of Arms"
+msgstr "Astaanta Qaranka Soomaaliya"
 
 msgid "Somali Communities"
 msgstr "Bulshooyinka Soomaaliyeed"
 
 msgid "Somali Community Group"
-msgstr "Somali Community Group"
+msgstr "Koox Bulshada Soomaaliyeed"
 
 msgid "Somali Community Groups"
 msgstr "Kooxaha Bulshada Soomaaliyeed"
 
 msgid "Somali Diplomatic Mission Portal"
-msgstr "Somali Diplomatic Mission Portal"
+msgstr "Bogga Xafiisyada Diblomaasiyadeed ee Soomaaliya"
 
 msgid "Somali Flag"
-msgstr "Somali Flag"
+msgstr "Calanka Soomaaliya"
 
 msgid "Somali Ministry of Foreign Affairs. All Rights Reserved."
-msgstr "Somali Ministry of Foreign Affairs. All Rights Reserved."
+msgstr ""
+"Wasaaradda Arrimaha Dibadda ee Soomaaliya. Dhammaan Xuquuqdu way Dhowran "
+"Tahay."
 
 msgid "Somali Missions"
-msgstr "Somali Missions"
+msgstr "Xafiisyada Soomaaliya"
 
 msgid "Somali Missions Complaint Portal"
-msgstr "Somali Missions Complaint Portal"
+msgstr "Bogga Cabashooyinka Xafiisyada Soomaaliya"
 
 msgid "Somali Missions Network"
 msgstr "Shabakadda Xafiisyada Soomaaliyeed"
 
 msgid "Somali Missions Platform"
-msgstr "Somali Missions Platform"
+msgstr "Bogga Xafiisyada Soomaaliya"
 
 msgid "Somali Oversight"
-msgstr "Somali Oversight"
+msgstr "Kormeerka Soomaaliya"
 
 msgid "Somali Student Associations"
 msgstr "Ururrada Ardayda Soomaaliyeed"
 
 msgid "Somali association"
-msgstr "Somali association"
+msgstr "Urur Soomaaliyeed"
 
 msgid "Staff"
-msgstr "Staff"
+msgstr "Shaqaale"
 
 msgid "Staff (Legacy)"
-msgstr "Staff (Legacy)"
+msgstr "Shaqaale (Hore)"
 
 msgid "Staff Dashboard"
-msgstr "Staff Dashboard"
+msgstr "Bogga Shaqaalaha"
 
 msgid "Staff Management"
-msgstr "Staff Management"
+msgstr "Maamulka Shaqaalaha"
 
 msgid "Staff Misconduct"
-msgstr "Staff Misconduct"
+msgstr "Anshax-xumo Shaqaale"
 
 msgid "Staff Roster"
-msgstr "Staff Roster"
+msgstr "Liiska Shaqaalaha"
 
 msgid "Staff dashboard status update."
-msgstr "Staff dashboard status update."
+msgstr "Cusboonaysiinta xaaladda bogga shaqaalaha."
 
 msgid "Statistics"
 msgstr "Tirakoob"
@@ -1757,415 +1920,568 @@ msgid "Stats"
 msgstr "Tirakoob"
 
 msgid "Status Alert"
-msgstr "Status Alert"
+msgstr "Digniin Xaaladeed"
 
 msgid "Stranded Citizen"
-msgstr "Stranded Citizen"
+msgstr "Muwaadin ku Xayiran"
 
 msgid "Student Association"
-msgstr "Student Association"
+msgstr "Ururka Ardayda"
 
 msgid "Student Associations"
 msgstr "Ururrada Ardayda"
 
 msgid "Student group"
-msgstr "Student group"
+msgstr "Koox arday"
 
 msgid "Student orientation"
-msgstr "Student orientation"
+msgstr "Hagitaanka ardayda"
 
 msgid "Students"
 msgstr "Ardayda"
 
 msgid "Subject"
-msgstr "Subject"
+msgstr "Mawduuc"
 
 msgid "Submission Trends (Last 6 Months)"
-msgstr "Submission Trends (Last 6 Months)"
+msgstr "Isbeddelka Gudbinta (6-dii Bilood ee u Dambeeyay)"
 
 msgid "Submission Type"
-msgstr "Submission Type"
+msgstr "Nooca Gudbinta"
 
 msgid "Submissions"
-msgstr "Submissions"
+msgstr "Gudbinno"
 
 msgid "Submit Anonymously"
-msgstr "Submit Anonymously"
+msgstr "Gudbi si qarsoodi ah"
 
 msgid "Submit Complaint"
 msgstr "Gudbi Cabasho"
 
 msgid "Submit Rating"
-msgstr "Submit Rating"
+msgstr "Gudbi Qiimayn"
 
 msgid "Submit Report"
-msgstr "Submit Report"
+msgstr "Gudbi Warbixin"
 
 msgid "Submit a Complaint"
-msgstr "Submit a Complaint"
+msgstr "Gudbi Cabasho"
 
 msgid "Submit anonymously"
-msgstr "Submit anonymously"
+msgstr "Gudbi si qarsoodi ah"
 
 msgid "Submit for Moderation"
-msgstr "Submit for Moderation"
+msgstr "U gudbi Dib-u-eegis"
 
 msgid "Submitted"
-msgstr "Submitted"
+msgstr "La gudbiyay"
 
 msgid "Submitted (New)"
-msgstr "Submitted (New)"
+msgstr "La gudbiyay (Cusub)"
 
 msgid "Submitted by"
-msgstr "Submitted by"
+msgstr "Waxaa gudbiyay"
 
 msgid "Submitted on"
-msgstr "Submitted on"
+msgstr "Taariikhda la gudbiyay"
 
 msgid "Submitting Date"
-msgstr "Submitting Date"
+msgstr "Taariikhda Gudbinta"
 
 msgid "Submitting Message in"
-msgstr "Submitting Message in"
+msgstr "Fariinta waxaa la gudbinayaa"
 
 msgid "Successfully Resolved"
-msgstr "Successfully Resolved"
+msgstr "Si Guul leh loo Xalliyay"
 
 msgid "Suspended"
-msgstr "Suspended"
+msgstr "La joojiyay"
 
 msgid "System Settings"
-msgstr "System Settings"
+msgstr "Dejinta Nidaamka"
 
 msgid "Target Mission"
-msgstr "Target Mission"
+msgstr "Xafiiska la beegsanayo"
 
 msgid "Target resolution SLA"
-msgstr "Target resolution SLA"
+msgstr "SLA-da xallinta la beegsanayo"
 
 msgid "Target response time"
-msgstr "Target response time"
+msgstr "Waqtiga jawaabta la beegsanayo"
 
 msgid "Technical data such as submission time for abuse prevention"
-msgstr "Technical data such as submission time for abuse prevention"
+msgstr "Xog farsamo sida waqtiga gudbinta si looga hortago xadgudub"
 
 msgid "Thank you for your feedback. Your complaint has been recorded."
-msgstr "Thank you for your feedback. Your complaint has been recorded."
+msgstr ""
+"Waad ku mahadsan tahay jawaab-celintaada. Cabashadaada waa la "
+"diiwaangeliyay."
 
-msgid "Thank you. Your email address has been verified. You can now log in to the portal and track your complaints."
-msgstr "Thank you. Your email address has been verified. You can now log in to the portal and track your complaints."
+msgid ""
+"Thank you. Your email address has been verified. You can now log in to the "
+"portal and track your complaints."
+msgstr ""
+"Mahadsanid. Iimaylkaaga waa la xaqiijiyay. Hadda waad soo geli kartaa bogga "
+"oo aad raadraaci kartaa cabashooyinkaaga."
 
-msgid "The Somali Missions Complaint & Evaluation Platform empowers Somali citizens worldwide to share service experiences at embassies and consulates. Aggregated feedback enables transparency, performance benchmarking, and actionable improvement for the Ministry of Foreign Affairs."
-msgstr "The Somali Missions Complaint & Evaluation Platform empowers Somali citizens worldwide to share service experiences at embassies and consulates. Aggregated feedback enables transparency, performance benchmarking, and actionable improvement for the Ministry of Foreign Affairs."
+msgid ""
+"The Somali Missions Complaint & Evaluation Platform empowers Somali citizens"
+" worldwide to share service experiences at embassies and consulates. "
+"Aggregated feedback enables transparency, performance benchmarking, and "
+"actionable improvement for the Ministry of Foreign Affairs."
+msgstr ""
+"Bogga Cabashooyinka & Qiimaynta Xafiisyada Soomaaliya wuxuu awood siiyaa "
+"muwaadiniinta Soomaaliyeed ee adduunka inay wadaagaan waaya-aragnimadooda "
+"adeegga safaaradaha iyo qunsuliyadaha. Jawaab-celinta la isu geeyo waxay "
+"suurtageliyaan daahfurnaan, isbarbardhig waxqabad, iyo horumarin wax ku ool "
+"ah oo Wasaaradda Arrimaha Dibadda ah."
 
-msgid "The following cases are older than 14 days and remain unresolved with no responses. Direct escalation warning has been triggered at Ministry HQ."
-msgstr "The following cases are older than 14 days and remain unresolved with no responses. Direct escalation warning has been triggered at Ministry HQ."
+msgid ""
+"The following cases are older than 14 days and remain unresolved with no "
+"responses. Direct escalation warning has been triggered at Ministry HQ."
+msgstr ""
+"Kiisaska soo socdaa waxay ka weyn yihiin 14 maalmood, welina lama xallin "
+"jawaabna ma leh. Digniin kor-u-qaadis toos ah ayaa laga kiciyay Xarunta "
+"Wasaaradda."
 
-msgid "The password reset link was invalid, possibly because it has already been used. Please request a new password reset."
-msgstr "The password reset link was invalid, possibly because it has already been used. Please request a new password reset."
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a new password reset."
+msgstr ""
+"Linkiga dib-u-dejinta furuhu ma shaqaynayo, waxaa laga yaabaa in horey loo "
+"isticmaalay. Fadlan codso dib-u-dejin cusub."
 
-msgid "The platform supports the Ministry of Foreign Affairs in monitoring service quality at Somali missions worldwide."
-msgstr "The platform supports the Ministry of Foreign Affairs in monitoring service quality at Somali missions worldwide."
+msgid ""
+"The platform supports the Ministry of Foreign Affairs in monitoring service "
+"quality at Somali missions worldwide."
+msgstr ""
+"Boggani wuxuu Wasaaradda Arrimaha Dibadda ka caawiyaa kormeerka tayada "
+"adeegga ee xafiisyada Soomaaliya ee adduunka."
 
-msgid "The public sees only summary information (subject, rating, status). Full messages and contact details are visible only to authorized Ministry and mission staff."
-msgstr "The public sees only summary information (subject, rating, status). Full messages and contact details are visible only to authorized Ministry and mission staff."
+msgid ""
+"The public sees only summary information (subject, rating, status). Full "
+"messages and contact details are visible only to authorized Ministry and "
+"mission staff."
+msgstr ""
+"Dadweynuhu waxay arkaan oo keliya xog kooban (cinwaan, qiimayn, xaalad). "
+"Fariimaha oo dhammaystiran iyo xogta xiriirka waxaa arki kara oo keliya "
+"shaqaalaha Wasaaradda iyo xafiisyada ee idman."
 
-msgid "These answers help the Ministry identify critical cases and prevent citizens from being stranded."
-msgstr "These answers help the Ministry identify critical cases and prevent citizens from being stranded."
+msgid ""
+"These answers help the Ministry identify critical cases and prevent citizens"
+" from being stranded."
+msgstr ""
+"Jawaabahani waxay Wasaaradda ka caawiyaan aqoonsiga kiisaska halista ah iyo "
+"ka-hortagga in muwaadiniintu xayirmaan."
 
 msgid "This Month"
 msgstr "Bishan"
 
-msgid "This channel triggers immediate oversight. Files submitted here will bypass normal queue delays and alert rescue officers."
-msgstr "This channel triggers immediate oversight. Files submitted here will bypass normal queue delays and alert rescue officers."
+msgid ""
+"This channel triggers immediate oversight. Files submitted here will bypass "
+"normal queue delays and alert rescue officers."
+msgstr ""
+"Kanaalkani wuxuu kiciyaa kormeer degdeg ah. Waxa halkan la gudbiyaa waxay ka"
+" gudbayaan safka caadiga ah, waxayna digniin gaarsiinayaan saraakiisha "
+"gurmadka."
 
-msgid "This platform collects complaints and ratings about Somali diplomatic missions to improve public services."
-msgstr "This platform collects complaints and ratings about Somali diplomatic missions to improve public services."
+msgid ""
+"This platform collects complaints and ratings about Somali diplomatic "
+"missions to improve public services."
+msgstr ""
+"Boggani wuxuu ururiyaa cabashooyin iyo qiimayn ku saabsan xafiisyada "
+"diblomaasiyadeed ee Soomaaliya si loo horumariyo adeegyada dadweynaha."
 
 msgid "Time to close out issue"
-msgstr "Time to close out issue"
+msgstr "Waqtiga xallinta arrinta"
 
 msgid "Timestamp"
-msgstr "Timestamp"
+msgstr "Waqtiga"
 
 msgid "Title"
-msgstr "Title"
+msgstr "Cinwaan"
 
 msgid "Toggle navigation"
-msgstr "Toggle navigation"
+msgstr "Fur/xir liiska bogga"
 
 msgid "Too many messages sent today. Please try again tomorrow."
-msgstr "Too many messages sent today. Please try again tomorrow."
+msgstr "Maanta fariimo aad u badan ayaa la diray. Fadlan berri isku day."
 
 msgid "Top Performing Embassies"
-msgstr "Top Performing Embassies"
+msgstr "Safaaradaha ugu Waxqabadka Fiican"
 
 msgid "Total"
-msgstr "Total"
+msgstr "Wadarta"
 
 msgid "Total Complaints"
 msgstr "Tirada Cabashooyinka"
 
 msgid "Total Complaints Registered"
-msgstr "Total Complaints Registered"
+msgstr "Wadarta Cabashooyinka la Diiwaangeliyay"
 
 msgid "Total Filed"
-msgstr "Total Filed"
+msgstr "Wadarta la gudbiyay"
 
 msgid "Total Missions"
 msgstr "Tirada Xafiisyada"
 
 msgid "Total Volume"
-msgstr "Total Volume"
+msgstr "Wadarta Guud"
 
 msgid "Total registered life-to-date"
-msgstr "Total registered life-to-date"
+msgstr "Wadarta la diiwaangeliyay ilaa maanta"
 
 msgid "Track"
 msgstr "La soco"
 
 msgid "Track Case"
-msgstr "Track Case"
+msgstr "Raadraac Kiiska"
 
 msgid "Track Complaint"
 msgstr "La soco Cabashada"
 
 msgid "Track Status"
-msgstr "Track Status"
+msgstr "Raadraac Xaaladda"
 
 msgid "Track Your Complaint"
-msgstr "Track Your Complaint"
+msgstr "Raadraac Cabashadaada"
 
 msgid "Track and view reviews from Somali Consular officials."
-msgstr "Track and view reviews from Somali Consular officials."
+msgstr "Raadraac oo eeg jawaabaha saraakiisha Qunsuliyadda Soomaaliya."
 
 msgid "Tracking code"
-msgstr "Tracking code"
+msgstr "Koodhka raadraaca"
 
 msgid "Translate to English"
-msgstr "Translate to English"
+msgstr "U turjun Ingiriisi"
 
 msgid "Translation"
-msgstr "Translation"
+msgstr "Turjumaad"
 
 msgid "Transmit Emergency Alert Now"
-msgstr "Transmit Emergency Alert Now"
+msgstr "Hadda Dir Digniinta Degdegga ah"
 
 msgid "Transparency"
 msgstr "Daahfurnaan"
 
 msgid "Transparency Portal"
-msgstr "Transparency Portal"
+msgstr "Bogga Daahfurnaanta"
 
 msgid "Transparent Missions. Better Service. Stronger Somalia."
 msgstr "Xafiisyo Daahfuran. Adeeg Wanaagsan. Soomaaliya Xooggan."
 
 msgid "Transport guidance"
-msgstr "Transport guidance"
+msgstr "Hagitaan gaadiid"
 
 msgid "Travel guidance"
-msgstr "Travel guidance"
+msgstr "Hagitaan safar"
 
 msgid "Unassigned"
-msgstr "Unassigned"
+msgstr "Aan loo qoondayn"
 
 msgid "Under Review"
-msgstr "Under Review"
+msgstr "Dib-u-eegis ku jira"
 
 msgid "Under Review (In Progress)"
-msgstr "Under Review (In Progress)"
+msgstr "Dib-u-eegis ku jira (Socda)"
 
 msgid "Unique Username"
-msgstr "Unique Username"
+msgstr "Magac-isticmaale gaar ah"
 
 msgid "Unknown"
-msgstr "Unknown"
+msgstr "Aan la garanayn"
 
 msgid "Unresolved for"
-msgstr "Unresolved for"
+msgstr "Aan la xallin muddo"
 
 msgid "Update Status"
-msgstr "Update Status"
+msgstr "Cusboonaysii Xaaladda"
 
-msgid "Update profiles, publish events, send announcements for moderation, and read citizen messages."
-msgstr "Update profiles, publish events, send announcements for moderation, and read citizen messages."
+msgid ""
+"Update profiles, publish events, send announcements for moderation, and read"
+" citizen messages."
+msgstr ""
+"Cusboonaysii xogta, faafi dhacdooyin, u dir ogeysiisyo dib-u-eegis, oo akhri"
+" fariimaha muwaadiniinta."
 
 msgid "Update status"
-msgstr "Update status"
+msgstr "Cusboonaysii xaaladda"
 
 msgid "Upload Supporting Evidence"
-msgstr "Upload Supporting Evidence"
+msgstr "Soo geli Caddayn Taageerta"
 
 msgid "Urgent"
-msgstr "Urgent"
+msgstr "Degdeg"
 
 msgid "Use your tracking code for updates."
-msgstr "Use your tracking code for updates."
+msgstr "Isticmaal koodhkaaga raadraaca si aad u hesho warar."
 
 msgid "User"
-msgstr "User"
+msgstr "Isticmaale"
 
 msgid "User Management"
-msgstr "User Management"
+msgstr "Maamulka Isticmaalayaasha"
 
 msgid "User Satisfaction Score"
-msgstr "User Satisfaction Score"
+msgstr "Qiimaynta Qanacsanaanta"
 
 msgid "Username or Email"
-msgstr "Username or Email"
+msgstr "Magac-isticmaale ama Iimayl"
 
 msgid "Verified"
 msgstr "La xaqiijiyay"
 
 msgid "Verified Emergency Offers"
-msgstr "Verified Emergency Offers"
+msgstr "Caawimaadaha Degdegga ah ee la Xaqiijiyay"
 
 msgid "Verify Your Email"
-msgstr "Verify Your Email"
+msgstr "Xaqiiji Iimaylkaaga"
 
 msgid "View All Statistics"
 msgstr "Eeg Dhammaan Tirakoobka"
 
 msgid "View Analysis"
-msgstr "View Analysis"
+msgstr "Eeg Falanqaynta"
 
 msgid "View Details"
 msgstr "Eeg Faahfaahin"
 
 msgid "Visa Problems"
-msgstr "Visa Problems"
+msgstr "Dhibaatooyin Fiiso"
 
 msgid "Visa issue"
-msgstr "Visa issue"
+msgstr "Arrin fiiso"
 
 msgid "Vision"
-msgstr "Vision"
+msgstr "Aragti"
 
 msgid "Volunteer campaign"
-msgstr "Volunteer campaign"
+msgstr "Olole mutadawiciin"
 
 msgid "Volunteer support"
-msgstr "Volunteer support"
+msgstr "Taageero mutadawiciin"
 
 msgid "Walk-in"
-msgstr "Walk-in"
+msgstr "Imaatin toos ah"
 
 msgid "War / Conflict Zone Extraction"
-msgstr "War / Conflict Zone Extraction"
+msgstr "Ka-saarista Aag Dagaal / Colaad"
 
 msgid "We monitor timely responses."
-msgstr "We monitor timely responses."
+msgstr "Waxaan kormeernaa jawaabaha waqtigooda."
 
-msgid "We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly."
-msgstr "We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly."
+msgid ""
+"We've emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+msgstr ""
+"Waxaan kuu soo dirnay tilmaamaha dejinta furahaaga, haddii akoon ku jiro "
+"iimaylka aad gelisay. Waqti dhow waa inaad heshaa."
 
 msgid "Website"
-msgstr "Website"
+msgstr "Bogga internetka"
 
 msgid "Website URL"
-msgstr "Website URL"
+msgstr "Cinwaanka bogga internetka"
 
 msgid "Welcome back,"
-msgstr "Welcome back,"
+msgstr "Ku soo dhawoow,"
 
 msgid "What is"
-msgstr "What is"
+msgstr "Waa maxay"
 
 msgid "What is %(num1)s + %(num2)s?"
-msgstr "What is %(num1)s + %(num2)s?"
+msgstr "Waa imisa %(num1)s + %(num2)s?"
 
 msgid "What we collect"
-msgstr "What we collect"
+msgstr "Waxa aan ururinno"
 
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
 msgid "Who can see your data"
-msgstr "Who can see your data"
+msgstr "Yaa arki kara xogtaada"
 
 msgid "Who runs this platform?"
-msgstr "Who runs this platform?"
+msgstr "Yaa maamula boggan?"
 
 msgid "Work Case"
-msgstr "Work Case"
+msgstr "Ka shaqee Kiiska"
 
 msgid "Worldwide"
-msgstr "Worldwide"
+msgstr "Adduunka oo dhan"
 
 msgid "Worldwide Network"
 msgstr "Shabakad Caalami ah"
 
 msgid "Write a message to the Embassy staff..."
-msgstr "Write a message to the Embassy staff..."
+msgstr "U qor fariin shaqaalaha Safaaradda..."
 
-msgid "Yes. Check 'Submit anonymously' and your name and contact details will not be stored."
-msgstr "Yes. Check 'Submit anonymously' and your name and contact details will not be stored."
+msgid ""
+"Yes. Check 'Submit anonymously' and your name and contact details will not "
+"be stored."
+msgstr ""
+"Haa. Calaamadee 'Gudbi si qarsoodi ah', magacaaga iyo xogta xiriirkaaga lama"
+" kaydin doono."
 
-msgid "You do not have permission to manage any missions. Contact the Ministry administrator."
-msgstr "You do not have permission to manage any missions. Contact the Ministry administrator."
+msgid ""
+"You do not have permission to manage any missions. Contact the Ministry "
+"administrator."
+msgstr ""
+"Uma lihid fasax aad ku maamusho xafiis. La xiriir maamulaha Wasaaradda."
 
 msgid "You have not submitted any complaints yet."
-msgstr "You have not submitted any complaints yet."
+msgstr "Weli cabasho ma gudbin."
 
 msgid "Your Identity & Callback Information"
-msgstr "Your Identity & Callback Information"
+msgstr "Aqoonsigaaga & Xogta Dib-loo-soo-waco"
 
 msgid "Your Voice Matters"
 msgstr "Codkaagu Wuu Muhiim Yahay"
 
 msgid "Your information is protected."
-msgstr "Your information is protected."
+msgstr "Xogtaadu waa ilaalsan tahay."
 
 msgid "Your message has been sent. We will respond if needed."
-msgstr "Your message has been sent. We will respond if needed."
+msgstr ""
+"Fariintaada waa la diray. Waan kaa soo jawaabi doonnaa haddii loo baahdo."
 
 msgid "Your name"
-msgstr "Your name"
+msgstr "Magacaaga"
 
 msgid "Your password has been set. You may go ahead and log in now."
-msgstr "Your password has been set. You may go ahead and log in now."
+msgstr "Furahaaga waa la dejiyay. Hadda waad soo geli kartaa."
 
 msgid "Your tracking code"
-msgstr "Your tracking code"
+msgstr "Koodhkaaga raadraaca"
 
 msgid "ago"
-msgstr "ago"
+msgstr "ka hor"
 
 msgid "cases"
-msgstr "cases"
+msgstr "kiisas"
 
 msgid "category indicates corruption, abuse, misconduct, or emergency"
-msgstr "category indicates corruption, abuse, misconduct, or emergency"
+msgstr ""
+"noocu wuxuu muujinayaa musuqmaasuq, tacaddi, anshax-xumo, ama xaalad degdeg "
+"ah"
 
 msgid "citizen already has a return ticket"
-msgstr "citizen already has a return ticket"
+msgstr "muwaadinku horey ayuu u haystay tigidh dib-u-noqosho"
 
 msgid "citizen has no accommodation"
-msgstr "citizen has no accommodation"
+msgstr "muwaadinku hoy ma haysto"
 
 msgid "citizen has waited more than two hours"
-msgstr "citizen has waited more than two hours"
+msgstr "muwaadinku wuxuu sugayay in ka badan laba saacadood"
 
 msgid "citizen is currently at the mission"
-msgstr "citizen is currently at the mission"
+msgstr "muwaadinku hadda wuxuu joogaa xafiiska"
 
 msgid "citizen travelled from another city or country"
-msgstr "citizen travelled from another city or country"
+msgstr "muwaadinku wuxuu ka yimid magaalo ama waddan kale"
 
 msgid "complaints"
-msgstr "complaints"
+msgstr "cabashooyin"
 
 msgid "days"
-msgstr "days"
+msgstr "maalmood"
 
 msgid "evidence was attached"
-msgstr "evidence was attached"
+msgstr "caddayn waa la lifaaqay"
 
 msgid "hours"
-msgstr "hours"
+msgstr "saacadood"
 
 msgid "optional"
-msgstr "optional"
+msgstr "ikhtiyaari"
 
 msgid "reviews"
-msgstr "reviews"
+msgstr "qiimayn"
+
+msgid "Medical Emergency"
+msgstr "Xaalad Caafimaad oo Degdeg ah"
+
+msgid "Death of a Citizen Abroad"
+msgstr "Geeri Muwaadin oo Dibadda ah"
+
+msgid "Family Emergency"
+msgstr "Xaalad Qoys oo Degdeg ah"
+
+msgid "Child Protection"
+msgstr "Ilaalinta Carruurta"
+
+msgid "Human Trafficking / Smuggling"
+msgstr "Ka-ganacsi Dad / Tahriib"
+
+msgid "Urgent Travel"
+msgstr "Safar Degdeg ah"
+
+msgid "War / Conflict Zone Assistance"
+msgstr "Caawimaad Aag Dagaal / Colaad"
+
+msgid "Other Urgent Assistance"
+msgstr "Caawimaad kale oo Degdeg ah"
+
+msgid "Please choose the embassy or consulate nearest to you."
+msgstr "Fadlan dooro safaaradda ama qunsuliyadda kuugu dhow."
+
+msgid "Please choose a valid embassy or consulate."
+msgstr "Fadlan dooro safaarad ama qunsuliyad sax ah."
+
+msgid "Please tell us the nature of the crisis."
+msgstr "Fadlan noo sheeg nooca xaaladda degdegga ah."
+
+msgid "Please choose a valid crisis type."
+msgstr "Fadlan dooro nooc xaalad oo sax ah."
+
+msgid "Please describe what happened so officers can act."
+msgstr "Fadlan sharax waxa dhacay si saraakiishu tallaabo u qaadaan."
+
+msgid "Please give a few more details (at least 10 characters)."
+msgstr "Fadlan bixi faahfaahin dheeraad ah (ugu yaraan 10 xaraf)."
+
+msgid "Please give a name officers can ask for."
+msgstr "Fadlan bixi magac ay saraakiishu weydiin karaan."
+
+msgid "A callback phone number is required for emergencies."
+msgstr ""
+"Lambar taleefan oo dib laguugu soo waco ayaa lagama maarmaan u ah xaaladaha "
+"degdegga ah."
+
+msgid "Please enter a valid email address, or leave it empty."
+msgstr "Fadlan geli iimayl sax ah, ama faaruq ka dhig."
+
+msgid "Your report was not sent yet"
+msgstr "Warbixintaada weli lama dirin"
+
+msgid ""
+"Please correct the highlighted fields below and press the button again. If "
+"you cannot complete the form, call the mission directly."
+msgstr ""
+"Fadlan sax meelaha hoos ku calaamadaysan, kadibna mar kale badhanka riix. "
+"Haddii aadan foomka buuxin karin, si toos ah xafiiska ula xiriir."
+
+msgid "-- Select Crisis Type --"
+msgstr "-- Dooro Nooca Xaaladda --"
+
+msgid "Active Emergency / Critical Cases"
+msgstr "Kiisas Degdeg ah / Halis ah oo Furan"
+
+msgid ""
+"These cases were flagged critical (including citizen emergency reports) and "
+"must be actioned before routine work."
+msgstr ""
+"Kiisaskan waxaa lagu calaamadeeyay halis (oo ay ku jiraan warbixinnada "
+"degdegga ah ee muwaadiniinta), waana in laga hor tallaabo qaado shaqada "
+"caadiga ah."
+
+#, python-format
+msgid "Documents to bring for %(service)s"
+msgstr "Dukumentiyada aad u keenayso %(service)s"
+
+msgid ""
+"Please bring these documents to your appointment. Missing required documents"
+" may mean you have to book again."
+msgstr ""
+"Fadlan dukumentiyadan u keen ballantaada. Haddii ay maqan yihiin kuwa loo "
+"baahan yahay, waxaa laga yaabaa inaad mar kale ballan qabsato."
