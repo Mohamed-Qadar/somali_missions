@@ -43,9 +43,9 @@
             <div class="flex h-[57px] md:h-[63px] lg:h-[71px] items-center justify-between gap-2 sm:gap-3 lg:gap-4 min-w-0">
                 
                 <!-- Logo & Branding -->
-                <a href="{% url 'home' %}" class="flex items-center gap-2 sm:gap-3 shrink min-w-0">
-                    <img src="{% static 'images/somalia-coat-of-arms.png' %}" alt="{% trans 'Somali Coat of Arms' %}" class="h-8 md:h-[38px] lg:h-[46px] w-auto object-contain shrink-0">
-                    <span class="flex h-[30px] w-10 md:h-[34px] md:w-11 lg:h-[42px] lg:w-14 items-center justify-center rounded border border-border bg-white shadow-sm shrink-0 overflow-hidden">
+                <a href="{% url 'home' %}" class="flex items-center gap-2 sm:gap-2.5 shrink min-w-0">
+                    <img src="{% static 'images/somalia-coat-of-arms.png' %}" alt="{% trans 'Somali Coat of Arms' %}" class="h-8 md:h-[38px] lg:h-[44px] w-auto object-contain shrink-0">
+                    <span class="flex h-[30px] w-10 md:h-[34px] md:w-11 lg:h-[40px] lg:w-12 items-center justify-center rounded border border-border bg-white shadow-sm shrink-0 overflow-hidden">
                         <img src="{% static 'missions/flag.jpg' %}" alt="{% trans 'Somali Flag' %}" class="h-full w-full object-cover">
                     </span>
                     <div class="leading-tight min-w-0 max-w-[150px] sm:max-w-[230px] text-left">
@@ -55,21 +55,37 @@
                     </div>
                 </a>
 
-                <!-- Main Desktop Navigation -->
-                <nav class="hidden lg:flex items-center justify-center gap-0.5 xl:gap-1 text-[11px] xl:text-[12px] font-bold text-textSecondary flex-1 min-w-0">
-                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'home' %}">{% trans "Home" %}</a>
-                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'directory' %}">{% trans "Directory" %}</a>
-                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'student_association_directory' %}">{% trans "Students" %}</a>
-                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'community_directory' %}">{% trans "Communities" %}</a>
-                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'transparency' %}">{% trans "Transparency" %}</a>
-                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'analysis' %}">{% trans "Stats" %}</a>
-                    <a class="px-1.5 xl:px-2.5 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap" href="{% url 'track' %}">{% trans "Track" %}</a>
+                <!-- Main Desktop Navigation (shown from xl up; the lg range and
+                     below use the hamburger). The two community directories are
+                     grouped under a single "Community" menu so the bar stays
+                     uncrowded inside the 1200px container. -->
+                {% with active=request.resolver_match.url_name %}
+                <nav class="hidden xl:flex items-center justify-center gap-1 text-[13px] font-semibold text-textSecondary flex-1 min-w-0">
+                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'home' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'home' %}">{% trans "Home" %}</a>
+                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'directory' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'directory' %}">{% trans "Directory" %}</a>
+
+                    <div class="relative" data-dropdown>
+                        <button type="button" data-dropdown-btn aria-haspopup="true" aria-expanded="false" aria-controls="communityDropdownMenu" class="inline-flex items-center gap-0.5 px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-primary {% if active == 'student_association_directory' or active == 'community_directory' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}">
+                            {% trans "Community" %}
+                            <span class="material-symbols-outlined text-base leading-none" aria-hidden="true">expand_more</span>
+                        </button>
+                        <div id="communityDropdownMenu" data-dropdown-menu class="absolute left-0 top-full w-56 bg-card border border-border rounded-xl shadow-lg py-2 opacity-0 -translate-y-2 pointer-events-none transition-all duration-200 ease-out z-50">
+                            <a class="block px-4 py-2 hover:bg-slate-50 {% if active == 'student_association_directory' %}text-primary font-bold{% else %}text-textPrimary{% endif %}" href="{% url 'student_association_directory' %}">{% trans "Student Associations" %}</a>
+                            <a class="block px-4 py-2 hover:bg-slate-50 {% if active == 'community_directory' %}text-primary font-bold{% else %}text-textPrimary{% endif %}" href="{% url 'community_directory' %}">{% trans "Somali Communities" %}</a>
+                        </div>
+                    </div>
+
+                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'transparency' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'transparency' %}">{% trans "Transparency" %}</a>
+                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'analysis' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'analysis' %}">{% trans "Stats" %}</a>
+                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'track' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'track' %}">{% trans "Track" %}</a>
                 </nav>
+                {% endwith %}
 
                 <div class="flex items-center justify-end gap-1.5 sm:gap-2 shrink-0">
                     <a class="inline-flex h-9 md:h-10 items-center gap-1.5 rounded-lg bg-danger px-2.5 sm:px-3 text-xs font-black text-white shadow-sm hover:bg-red-600 transition-colors" href="{% url 'emergency_hotline' %}">
                         <span class="material-symbols-outlined text-base">warning</span>
-                        <span class="hidden min-[380px]:inline">{% trans "Emergency Support" %}</span>
+                        <span class="hidden min-[380px]:inline 2xl:hidden">{% trans "Emergency" %}</span>
+                        <span class="hidden 2xl:inline">{% trans "Emergency Support" %}</span>
                     </a>
 
                     {% if user.is_authenticated %}
@@ -79,11 +95,11 @@
                                 <span class="absolute -top-1.5 -right-1.5 bg-danger text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">{{ unread_notification_count }}</span>
                             {% endif %}
                         </a>
-                        <div class="relative hidden lg:block" id="profileDropdownContainer">
-                            <button id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" aria-controls="profileDropdownMenu" class="flex h-10 items-center gap-2 rounded-lg border border-border bg-white px-3 text-xs text-secondary hover:border-primary hover:text-primary font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                        <div class="relative hidden xl:block" id="profileDropdownContainer" data-dropdown>
+                            <button id="profileDropdownBtn" data-dropdown-btn aria-haspopup="true" aria-expanded="false" aria-controls="profileDropdownMenu" class="flex h-10 items-center gap-2 rounded-lg border border-border bg-white px-3 text-xs text-secondary hover:border-primary hover:text-primary font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                                 <span class="material-symbols-outlined">account_circle</span>
-                                <span>{{ user.username }}</span>
-                                <span class="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded uppercase font-semibold">
+                                <span class="max-w-[120px] truncate">{{ user.username }}</span>
+                                <span class="hidden 2xl:inline-block text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded uppercase font-semibold">
                                     {% if user.profile.role == 'CITIZEN' %}
                                         {% trans "Citizen" %}
                                     {% elif user.profile.role == 'EMBASSY_STAFF' %}
@@ -100,7 +116,7 @@
                                 </span>
                             </button>
                             <!-- Dropdown Menu (No physical gap with top-full position) -->
-                            <div id="profileDropdownMenu" class="absolute right-0 top-full w-48 bg-card border border-border rounded-xl shadow-lg py-2 opacity-0 -translate-y-2 pointer-events-none transition-all duration-300 ease-out z-50">
+                            <div id="profileDropdownMenu" data-dropdown-menu class="absolute right-0 top-full w-48 bg-card border border-border rounded-xl shadow-lg py-2 opacity-0 -translate-y-2 pointer-events-none transition-all duration-300 ease-out z-50">
                                 {% if user.profile.role == 'CITIZEN' %}
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'citizen_dashboard' %}">{% trans "Dashboard" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'submit_complaint_wizard' %}">{% trans "New Complaint" %}</a>
@@ -149,14 +165,14 @@
                     {% endif %}
 
                     <!-- Mobile Menu Button -->
-                    <button id="navToggle" class="lg:hidden inline-flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-lg border border-border text-secondary bg-slate-50 focus-visible:ring-2 focus-visible:ring-primary" aria-label="{% trans 'Toggle navigation' %}" aria-expanded="false" aria-controls="navMobilePanel">
+                    <button id="navToggle" class="xl:hidden inline-flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-lg border border-border text-secondary bg-slate-50 focus-visible:ring-2 focus-visible:ring-primary" aria-label="{% trans 'Toggle navigation' %}" aria-expanded="false" aria-controls="navMobilePanel">
                         <span class="material-symbols-outlined">menu</span>
                     </button>
                 </div>
             </div>
 
             <!-- Mobile Navigation Panel -->
-            <div id="navMobilePanel" class="lg:hidden hidden border-t border-border py-4">
+            <div id="navMobilePanel" class="xl:hidden hidden border-t border-border py-4">
                 <div class="flex flex-col gap-2 text-sm font-semibold">
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'home' %}">{% trans "Home" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'directory' %}">{% trans "Directory" %}</a>
@@ -269,12 +285,15 @@
                 });
             }
 
-            // Profile Dropdown Interactivity
-            const container = document.getElementById('profileDropdownContainer');
-            const btn = document.getElementById('profileDropdownBtn');
-            const menu = document.getElementById('profileDropdownMenu');
-            
-            if (container && btn && menu) {
+            // Dropdown menus (profile, Community, …). Hover to open on pointer
+            // devices; click works everywhere; Escape and an outside click close.
+            // aria-expanded is kept in sync for screen readers.
+            const usesHover = window.matchMedia("(min-width: 1280px)").matches && !('ontouchstart' in window);
+            document.querySelectorAll('[data-dropdown]').forEach(function (container) {
+                const btn = container.querySelector('[data-dropdown-btn]');
+                const menu = container.querySelector('[data-dropdown-menu]');
+                if (!btn || !menu) return;
+
                 let closeTimeout = null;
                 let isOpen = false;
 
@@ -296,50 +315,29 @@
 
                 function scheduleClose() {
                     if (closeTimeout) clearTimeout(closeTimeout);
-                    closeTimeout = setTimeout(() => {
-                        closeDropdown();
-                    }, 400); // 400ms closing delay
+                    closeTimeout = setTimeout(closeDropdown, 300);
                 }
 
-                // Check device capability
-                const isMobile = window.matchMedia("(max-width: 1024px)").matches || ('ontouchstart' in window);
-
-                if (!isMobile) {
-                    // Desktop: Hover behaviors
+                if (usesHover) {
                     container.addEventListener('mouseenter', openDropdown);
                     container.addEventListener('mouseleave', scheduleClose);
-                    
                     menu.addEventListener('mouseenter', openDropdown);
                     menu.addEventListener('mouseleave', scheduleClose);
-
-                    // Click toggle fallback
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (isOpen) {
-                            closeDropdown();
-                        } else {
-                            openDropdown();
-                        }
-                    });
-                } else {
-                    // Mobile: Click trigger only
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (isOpen) {
-                            closeDropdown();
-                        } else {
-                            openDropdown();
-                        }
-                    });
                 }
 
-                // Click outside to close
-                document.addEventListener('click', function(e) {
-                    if (!container.contains(e.target)) {
-                        closeDropdown();
-                    }
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    if (isOpen) { closeDropdown(); } else { openDropdown(); }
                 });
-            }
+
+                container.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && isOpen) { closeDropdown(); btn.focus(); }
+                });
+
+                document.addEventListener('click', function (e) {
+                    if (!container.contains(e.target)) { closeDropdown(); }
+                });
+            });
 
             // Toast messages: dismiss button + auto-hide after a few seconds
             document.querySelectorAll('.toast-message').forEach(function (toast) {
