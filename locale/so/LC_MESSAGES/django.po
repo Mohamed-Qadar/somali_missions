@@ -2968,3 +2968,6 @@ msgstr "Kooxdani weli kuma darin sharaxaad buuxda."
 
 msgid "Profile description pending."
 msgstr "Sharaxaadda xogta ayaa sugaya."
+
+msgid "Community"
+msgstr "Bulsho"

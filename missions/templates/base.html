@@ -60,12 +60,12 @@
                      grouped under a single "Community" menu so the bar stays
                      uncrowded inside the 1200px container. -->
                 {% with active=request.resolver_match.url_name %}
-                <nav class="hidden xl:flex items-center justify-center gap-1 text-[13px] font-semibold text-textSecondary flex-1 min-w-0">
-                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'home' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'home' %}">{% trans "Home" %}</a>
-                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'directory' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'directory' %}">{% trans "Directory" %}</a>
+                <nav class="hidden xl:flex items-center justify-center gap-0.5 text-[12px] font-semibold text-textSecondary flex-1 min-w-0">
+                    <a class="px-2 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'home' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'home' %}">{% trans "Home" %}</a>
+                    <a class="px-2 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'directory' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'directory' %}">{% trans "Directory" %}</a>
 
                     <div class="relative" data-dropdown>
-                        <button type="button" data-dropdown-btn aria-haspopup="true" aria-expanded="false" aria-controls="communityDropdownMenu" class="inline-flex items-center gap-0.5 px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-primary {% if active == 'student_association_directory' or active == 'community_directory' or active == 'events_public' or active == 'community_register' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}">
+                        <button type="button" data-dropdown-btn aria-haspopup="true" aria-expanded="false" aria-controls="communityDropdownMenu" class="inline-flex items-center gap-0.5 px-2 py-2 rounded-lg transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-primary {% if active == 'student_association_directory' or active == 'community_directory' or active == 'events_public' or active == 'community_register' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}">
                             {% trans "Community" %}
                             <span class="material-symbols-outlined text-base leading-none" aria-hidden="true">expand_more</span>
                         </button>
@@ -78,9 +78,9 @@
                         </div>
                     </div>
 
-                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'transparency' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'transparency' %}">{% trans "Transparency" %}</a>
-                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'analysis' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'analysis' %}">{% trans "Stats" %}</a>
-                    <a class="px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'track' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'track' %}">{% trans "Track" %}</a>
+                    <a class="px-2 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'transparency' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'transparency' %}">{% trans "Transparency" %}</a>
+                    <a class="px-2 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'analysis' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'analysis' %}">{% trans "Stats" %}</a>
+                    <a class="px-2 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'track' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'track' %}">{% trans "Track" %}</a>
                 </nav>
                 {% endwith %}
 
