@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Consular Services" %} - {% trans "Ministry of Foreign Affairs" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12 space-y-8">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-secondary to-slate-800 text-white rounded-3xl p-6 md:p-8 shadow-sm">
+        <div>
+            <p class="text-[10px] uppercase font-extrabold tracking-[0.14em] text-primary">{% trans "Federal Republic of Somalia" %}</p>
+            <h1 class="text-2xl md:text-3xl font-black mt-1">{% trans "Consular Services" %}</h1>
+            <p class="text-white/80 text-sm mt-2 max-w-2xl">{% trans "Start your consular service application online before visiting an embassy or consulate. Choose a service, complete the form, upload your documents, and track the status from your account." %}</p>
+        </div>
+        <div class="flex flex-col gap-2 shrink-0">
+            <a href="{% url 'consular_apply' %}" class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-opacity-90 text-white font-bold px-5 py-3 rounded-xl shadow-sm text-sm transition-all">
+                <span class="material-symbols-outlined text-sm">add</span>
+                {% trans "Apply for a Service" %}
+            </a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'my_consular_applications' %}" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3 rounded-xl text-sm transition-all">
+                <span class="material-symbols-outlined text-sm">fact_check</span>
+                {% trans "My Applications" %}
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Service category cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {% for category in categories %}
+        <div class="bg-card border border-border rounded-3xl p-6 shadow-sm flex flex-col gap-4 hover:border-primary/40 transition-all">
+            <div class="flex items-start gap-4">
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary shrink-0">
+                    <span class="material-symbols-outlined">{{ category.icon }}</span>
+                </span>
+                <div>
+                    <h2 class="text-lg font-bold text-secondary">{{ category.label }}</h2>
+                    <p class="text-sm text-textSecondary mt-1">{{ category.blurb }}</p>
+                </div>
+            </div>
+            <a href="{% url 'consular_apply' %}?category={{ category.key }}" class="mt-auto inline-flex items-center justify-center gap-2 border border-primary/30 text-primary hover:bg-primary hover:text-white font-bold px-4 py-2.5 rounded-xl text-sm transition-all">
+                {% trans "Apply" %}
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- How it works -->
+    <div class="bg-card border border-border rounded-3xl p-6 md:p-8 shadow-sm">
+        <h2 class="text-lg font-bold text-secondary mb-5">{% trans "How it works" %}</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 text-sm">
+            {% for step in "12345" %}
+            <div class="flex flex-col gap-2 p-4 rounded-2xl bg-slate-50/70 border border-border">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white font-black text-xs">{{ forloop.counter }}</span>
+                <p class="font-semibold text-secondary">
+                    {% if forloop.counter == 1 %}{% trans "Select mission & service" %}
+                    {% elif forloop.counter == 2 %}{% trans "Complete the application" %}
+                    {% elif forloop.counter == 3 %}{% trans "Upload documents" %}
+                    {% elif forloop.counter == 4 %}{% trans "Mission reviews it" %}
+                    {% else %}{% trans "Attend if required" %}{% endif %}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

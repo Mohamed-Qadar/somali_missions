@@ -27,6 +27,10 @@
 		<div class="bg-white rounded-2xl border border-border p-6 shadow-sm">
 			<h2 class="text-xl font-bold mb-2">{% trans "Document Pre-check" %}</h2>
 			<p class="text-xs text-textSecondary mb-4">{% trans "Review requirements before travelling to avoid repeat visits and extra costs." %}</p>
+			<a href="{% url 'consular_apply' %}?mission={{ mission.pk }}" class="inline-flex items-center gap-2 bg-primary text-white font-bold px-4 py-2.5 rounded-xl text-sm shadow-sm hover:bg-opacity-90 mb-4 w-full justify-center">
+				<span class="material-symbols-outlined text-sm">assignment</span>
+				{% trans "Apply for Consular Service Online" %}
+			</a>
 			<div class="space-y-4">
 				{% for service in services %}
 					<div class="border border-border rounded-xl p-4 bg-slate-50/50">

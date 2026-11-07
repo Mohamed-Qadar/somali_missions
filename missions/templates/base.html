@@ -63,6 +63,7 @@
                 <nav class="hidden xl:flex items-center justify-center gap-0.5 text-[12px] font-semibold text-textSecondary flex-1 min-w-0">
                     <a class="px-2 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'home' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'home' %}">{% trans "Home" %}</a>
                     <a class="px-2 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'directory' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'directory' %}">{% trans "Directory" %}</a>
+                    <a class="px-2 py-2 rounded-lg transition-colors whitespace-nowrap {% if active == 'consular_services' or active == 'consular_apply' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}" href="{% url 'consular_services' %}">{% trans "Consular Services" %}</a>
 
                     <div class="relative" data-dropdown>
                         <button type="button" data-dropdown-btn aria-haspopup="true" aria-expanded="false" aria-controls="communityDropdownMenu" class="inline-flex items-center gap-0.5 px-2 py-2 rounded-lg transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-primary {% if active == 'student_association_directory' or active == 'community_directory' or active == 'events_public' or active == 'community_register' %}bg-primary/10 text-primary{% else %}hover:bg-primary/10 hover:text-primary{% endif %}">
@@ -124,17 +125,20 @@
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'citizen_dashboard' %}">{% trans "Dashboard" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'submit_complaint_wizard' %}">{% trans "New Complaint" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'citizen_dashboard' %}">{% trans "My Complaints" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'my_consular_applications' %}">{% trans "My Consular Applications" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'track' %}">{% trans "Messages" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="#">{% trans "Profile" %}</a>
                                 {% elif user.profile.role == 'EMBASSY_OFFICER' %}
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Dashboard" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Assigned Cases" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'consular_staff_applications' %}">{% trans "Consular Applications" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'mission_events_manage' %}">{% trans "Mission Events" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Messages" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'report_dashboard' %}">{% trans "Reports" %}</a>
                                 {% elif user.profile.role == 'EMBASSY_MANAGER' %}
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Dashboard" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Embassy Complaints" %}</a>
+                                    <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'consular_staff_applications' %}">{% trans "Consular Applications" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'mission_events_manage' %}">{% trans "Mission Events" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Staff Management" %}</a>
                                     <a class="block px-4 py-2 hover:bg-slate-50 text-textPrimary" href="{% url 'export_complaints_csv' %}?consulate={{ user.profile.mission.name }}">{% trans "Performance Reports" %}</a>
@@ -182,6 +186,7 @@
                 <div class="flex flex-col gap-2 text-sm font-semibold">
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'home' %}">{% trans "Home" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'directory' %}">{% trans "Directory" %}</a>
+                    <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'consular_services' %}">{% trans "Consular Services" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'before_you_travel' %}">{% trans "Before You Travel" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'book_appointment' %}">{% trans "Book Appointment" %}</a>
                     <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'ask_assistant' %}">{% trans "Ask the Assistant" %}</a>
@@ -202,16 +207,19 @@
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'citizen_dashboard' %}">{% trans "Dashboard" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'submit_complaint_wizard' %}">{% trans "New Complaint" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'citizen_dashboard' %}">{% trans "My Complaints" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'my_consular_applications' %}">{% trans "My Consular Applications" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'track' %}">{% trans "Messages" %}</a>
                         {% elif user.profile.role == 'EMBASSY_OFFICER' %}
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Dashboard" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Assigned Cases" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'consular_staff_applications' %}">{% trans "Consular Applications" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'mission_events_manage' %}">{% trans "Mission Events" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_officer_dashboard' %}">{% trans "Messages" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'report_dashboard' %}">{% trans "Reports" %}</a>
                         {% elif user.profile.role == 'EMBASSY_MANAGER' %}
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Dashboard" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Embassy Complaints" %}</a>
+                            <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'consular_staff_applications' %}">{% trans "Consular Applications" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'mission_events_manage' %}">{% trans "Mission Events" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'embassy_manager_dashboard' %}">{% trans "Staff Management" %}</a>
                             <a class="px-4 py-2.5 rounded-xl hover:bg-slate-50 text-textSecondary" href="{% url 'export_complaints_csv' %}?consulate={{ user.profile.mission.name }}">{% trans "Performance Reports" %}</a>

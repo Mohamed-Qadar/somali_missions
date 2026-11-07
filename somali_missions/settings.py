@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'queue_management.apps.QueueManagementConfig',
     'assistant.apps.AssistantConfig',
     'notifications.apps.NotificationsConfig',
+    'consular.apps.ConsularConfig',
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_spectacular',

@@ -1,0 +1,7 @@
+from django.apps import AppConfig
+
+
+class ConsularConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'consular'
+    verbose_name = 'Consular Services'

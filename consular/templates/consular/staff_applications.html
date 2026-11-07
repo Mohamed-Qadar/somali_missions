@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Consular Applications" %} - {% trans "Staff" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12 space-y-6">
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div>
+            <h1 class="text-2xl md:text-3xl font-black text-secondary">{% trans "Consular Applications" %}</h1>
+            <p class="text-textSecondary text-sm mt-1">{% blocktrans %}{{ open_total }} application(s) in progress at your mission(s).{% endblocktrans %}</p>
+        </div>
+    </div>
+
+    {% if denied %}
+        <div class="bg-amber-50 border border-amber-200 text-amber-800 rounded-2xl p-6 text-sm">
+            {% trans "You are not assigned to any mission, so there are no applications to review." %}
+        </div>
+    {% else %}
+    <!-- Filters -->
+    <form method="get" class="bg-card border border-border rounded-2xl p-4 shadow-sm flex flex-wrap items-end gap-3">
+        <div>
+            <label for="id_status" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Status" %}</label>
+            <select id="id_status" name="status" data-autosubmit class="rounded-lg border border-border px-3 py-2 text-sm">
+                <option value="">{% trans "All statuses" %}</option>
+                {% for value, label in status_choices %}
+                <option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% if missions|length > 1 %}
+        <div>
+            <label for="id_mission" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Mission" %}</label>
+            <select id="id_mission" name="mission" data-autosubmit class="rounded-lg border border-border px-3 py-2 text-sm">
+                <option value="">{% trans "All missions" %}</option>
+                {% for m in missions %}
+                <option value="{{ m.id }}" {% if selected_mission == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <button type="submit" class="border border-primary/30 text-primary font-bold px-4 py-2 rounded-lg text-sm hover:bg-primary hover:text-white transition-colors">{% trans "Filter" %}</button>
+        {% if selected_status or selected_mission %}
+        <a href="{% url 'consular_staff_applications' %}" class="text-sm text-textSecondary hover:text-primary font-semibold pb-2">{% trans "Clear" %}</a>
+        {% endif %}
+    </form>
+
+    <div class="bg-card border border-border rounded-3xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="text-left text-xs uppercase tracking-wider text-textSecondary border-b border-border bg-slate-50/70">
+                        <th class="px-5 py-3 font-bold">{% trans "Reference" %}</th>
+                        <th class="px-5 py-3 font-bold">{% trans "Service" %}</th>
+                        <th class="px-5 py-3 font-bold">{% trans "Applicant" %}</th>
+                        <th class="px-5 py-3 font-bold">{% trans "Mission" %}</th>
+                        <th class="px-5 py-3 font-bold">{% trans "Submitted" %}</th>
+                        <th class="px-5 py-3 font-bold">{% trans "Status" %}</th>
+                        <th class="px-5 py-3 font-bold text-right">{% trans "Action" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in applications %}
+                    <tr class="border-b border-border last:border-0 hover:bg-slate-50/50">
+                        <td class="px-5 py-3 font-bold text-secondary whitespace-nowrap">{{ a.reference_code }}</td>
+                        <td class="px-5 py-3">{{ a.service.name }}</td>
+                        <td class="px-5 py-3">{{ a.full_name }}</td>
+                        <td class="px-5 py-3 text-textSecondary">{{ a.mission.city }}</td>
+                        <td class="px-5 py-3 text-textSecondary whitespace-nowrap">{{ a.submitted_at|default:a.created_at|date:"Y-m-d" }}</td>
+                        <td class="px-5 py-3">{% include "consular/_status_badge.html" with status=a.status label=a.get_status_display %}</td>
+                        <td class="px-5 py-3 text-right">
+                            <a href="{% url 'consular_staff_application_detail' a.pk %}" class="inline-flex items-center gap-1 text-primary font-bold hover:underline">
+                                {% trans "Review" %}<span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="px-5 py-12 text-center text-textSecondary">{% trans "No applications found." %}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script nonce="{{ request.csp_nonce }}">
+    // CSP-safe auto-submit (the site CSP blocks inline event-handler
+    // attributes). The Filter button is the no-JS fallback.
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('select[data-autosubmit]').forEach(function (el) {
+            el.addEventListener('change', function () {
+                if (el.form) el.form.submit();
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Review" %} {{ application.reference_code }}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-12 space-y-6">
+
+    <a href="{% url 'consular_staff_applications' %}" class="inline-flex items-center gap-1 text-sm text-textSecondary hover:text-primary font-semibold">
+        <span class="material-symbols-outlined text-sm">arrow_back</span>{% trans "Back to applications" %}
+    </a>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+        <!-- Left: details -->
+        <div class="lg:col-span-2 space-y-6">
+            <div class="bg-card border border-border rounded-3xl p-6 md:p-8 shadow-sm space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <p class="text-xs font-bold text-textSecondary uppercase tracking-wider">{% trans "Reference" %}</p>
+                        <h1 class="text-2xl font-black text-secondary">{{ application.reference_code }}</h1>
+                    </div>
+                    {% include "consular/_status_badge.html" with status=application.status label=application.get_status_display %}
+                </div>
+                <div class="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm border-t border-border pt-4">
+                    <div><span class="text-textSecondary">{% trans "Service" %}:</span> <span class="font-semibold text-secondary">{{ application.service.name }}</span></div>
+                    <div><span class="text-textSecondary">{% trans "Mission" %}:</span> <span class="font-semibold text-secondary">{{ application.mission.name }}</span></div>
+                    <div><span class="text-textSecondary">{% trans "Applicant" %}:</span> <span class="font-semibold">{{ application.full_name }}</span></div>
+                    <div><span class="text-textSecondary">{% trans "Submitted" %}:</span> <span class="font-semibold">{{ application.submitted_at|default:application.created_at|date:"Y-m-d H:i" }}</span></div>
+                    {% if application.email %}<div><span class="text-textSecondary">{% trans "Email" %}:</span> <span class="font-semibold">{{ application.email }}</span></div>{% endif %}
+                    {% if application.phone %}<div><span class="text-textSecondary">{% trans "Phone" %}:</span> <span class="font-semibold">{{ application.phone }}</span></div>{% endif %}
+                    {% if application.date_of_birth %}<div><span class="text-textSecondary">{% trans "Date of birth" %}:</span> <span class="font-semibold">{{ application.date_of_birth|date:"Y-m-d" }}</span></div>{% endif %}
+                    {% if application.passport_number %}<div><span class="text-textSecondary">{% trans "Passport" %}:</span> <span class="font-semibold">{{ application.passport_number }}</span></div>{% endif %}
+                    {% if application.national_id %}<div><span class="text-textSecondary">{% trans "National ID" %}:</span> <span class="font-semibold">{{ application.national_id }}</span></div>{% endif %}
+                </div>
+                {% if application.notes %}
+                <div class="text-sm border-t border-border pt-4">
+                    <p class="text-textSecondary font-bold uppercase text-xs tracking-wider mb-1">{% trans "Applicant notes" %}</p>
+                    <p class="whitespace-pre-line">{{ application.notes }}</p>
+                </div>
+                {% endif %}
+                {% if application.appointment %}
+                <div class="text-sm border-t border-border pt-4">
+                    <span class="text-textSecondary">{% trans "Linked appointment" %}:</span>
+                    <a href="{% url 'appointment_confirmation' application.appointment.qr_token %}" class="font-bold text-primary hover:underline">{{ application.appointment.qr_token }}</a>
+                    <span class="text-textSecondary">({{ application.appointment.get_status_display }})</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Documents -->
+            <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-3">
+                <h2 class="text-lg font-bold text-secondary">{% trans "Uploaded documents" %}</h2>
+                {% if required_documents %}
+                <p class="text-xs text-textSecondary"><span class="font-bold uppercase tracking-wider">{% trans "Required" %}:</span>
+                    {% for doc in required_documents %}{{ doc.name }}{% if not forloop.last %} · {% endif %}{% endfor %}</p>
+                {% endif %}
+                {% if documents %}
+                <ul class="divide-y divide-border">
+                    {% for d in documents %}
+                    <li class="flex items-center justify-between gap-3 py-2.5">
+                        <span class="flex items-center gap-2 text-sm min-w-0">
+                            <span class="material-symbols-outlined text-slate-400">description</span>
+                            <span class="truncate">{{ d.file_name }}</span>
+                            <span class="text-xs text-textSecondary shrink-0">{{ d.uploaded_at|date:"Y-m-d" }}</span>
+                        </span>
+                        <a href="{{ d.file.url }}" target="_blank" rel="noopener" class="text-primary text-sm font-bold hover:underline shrink-0">{% trans "Open" %}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-sm text-textSecondary italic">{% trans "No documents uploaded." %}</p>
+                {% endif %}
+            </div>
+
+            <!-- Internal notes -->
+            {% if application.staff_notes %}
+            <div class="bg-slate-50 border border-border rounded-3xl p-6 shadow-sm">
+                <h2 class="text-sm font-bold text-secondary uppercase tracking-wider mb-2">{% trans "Internal notes" %}</h2>
+                <p class="text-sm whitespace-pre-line text-textPrimary">{{ application.staff_notes }}</p>
+            </div>
+            {% endif %}
+
+            <!-- Timeline -->
+            <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-4">
+                <h2 class="text-lg font-bold text-secondary">{% trans "Status history" %}</h2>
+                <ol class="relative border-l border-border ml-2 space-y-4">
+                    {% for h in history %}
+                    <li class="ml-4">
+                        <span class="absolute -left-1.5 h-3 w-3 rounded-full bg-primary"></span>
+                        <p class="text-sm font-semibold text-secondary">{{ h.get_new_status_display }}
+                            {% if h.changed_by %}<span class="text-xs text-textSecondary font-normal">· {{ h.changed_by.username }}</span>{% endif %}</p>
+                        {% if h.note %}<p class="text-xs text-textSecondary">{{ h.note }}</p>{% endif %}
+                        <p class="text-[11px] text-textSecondary">{{ h.created_at|date:"Y-m-d H:i" }}</p>
+                    </li>
+                    {% empty %}
+                    <li class="ml-4 text-sm text-textSecondary italic">{% trans "No history yet." %}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+
+        <!-- Right: action panel -->
+        <div class="space-y-6">
+            <form method="post" class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-4 lg:sticky lg:top-24">
+                {% csrf_token %}
+                <h2 class="text-lg font-bold text-secondary">{% trans "Update application" %}</h2>
+                <div>
+                    <label for="{{ form.action.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Action" %}</label>
+                    {{ form.action }}
+                </div>
+                <div>
+                    <label for="{{ form.citizen_message.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{{ form.citizen_message.label }}</label>
+                    {{ form.citizen_message }}
+                </div>
+                <div>
+                    <label for="{{ form.staff_notes.id_for_label }}" class="block text-xs font-bold text-textSecondary mb-1">{{ form.staff_notes.label }}</label>
+                    {{ form.staff_notes }}
+                </div>
+                <button type="submit" class="w-full bg-primary text-white font-bold px-4 py-3 rounded-xl shadow-sm hover:bg-opacity-90">{% trans "Apply update" %}</button>
+                <p class="text-xs text-textSecondary">{% trans "The citizen is notified of status changes and sees any message you write above." %}</p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

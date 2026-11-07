@@ -2971,3 +2971,306 @@ msgstr "Sharaxaadda xogta ayaa sugaya."
 
 msgid "Community"
 msgstr "Bulsho"
+
+msgid "Apply for Consular Service"
+msgstr "Codso Adeeg Qunsuli"
+
+msgid "Apply for a Consular Service"
+msgstr "Codso Adeeg Qunsuli"
+
+msgid "Apply for Consular Service Online"
+msgstr "Kudalbo Onlayn Adeeg Qunsuli"
+
+msgid "Apply for a Service"
+msgstr "Codso Adeeg"
+
+msgid "My Consular Applications"
+msgstr "Codsiyadayda Qunsuli"
+
+msgid "My Applications"
+msgstr "Codsiyadayda"
+
+msgid "New Application"
+msgstr "Codsi Cusub"
+
+msgid "Apply"
+msgstr "Codso"
+
+msgid ""
+"Start your consular service application online before visiting an embassy or"
+" consulate. Choose a service, complete the form, upload your documents, and "
+"track the status from your account."
+msgstr ""
+"Bilow codsigaaga adeegga qunsuliyadda onlayn ka hor inta aadan booqan "
+"safaarad ama qunsuliyad. Dooro adeeg, buuxi foomka, soo geli "
+"dukumeentiyadaada, oo la soco xaaladda akoonkaaga."
+
+msgid "How it works"
+msgstr "Sida ay u shaqeyso"
+
+msgid "Select mission & service"
+msgstr "Dooro xafiiska & adeegga"
+
+msgid "Complete the application"
+msgstr "Buuxi codsiga"
+
+msgid "Upload documents"
+msgstr "Soo geli dukumeentiyada"
+
+msgid "Mission reviews it"
+msgstr "Xafiisku wuu dib u eegayaa"
+
+msgid "Attend if required"
+msgstr "Tag haddii loo baahdo"
+
+msgid "Passport Services"
+msgstr "Adeegyada Baasaboorka"
+
+msgid "Civil Registration"
+msgstr "Diiwaangelinta Madaniga"
+
+msgid "Document Services"
+msgstr "Adeegyada Dukumeentiyada"
+
+msgid "Other Consular Services"
+msgstr "Adeegyo Qunsuli oo Kale"
+
+msgid "Renewal, new passport, lost passport, emergency travel document"
+msgstr ""
+"Cusboonaysiin, baasaboor cusub, baasaboor lumay, dukumeenti safar oo degdeg "
+"ah"
+
+msgid "Birth, marriage and death certificates and registration"
+msgstr "Shahaadooyinka iyo diiwaangelinta dhalasho, guur iyo geeri"
+
+msgid "Attestation, legalization, authentication, power of attorney"
+msgstr "Caddaynta, sharcigelinta, xaqiijinta, wakaalad sharci"
+
+msgid "Citizenship requests and any other consular assistance"
+msgstr "Codsiyada dhalashada iyo kaalmo kale oo qunsuli"
+
+msgid ""
+"Choose your mission and the service you need, complete the form, and upload "
+"your supporting documents."
+msgstr ""
+"Dooro xafiiskaaga iyo adeegga aad u baahan tahay, buuxi foomka, oo soo geli "
+"dukumeentiyadaada taageerada."
+
+msgid "Embassy/Consulate"
+msgstr "Safaarad/Qunsuliyad"
+
+msgid "Service"
+msgstr "Adeeg"
+
+msgid "-- Select Service --"
+msgstr "-- Dooro Adeeg --"
+
+msgid "Documents required for %(service)s"
+msgstr "Dukumeentiyada loo baahan yahay %(service)s"
+
+msgid ""
+"Please have these ready to upload. Missing required documents may delay your"
+" application."
+msgstr ""
+"Fadlan diyaari kuwan si aad u soo gelisid. Dukumeentiyo maqan ayaa dib u "
+"dhigi kara codsigaaga."
+
+msgid ""
+"This service usually requires attending the mission in person. After your "
+"documents are reviewed you will be asked to book an appointment."
+msgstr ""
+"Adeeggan badanaa wuxuu u baahan yahay inaad qofka ahaan xafiiska timaado. Ka"
+" dib marka dukumeentiyadaada la eego waxaa lagu weydiin doonaa inaad ballan "
+"qabsatid."
+
+msgid "Full name"
+msgstr "Magaca oo dhan"
+
+msgid "Date of birth"
+msgstr "Taariikhda dhalashada"
+
+msgid "Passport number"
+msgstr "Lambarka baasaboorka"
+
+msgid "National ID"
+msgstr "Aqoonsiga qaranka"
+
+msgid "if applicable"
+msgstr "haddii ay khuseyso"
+
+msgid "Notes"
+msgstr "Faallooyin"
+
+msgid "PDF or image files, up to 10 MB each. You can add more later."
+msgstr ""
+"Faylasha PDF ama sawir, ilaa 10 MB mid kasta. Waad ku dari kartaa kuwo kale "
+"hadhow."
+
+msgid "Submit Application"
+msgstr "Gudbi Codsiga"
+
+msgid "Select a service to continue."
+msgstr "Dooro adeeg si aad u sii wadatid."
+
+msgid "Reference"
+msgstr "Tixraac"
+
+msgid "Status"
+msgstr "Xaalad"
+
+msgid "View"
+msgstr "Eeg"
+
+msgid "You have no consular applications yet."
+msgstr "Weli ma haysatid codsiyo qunsuli."
+
+msgid "Start your first application"
+msgstr "Bilow codsigaaga koowaad"
+
+msgid "Back to my applications"
+msgstr "Ku noqo codsiyadayda"
+
+msgid "Applicant"
+msgstr "Codsadaha"
+
+msgid "Processing time"
+msgstr "Muddada habaynta"
+
+msgid "Message from the mission"
+msgstr "Fariin ka timid xafiiska"
+
+msgid "Appointment required"
+msgstr "Ballan ayaa loo baahan yahay"
+
+msgid ""
+"Please book an appointment to attend the mission, then link it here using "
+"its reference code."
+msgstr ""
+"Fadlan qabso ballan si aad xafiiska u tagtid, ka dibna halkan ku xir adiga "
+"oo isticmaalaya lambarka tixraaca."
+
+msgid "Book Appointment"
+msgstr "Qabso Ballan"
+
+msgid "Appointment reference"
+msgstr "Tixraaca ballanta"
+
+msgid "Link appointment"
+msgstr "Ku xir ballanta"
+
+msgid "View appointment"
+msgstr "Eeg ballanta"
+
+msgid "Documents"
+msgstr "Dukumeentiyada"
+
+msgid "Required for this service"
+msgstr "Loo baahan yahay adeeggan"
+
+msgid "No documents uploaded yet."
+msgstr "Weli dukumeenti lama soo gelin."
+
+msgid "Open"
+msgstr "Fur"
+
+msgid "Add more documents"
+msgstr "Ku dar dukumeenti dheeraad ah"
+
+msgid "Upload"
+msgstr "Soo geli"
+
+msgid "Status history"
+msgstr "Taariikhda xaaladda"
+
+msgid "No history yet."
+msgstr "Weli taariikh malaha."
+
+msgid "Cancel application"
+msgstr "Jooji codsiga"
+
+msgid "Cancel this application?"
+msgstr "Ma joojinaysaa codsigan?"
+
+msgid "Consular Applications"
+msgstr "Codsiyada Qunsuliyadda"
+
+msgid "All statuses"
+msgstr "Dhammaan xaaladaha"
+
+msgid "All missions"
+msgstr "Dhammaan xafiisyada"
+
+msgid "Clear"
+msgstr "Nadiifi"
+
+msgid "No applications found."
+msgstr "Codsiyo lama helin."
+
+msgid ""
+"You are not assigned to any mission, so there are no applications to review."
+msgstr "Xafiis laguguma xilsaarin, sidaas darteed ma jiraan codsiyo la eego."
+
+msgid "Update application"
+msgstr "Cusboonaysii codsiga"
+
+msgid "Apply update"
+msgstr "Fuli cusboonaysiinta"
+
+msgid "Uploaded documents"
+msgstr "Dukumeentiyada la soo geliyay"
+
+msgid "Required"
+msgstr "Loo baahan yahay"
+
+msgid "No documents uploaded."
+msgstr "Dukumeenti lama soo gelin."
+
+msgid "Internal notes"
+msgstr "Faallooyin gudaha ah"
+
+msgid "Applicant notes"
+msgstr "Faallooyinka codsadaha"
+
+msgid "Linked appointment"
+msgstr "Ballanta la xiray"
+
+msgid ""
+"The citizen is notified of status changes and sees any message you write "
+"above."
+msgstr ""
+"Muwaadinka waa loo ogeysiiyaa isbeddellada xaaladda wuxuuna arkaa fariin "
+"kasta oo aad kor ku qorto."
+
+msgid "Message to the citizen (visible to them)"
+msgstr "Fariin loo diro muwaadinka (wuu arki karaa)"
+
+msgid "Internal notes (staff only)"
+msgstr "Faallooyin gudaha (shaqaalaha kaliya)"
+
+msgid "Back to applications"
+msgstr "Ku noqo codsiyada"
+
+msgid "Draft"
+msgstr "Qabyo"
+
+msgid "Additional Documents Required"
+msgstr "Dukumeenti Dheeraad ah ayaa loo baahan yahay"
+
+msgid "Approved / Ready"
+msgstr "La ansixiyay / Diyaar"
+
+msgid "Appointment Required"
+msgstr "Ballan ayaa loo baahan yahay"
+
+msgid "Completed"
+msgstr "La dhammeeyay"
+
+msgid "Cancelled"
+msgstr "La joojiyay"
+
+msgid ""
+"This service is currently unavailable at the selected mission. Please choose"
+" another mission or service."
+msgstr ""
+"Adeeggan hadda laguma heli karo xafiiska la doortay. Fadlan dooro xafiis ama"
+" adeeg kale."

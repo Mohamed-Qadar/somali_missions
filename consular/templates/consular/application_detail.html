@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Application" %} {{ application.reference_code }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12 space-y-6">
+
+    <a href="{% url 'my_consular_applications' %}" class="inline-flex items-center gap-1 text-sm text-textSecondary hover:text-primary font-semibold">
+        <span class="material-symbols-outlined text-sm">arrow_back</span>
+        {% trans "Back to my applications" %}
+    </a>
+
+    <!-- Summary -->
+    <div class="bg-card border border-border rounded-3xl p-6 md:p-8 shadow-sm space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <p class="text-xs font-bold text-textSecondary uppercase tracking-wider">{% trans "Reference" %}</p>
+                <h1 class="text-2xl font-black text-secondary">{{ application.reference_code }}</h1>
+            </div>
+            {% include "consular/_status_badge.html" with status=application.status label=application.get_status_display %}
+        </div>
+        <div class="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm border-t border-border pt-4">
+            <div><span class="text-textSecondary">{% trans "Service" %}:</span> <span class="font-semibold text-secondary">{{ application.service.name }}</span></div>
+            <div><span class="text-textSecondary">{% trans "Mission" %}:</span> <span class="font-semibold text-secondary">{{ application.mission.name }}</span></div>
+            <div><span class="text-textSecondary">{% trans "Applicant" %}:</span> <span class="font-semibold">{{ application.full_name }}</span></div>
+            <div><span class="text-textSecondary">{% trans "Submitted" %}:</span> <span class="font-semibold">{{ application.submitted_at|default:application.created_at|date:"Y-m-d H:i" }}</span></div>
+            {% if application.service.expected_processing_time %}
+            <div><span class="text-textSecondary">{% trans "Processing time" %}:</span> <span class="font-semibold">{{ application.service.expected_processing_time }}</span></div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Message from the mission -->
+    {% if application.citizen_message %}
+    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5">
+        <h2 class="flex items-center gap-2 text-sm font-extrabold text-primary mb-1">
+            <span class="material-symbols-outlined text-base">mail</span>{% trans "Message from the mission" %}
+        </h2>
+        <p class="text-sm text-textPrimary whitespace-pre-line">{{ application.citizen_message }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Appointment required -->
+    {% if application.status == Status.APPOINTMENT_REQUIRED %}
+    <div class="bg-purple-50 border border-purple-200 rounded-2xl p-5 space-y-3">
+        <h2 class="flex items-center gap-2 text-sm font-extrabold text-purple-800">
+            <span class="material-symbols-outlined text-base">event_available</span>{% trans "Appointment required" %}
+        </h2>
+        {% if application.appointment %}
+            <p class="text-sm text-textPrimary">{% blocktrans with code=application.appointment.qr_token status=application.appointment.get_status_display %}Linked appointment: <strong>{{ code }}</strong> ({{ status }}).{% endblocktrans %}</p>
+            <a href="{% url 'appointment_confirmation' application.appointment.qr_token %}" class="inline-flex items-center gap-2 text-primary font-bold text-sm hover:underline">
+                {% trans "View appointment" %}<span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+        {% else %}
+            <p class="text-sm text-textPrimary">{% trans "Please book an appointment to attend the mission, then link it here using its reference code." %}</p>
+            <a href="{% url 'book_appointment' %}?mission={{ application.mission_id }}&service={{ application.service_id }}" class="inline-flex items-center gap-2 bg-primary text-white font-bold px-4 py-2.5 rounded-xl text-sm hover:bg-opacity-90">
+                <span class="material-symbols-outlined text-sm">calendar_add_on</span>{% trans "Book Appointment" %}
+            </a>
+            <form method="post" class="flex flex-wrap items-end gap-2 pt-2 border-t border-purple-200">
+                {% csrf_token %}
+                <input type="hidden" name="link_appointment" value="1">
+                <div>
+                    <label for="id_qr_token" class="block text-xs font-bold text-textSecondary mb-1">{% trans "Appointment reference" %}</label>
+                    <input id="id_qr_token" type="text" name="qr_token" class="rounded-lg border border-border px-3 py-2 text-sm" placeholder="{% trans 'e.g. AB12CD34' %}">
+                </div>
+                <button type="submit" class="border border-primary/40 text-primary font-bold px-4 py-2 rounded-lg text-sm hover:bg-primary hover:text-white">{% trans "Link appointment" %}</button>
+            </form>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Documents -->
+    <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-4">
+        <h2 class="text-lg font-bold text-secondary">{% trans "Documents" %}</h2>
+
+        {% if required_documents %}
+        <div class="text-xs text-textSecondary">
+            <p class="font-bold uppercase tracking-wider mb-1">{% trans "Required for this service" %}</p>
+            <ul class="list-disc list-inside space-y-0.5">
+                {% for doc in required_documents %}<li>{{ doc.name }}{% if not doc.is_required %} ({% trans "optional" %}){% endif %}</li>{% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if documents %}
+        <ul class="divide-y divide-border">
+            {% for d in documents %}
+            <li class="flex items-center justify-between gap-3 py-2.5">
+                <span class="flex items-center gap-2 text-sm min-w-0">
+                    <span class="material-symbols-outlined text-slate-400">description</span>
+                    <span class="truncate">{{ d.file_name }}</span>
+                </span>
+                <a href="{{ d.file.url }}" target="_blank" rel="noopener" class="text-primary text-sm font-bold hover:underline shrink-0">{% trans "Open" %}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-sm text-textSecondary italic">{% trans "No documents uploaded yet." %}</p>
+        {% endif %}
+
+        {% if application.can_upload_more %}
+        <form method="post" enctype="multipart/form-data" class="border-t border-border pt-4 space-y-3">
+            {% csrf_token %}
+            <input type="hidden" name="upload_documents" value="1">
+            <label for="id_more_documents" class="block text-xs font-bold text-textSecondary">{% trans "Add more documents" %}</label>
+            <input id="id_more_documents" type="file" name="documents" multiple accept="image/*,application/pdf"
+                   class="w-full rounded-lg border border-border px-3 py-2 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-primary/10 file:px-3 file:py-1.5 file:text-primary file:font-bold">
+            <button type="submit" class="bg-primary text-white font-bold px-4 py-2 rounded-lg text-sm hover:bg-opacity-90">{% trans "Upload" %}</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <!-- Status timeline -->
+    <div class="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-4">
+        <h2 class="text-lg font-bold text-secondary">{% trans "Status history" %}</h2>
+        <ol class="relative border-l border-border ml-2 space-y-4">
+            {% for h in history %}
+            <li class="ml-4">
+                <span class="absolute -left-1.5 h-3 w-3 rounded-full bg-primary"></span>
+                <p class="text-sm font-semibold text-secondary">{{ h.get_new_status_display }}</p>
+                {% if h.note %}<p class="text-xs text-textSecondary">{{ h.note }}</p>{% endif %}
+                <p class="text-[11px] text-textSecondary">{{ h.created_at|date:"Y-m-d H:i" }}</p>
+            </li>
+            {% empty %}
+            <li class="ml-4 text-sm text-textSecondary italic">{% trans "No history yet." %}</li>
+            {% endfor %}
+        </ol>
+    </div>
+
+    <!-- Cancel -->
+    {% if application.is_open %}
+    <form method="post" class="text-right" data-confirm="{% trans 'Cancel this application?' %}">
+        {% csrf_token %}
+        <input type="hidden" name="cancel_application" value="1">
+        <button type="submit" class="text-sm text-red-600 font-semibold hover:underline">{% trans "Cancel application" %}</button>
+    </form>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script nonce="{{ request.csp_nonce }}">
+    // CSP-safe confirm (inline onclick is blocked by the site CSP).
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('form[data-confirm]').forEach(function (form) {
+            form.addEventListener('submit', function (e) {
+                if (!window.confirm(form.getAttribute('data-confirm'))) {
+                    e.preventDefault();
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
